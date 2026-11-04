@@ -98,7 +98,6 @@
 
         .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 1.1rem; }
 
-        /* Barra de información compacta */
         .info-bar {
             display: flex;
             justify-content: space-between;
@@ -225,6 +224,7 @@
             padding: 20px;
             margin-top: 10px;
             border-top: 1px solid rgba(0,0,0,0.1);
+            line-height: 1.4;
         }
         body.dark-mode .contact-footer { border-top-color: rgba(255,255,255,0.1); }
         .contact-footer strong { color: var(--primary); }
@@ -439,7 +439,6 @@
         function renderCards(dataArray, words = []) {
             resultsContainer.innerHTML = '';
             
-            // Actualizar el contador con los resultados que se están mostrando
             updateCounter(dataArray.length);
 
             if (dataArray.length === 0) {
@@ -488,7 +487,7 @@
 
             const footer = document.createElement('div');
             footer.className = 'contact-footer';
-            footer.innerHTML = '¿Algún dato incorrecto o falta un sitio?<br>Por favor, contacta a <strong>Supervisión</strong>.';
+            footer.innerHTML = '¿Falta un armario o hay que editar un dato?<br>Por favor, contacta a <strong>Supervisión</strong> para agregarlo o corregirlo.';
             frag.appendChild(footer);
 
             resultsContainer.appendChild(frag);
@@ -506,6 +505,14 @@
             const term = searchInput.value.toLowerCase().trim();
             currentSearchWords = term.split(/\s+/).filter(w => w !== '');
 
+            // MAGIA: Si el usuario está escribiendo, liberamos cualquier filtro "picado" 
+            // y volvemos a "Todos" para que la búsqueda sea siempre global.
+            if (term !== '' && currentFilter !== '') {
+                currentFilter = '';
+                document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+                document.querySelector('.chip').classList.add('active'); // El primer chip es "Todos"
+            }
+
             const filtered = globalData.filter(item => {
                 const searchable = `${item.nombre} ${item.coordenadas} ${item.tipo} ${item.obs}`.toLowerCase();
                 const matchesSearch = currentSearchWords.every(w => searchable.includes(w));
@@ -517,14 +524,14 @@
 
         searchInput.addEventListener('input', filterData);
 
-        // Filtro por Chips clásico
         window.applyFilter = function (filterTerm, element) {
             currentFilter = filterTerm;
             
-            // Quitar el estado activo de todos los chips
+            // Limpiar el buscador si se hace clic en un botón (opcional, pero ayuda a la UX)
+            // searchInput.value = ''; 
+            // currentSearchWords = [];
+
             document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-            
-            // Poner activo el chip clickeado
             if (element) element.classList.add('active');
             
             filterData();
