@@ -17,6 +17,9 @@
             --accent: #1a73e8;
             --highlight-bg: #ffeb3b;
             --highlight-text: #000000;
+            --modal-bg: #ffffff;
+            --rule-bg: #fff3e0;
+            --rule-border: #f57c00;
         }
 
         body.dark-mode {
@@ -28,6 +31,9 @@
             --primary-dark: #81c784;
             --highlight-bg: #ff9800;
             --highlight-text: #000000;
+            --modal-bg: #2c2c2c;
+            --rule-bg: #3e2a1a;
+            --rule-border: #ffb74d;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -63,16 +69,11 @@
         }
 
         .header-title { font-size: 1.15rem; font-weight: 700; margin: 0; display: flex; align-items: center; gap: 8px; }
-        
-        .subtitle { 
-            font-size: 0.7rem; 
-            opacity: 0.85; 
-            margin-top: 4px; 
-            line-height: 1.2;
-            max-width: 90%;
-        }
+        .subtitle { font-size: 0.7rem; opacity: 0.85; margin-top: 4px; line-height: 1.2; max-width: 90%; }
 
-        .theme-toggle {
+        .header-buttons { display: flex; gap: 8px; }
+
+        .icon-btn {
             background: rgba(255,255,255,0.2);
             border: none;
             color: white;
@@ -80,6 +81,11 @@
             padding: 5px 10px;
             border-radius: 15px;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
         }
 
         .search-wrapper { position: relative; }
@@ -245,6 +251,58 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
             transition: opacity 0.3s;
         }
+
+        /* --- MODAL --- */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: var(--modal-bg);
+            color: var(--text-main);
+            padding: 20px;
+            border-radius: 12px;
+            max-width: 480px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .modal-content h3 { margin-top: 0; color: var(--primary); font-size: 1.2rem; }
+        .modal-content p { font-size: 0.9rem; line-height: 1.5; margin-bottom: 10px; }
+        .modal-content ol { font-size: 0.9rem; padding-left: 20px; line-height: 1.5; margin-bottom: 15px; }
+        .modal-content li { margin-bottom: 10px; }
+        
+        .modal-highlight {
+            background: var(--rule-bg);
+            border-left: 4px solid var(--rule-border);
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+            font-size: 0.85rem;
+            color: var(--text-main);
+        }
+
+        .close-modal-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 15px;
+            border-radius: 8px;
+            width: 100%;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -255,7 +313,10 @@
                 <div class="header-title">📊 Armarios y Centrales</div>
                 <div class="subtitle">Creado por Carlos Saez para la búsqueda eficiente en terreno.</div>
             </div>
-            <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">🌙</button>
+            <div class="header-buttons">
+                <button class="icon-btn" onclick="openModal()" title="Información importante">ℹ️</button>
+                <button class="icon-btn" id="themeToggle" onclick="toggleTheme()">🌙</button>
+            </div>
         </div>
 
         <div class="search-wrapper">
@@ -281,6 +342,33 @@
 
     <button id="scrollTopBtn" onclick="scrollToTop()">⬆️</button>
 
+    <!-- MODAL DE AYUDA -->
+    <div class="modal-overlay" id="infoModal">
+        <div class="modal-content">
+            <h3>⚠️ Guía: ¿No encuentras el sitio?</h3>
+            
+            <p>Para saber si una conexión es <strong>RÍGIDA</strong> (y por eso no aparece en esta app), haz estos 2 chequeos en tu orden:</p>
+            
+            <ol>
+                <li><strong>Revisa el nombre del contenedor:</strong> Si dice algo como <b>"SECTOR 3"</b> o <b>"SECTOR 1 AL 8"</b>, <u>no existen armarios con esos nombres</u>. Es muy probable que sea rígida.</li>
+                <li><strong>Revisa la lista de elementos (como en Oracle):</strong> Busca si tu orden tiene <b>AMBOS</b> de estos elementos:
+                    <ul style="margin-top: 5px; color: var(--text-main);">
+                        <li><code>ALTA:Filamento Splitter P.</code> (Primario)</li>
+                        <li><code>ALTA:Filamento Splitter S.</code> (Secundario)</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <div class="modal-highlight">
+                <strong>Conclusión:</strong><br>
+                ✔️ Si dice "Sector X" Y tiene <b>AMBOS</b> filamentos (P y S): Es <b>RÍGIDA</b>. No debe buscarla aquí.<br><br>
+                ❌ Si dice "Sector X" pero <b>solo tiene Filamento P</b> (Primario) y le falta el Secundario: Es <b>FLEXIBLE</b>. El sitio debería estar aquí. <b>Contacta a Supervisión.</b>
+            </div>
+            
+            <button class="close-modal-btn" onclick="closeModal()">Entendido</button>
+        </div>
+    </div>
+
     <script>
         const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSKUPJST2SVhD74W0cYfcb7RpBpuWgT5SLqHn7YSJasQcPNE971C5x_mBCDHPKJift7EFrOoYs4VHoq/pub?gid=1395209502&single=true&output=csv';
 
@@ -292,6 +380,7 @@
         const searchInput = document.getElementById('searchInput');
         const scrollTopBtn = document.getElementById('scrollTopBtn');
         const siteCounter = document.getElementById('siteCounter');
+        const infoModal = document.getElementById('infoModal');
 
         if (localStorage.getItem('theme') === 'dark') {
             document.body.classList.add('dark-mode');
@@ -304,6 +393,10 @@
             localStorage.setItem('theme', isDark ? 'dark' : 'light');
             document.getElementById('themeToggle').innerText = isDark ? '☀️' : '🌙';
         }
+
+        function openModal() { infoModal.style.display = 'flex'; }
+        function closeModal() { infoModal.style.display = 'none'; }
+        infoModal.addEventListener('click', (e) => { if (e.target === infoModal) closeModal(); });
 
         function escapeHtml(str) {
             return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
@@ -375,20 +468,13 @@
             return { texto: 'Armario', tagBg: '#e8f5e9', tagColor: '#2e7d32' };
         }
 
-        // --- NUEVA FUNCIÓN DE PRIORIDAD DE CENTRALES ---
         function getCentralPriority(nombre) {
             const n = nombre.toUpperCase();
-            // 1. VLDV 1 (con o sin espacio, con o sin guion)
             if (/VLDV[\s\-]*1/.test(n)) return 1;
-            // 2. VLDV 2
             if (/VLDV[\s\-]*2/.test(n)) return 2;
-            // 3. Isla Teja
             if (n.includes('TEJA')) return 3;
-            // 4. Cualquier otra que diga VLDV
             if (n.includes('VLDV')) return 4;
-            // 5. Paillaco
             if (n.includes('PAILLACO')) return 5;
-            // 6. Todas las demás (ej: San José, Niebla, etc.)
             return 10; 
         }
 
@@ -444,143 +530,4 @@
                 console.warn('No se pudo conectar. Usando datos offline.', error);
                 if (!cached) {
                     resultsContainer.innerHTML = `<div class="no-results">Error de conexión.<small>Conéctate a internet al menos una vez.</small></div>`;
-                    lastUpdatedEl.innerText = "Error";
-                }
-            }
-        }
-
-        function updateCounter(count) {
-            siteCounter.innerText = `${count} sitio${count === 1 ? '' : 's'}`;
-        }
-
-        function renderCards(dataArray, words = []) {
-            resultsContainer.innerHTML = '';
-            
-            updateCounter(dataArray.length);
-
-            if (dataArray.length === 0) {
-                resultsContainer.innerHTML = '<div class="no-results">No hay resultados para tu búsqueda.</div>';
-                return;
-            }
-
-            const frag = document.createDocumentFragment();
-            for (const item of dataArray) {
-                const card = document.createElement('div');
-                card.className = 'card';
-                const etiqueta = getTipoEtiqueta(item);
-
-                card.style.setProperty('--tag-bg', etiqueta.tagBg);
-                card.style.setProperty('--tag-color', etiqueta.tagColor);
-
-                let nombrePpal = item.nombre;
-                let detalleCables = '';
-                const idx = item.nombre.indexOf(':');
-                if (idx !== -1) {
-                    nombrePpal    = item.nombre.slice(0, idx).trim();
-                    detalleCables = item.nombre.slice(idx + 1).trim();
-                }
-
-                const hlNombre = highlightText(nombrePpal, words);
-                const hlCables = detalleCables ? highlightText(detalleCables, words) : '';
-                const hlObs = item.obs ? highlightText(item.obs, words) : '';
-
-                const href = safeUrl(item.url);
-                const btn = href
-                    ? `<a href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer" class="nav-btn">🗺️ Abrir en Maps</a>`
-                    : `<div class="nav-btn" style="background:#9aa0a6;cursor:not-allowed">⚠️ Sin enlace</div>`;
-
-                card.innerHTML = `
-                    <div class="card-header">
-                        <span class="tag">${etiqueta.texto}</span>
-                    </div>
-                    <div class="card-title">${hlNombre}</div>
-                    ${hlCables ? `<div class="cable-box">🔌 Cables: ${hlCables}</div>` : ''}
-                    ${hlObs ? `<div class="obs-box">📝 ${hlObs}</div>` : ''}
-                    ${btn}
-                `;
-
-                frag.appendChild(card);
-            }
-
-            const footer = document.createElement('div');
-            footer.className = 'contact-footer';
-            footer.innerHTML = '¿Falta un armario o hay que editar un dato?<br>Por favor, contacta a <strong>Supervisión</strong> para agregarlo o corregirlo.';
-            frag.appendChild(footer);
-
-            resultsContainer.appendChild(frag);
-        }
-
-        function chipMatches(item, filter) {
-            if (!filter) return true;
-            const cat = classify(item.nombre, item.tipo);
-            if (filter === 'CENTRAL')    return cat === 'central';
-            if (filter === 'ARMA')       return cat === 'armario';
-            return item.nombre.toUpperCase().includes(filter);
-        }
-
-        function filterData() {
-            const term = searchInput.value.toLowerCase().trim();
-            currentSearchWords = term.split(/\s+/).filter(w => w !== '');
-
-            // Si el usuario escribe, desbloquea los filtros y vuelve a "Todos"
-            if (term !== '' && currentFilter !== '') {
-                currentFilter = '';
-                document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-                document.querySelector('.chip').classList.add('active');
-            }
-
-            let filtered = globalData.filter(item => {
-                const searchable = `${item.nombre} ${item.coordenadas} ${item.tipo} ${item.obs}`.toLowerCase();
-                const matchesSearch = currentSearchWords.every(w => searchable.includes(w));
-                return matchesSearch && chipMatches(item, currentFilter);
-            });
-
-            // --- ORDENAMIENTO PERSONALIZADO SI ESTAMOS EN CENTRALES ---
-            if (currentFilter === 'CENTRAL') {
-                filtered.sort((a, b) => {
-                    const prioA = getCentralPriority(a.nombre);
-                    const prioB = getCentralPriority(b.nombre);
-                    
-                    if (prioA !== prioB) {
-                        return prioA - prioB; // Ordena por prioridad
-                    }
-                    return a.nombre.localeCompare(b.nombre); // Si empatan, orden alfabético
-                });
-            }
-            
-            renderCards(filtered, currentSearchWords);
-        }
-
-        searchInput.addEventListener('input', filterData);
-
-        window.applyFilter = function (filterTerm, element) {
-            currentFilter = filterTerm;
-            
-            document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-            if (element) element.classList.add('active');
-            
-            filterData();
-        };
-
-        resultsContainer.addEventListener('scroll', () => {
-            if (resultsContainer.scrollTop > 300) {
-                scrollTopBtn.style.display = 'block';
-            } else {
-                scrollTopBtn.style.display = 'none';
-            }
-        });
-
-        function scrollToTop() {
-            resultsContainer.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js').then(reg => {
-                reg.update();
-            }).catch(err => console.log("Error SW:", err));
-        }
-
-        loadData();
-    </script>
-</body>
-</html>
+                    lastUpdatedEl
