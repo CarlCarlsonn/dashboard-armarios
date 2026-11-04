@@ -375,6 +375,23 @@
             return { texto: 'Armario', tagBg: '#e8f5e9', tagColor: '#2e7d32' };
         }
 
+        // --- NUEVA FUNCIÓN DE PRIORIDAD DE CENTRALES ---
+        function getCentralPriority(nombre) {
+            const n = nombre.toUpperCase();
+            // 1. VLDV 1 (con o sin espacio, con o sin guion)
+            if (/VLDV[\s\-]*1/.test(n)) return 1;
+            // 2. VLDV 2
+            if (/VLDV[\s\-]*2/.test(n)) return 2;
+            // 3. Isla Teja
+            if (n.includes('TEJA')) return 3;
+            // 4. Cualquier otra que diga VLDV
+            if (n.includes('VLDV')) return 4;
+            // 5. Paillaco
+            if (n.includes('PAILLACO')) return 5;
+            // 6. Todas las demás (ej: San José, Niebla, etc.)
+            return 10; 
+        }
+
         async function loadData() {
             const lastUpdatedEl = document.getElementById('lastUpdated');
             
@@ -505,19 +522,31 @@
             const term = searchInput.value.toLowerCase().trim();
             currentSearchWords = term.split(/\s+/).filter(w => w !== '');
 
-            // MAGIA: Si el usuario está escribiendo, liberamos cualquier filtro "picado" 
-            // y volvemos a "Todos" para que la búsqueda sea siempre global.
+            // Si el usuario escribe, desbloquea los filtros y vuelve a "Todos"
             if (term !== '' && currentFilter !== '') {
                 currentFilter = '';
                 document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-                document.querySelector('.chip').classList.add('active'); // El primer chip es "Todos"
+                document.querySelector('.chip').classList.add('active');
             }
 
-            const filtered = globalData.filter(item => {
+            let filtered = globalData.filter(item => {
                 const searchable = `${item.nombre} ${item.coordenadas} ${item.tipo} ${item.obs}`.toLowerCase();
                 const matchesSearch = currentSearchWords.every(w => searchable.includes(w));
                 return matchesSearch && chipMatches(item, currentFilter);
             });
+
+            // --- ORDENAMIENTO PERSONALIZADO SI ESTAMOS EN CENTRALES ---
+            if (currentFilter === 'CENTRAL') {
+                filtered.sort((a, b) => {
+                    const prioA = getCentralPriority(a.nombre);
+                    const prioB = getCentralPriority(b.nombre);
+                    
+                    if (prioA !== prioB) {
+                        return prioA - prioB; // Ordena por prioridad
+                    }
+                    return a.nombre.localeCompare(b.nombre); // Si empatan, orden alfabético
+                });
+            }
             
             renderCards(filtered, currentSearchWords);
         }
@@ -527,10 +556,6 @@
         window.applyFilter = function (filterTerm, element) {
             currentFilter = filterTerm;
             
-            // Limpiar el buscador si se hace clic en un botón (opcional, pero ayuda a la UX)
-            // searchInput.value = ''; 
-            // currentSearchWords = [];
-
             document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
             if (element) element.classList.add('active');
             
