@@ -150,6 +150,28 @@
             font-weight: 600;
         }
 
+        /* ESTILO DEL BOTÓN DE ACTUALIZAR */
+        .update-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            background: rgba(255,255,255,0.1);
+            padding: 4px 8px;
+            border-radius: 12px;
+            transition: background 0.2s;
+        }
+        .update-wrapper:active { background: rgba(255,255,255,0.3); }
+        
+        #refreshIcon {
+            font-size: 0.9rem;
+            transition: transform 0.5s;
+        }
+        .rotating {
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
         .filters-container {
             display: flex;
             overflow-x: auto;
@@ -398,7 +420,12 @@
         
         <div class="info-bar">
             <span id="siteCounter" class="site-counter">0 sitios</span>
-            <span id="lastUpdated">Sincronizando...</span>
+            
+            <!-- NUEVO BOTÓN DE ACTUALIZAR -->
+            <div class="update-wrapper" onclick="forceUpdate()" title="Buscar nuevos datos">
+                <span id="lastUpdated">Sincronizando...</span>
+                <span id="refreshIcon">🔄</span>
+            </div>
         </div>
         
         <div class="filters-container">
@@ -478,6 +505,7 @@
         var scrollTopBtn = document.getElementById('scrollTopBtn');
         var siteCounter = document.getElementById('siteCounter');
         var infoModal = document.getElementById('infoModal');
+        var refreshIcon = document.getElementById('refreshIcon');
 
         var reglaHtml = 
             '<div class="card-header"><span class="tag">REGLA DE ORO</span></div>' +
@@ -638,6 +666,12 @@
             return 10; 
         }
 
+        // --- FUNCIÓN PARA FORZAR LA ACTUALIZACIÓN DESDE EL BOTÓN ---
+        function forceUpdate() {
+            refreshIcon.classList.add('rotating');
+            loadData();
+        }
+
         async function loadData() {
             var lastUpdatedEl = document.getElementById('lastUpdated');
             
@@ -653,7 +687,9 @@
             }
 
             try {
-                var response = await fetch(SHEET_CSV_URL, { cache: 'no-store' });
+                // Forzamos a Google Sheets a no darnos datos cacheados usando &t=Date.now()
+                var fetchUrl = SHEET_CSV_URL + '&nocache=' + new Date().getTime();
+                var response = await fetch(fetchUrl, { cache: 'no-store' });
                 
                 if (!response.ok) {
                     throw new Error('Google Sheets respondió con error ' + response.status + '. Asegúrate de que la hoja esté publicada en la web.');
@@ -700,6 +736,9 @@
                     resultsContainer.innerHTML = '<div class="no-results" style="color: #d32f2f; font-family: monospace;"><b>Error al cargar datos:</b><br><br>' + error.message + '<br><br><i>Revisa que el enlace de Google Sheets siga siendo público.</i></div>';
                     lastUpdatedEl.innerText = "Error de conexión";
                 }
+            } finally {
+                // Quitar la animación de giro
+                refreshIcon.classList.remove('rotating');
             }
         }
 
@@ -802,8 +841,6 @@
             var term = searchInput.value.toLowerCase().trim();
             currentSearchWords = term.split(/\s+/).filter(function(w) { return w !== ''; });
 
-            // MAGIA AQUÍ: Si el buscador tiene texto, forzamos el filtro a '' (Todos).
-            // Si el buscador está vacío, usamos el currentFilter (el chip seleccionado).
             var filterToApply = (term !== '') ? '' : currentFilter;
 
             var filtered = globalData.filter(function(item) {
@@ -825,17 +862,14 @@
         }
 
         window.applyFilter = function (filterTerm, element) {
-            // Al tocar un chip, borramos el buscador
             searchInput.value = '';
             localStorage.removeItem('lastSearchTerm');
             updateClearBtnVisibility();
 
-            // Aplicamos el nuevo filtro del chip
             currentFilter = filterTerm;
             document.querySelectorAll('.chip').forEach(function(c) { c.classList.remove('active'); });
             if (element) element.classList.add('active');
 
-            // Refrescamos (como el buscador está vacío, respetará el chip)
             filterData();
         };
 
