@@ -20,6 +20,9 @@
             --modal-bg: #ffffff;
             --rule-bg: #fff3e0;
             --rule-border: #f57c00;
+            --danger-bg: #ffebee;
+            --danger-color: #d32f2f;
+            --table-bg: #f8f9fa;
         }
 
         body.dark-mode {
@@ -34,6 +37,9 @@
             --modal-bg: #2c2c2c;
             --rule-bg: #3e2a1a;
             --rule-border: #ffb74d;
+            --danger-bg: #3e1a1a;
+            --danger-color: #ef5350;
+            --table-bg: #2a2a2a;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -167,6 +173,19 @@
             background-color: var(--tag-color, var(--primary));
         }
 
+        /* Estilo especial para la tarjeta de regla */
+        .rule-card {
+            border: 2px solid var(--danger-color);
+            background-color: var(--card-bg);
+            border-left: 6px solid var(--danger-color);
+            animation: slideDown 0.3s ease-out;
+        }
+        
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
 
         .tag {
@@ -175,7 +194,7 @@
             padding: 4px 10px;
             border-radius: 12px;
             font-size: 0.75rem;
-            font-weight: 600;
+            font-weight: 700;
             text-transform: uppercase;
         }
 
@@ -195,7 +214,7 @@
         body.dark-mode .cable-box, body.dark-mode .obs-box { background: rgba(255,255,255,0.05); border-color: #444; }
         
         .cable-box { color: var(--primary-dark); }
-        .obs-box { font-family: inherit; color: var(--text-muted); font-weight: normal; font-size: 0.85rem; }
+        .obs-box { font-family: inherit; color: var(--text-main); font-weight: normal; font-size: 0.85rem; }
 
         mark {
             background-color: var(--highlight-bg);
@@ -252,6 +271,49 @@
             transition: opacity 0.3s;
         }
 
+        /* --- ESTILOS DE LA TABLA ORACLE --- */
+        .oracle-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.75rem;
+            margin: 10px 0;
+            background-color: var(--table-bg);
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .oracle-table th {
+            background-color: #0d3b66;
+            color: white;
+            padding: 6px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .oracle-table td {
+            border: 1px solid rgba(0,0,0,0.1);
+            padding: 8px 6px;
+            text-align: center;
+            color: var(--text-main);
+        }
+        body.dark-mode .oracle-table td { border-color: #444; }
+        
+        .highlight-sector {
+            background-color: #fff59d;
+            color: #000;
+            font-weight: bold;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        
+        .highlight-red-box {
+            border: 3px solid #d32f2f !important;
+            background-color: #ffebee;
+            color: #b71c1c !important;
+            font-weight: bold;
+        }
+        body.dark-mode .highlight-red-box { background-color: #3e1a1a; color: #ef5350 !important; }
+
+        /* MODAL */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -268,28 +330,17 @@
             color: var(--text-main);
             padding: 20px;
             border-radius: 12px;
-            max-width: 480px;
+            max-width: 500px;
             width: 100%;
             max-height: 90vh;
             overflow-y: auto;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
-        .modal-content h3 { margin-top: 0; color: var(--primary); font-size: 1.2rem; }
+        .modal-content h3 { margin-top: 0; color: var(--danger-color); font-size: 1.2rem; text-align: center; }
         .modal-content p { font-size: 0.9rem; line-height: 1.5; margin-bottom: 10px; }
-        .modal-content ol { font-size: 0.9rem; padding-left: 20px; line-height: 1.5; margin-bottom: 15px; }
-        .modal-content li { margin-bottom: 10px; }
+        .modal-content .note-box { background: var(--rule-bg); border-left: 4px solid var(--rule-border); padding: 10px; border-radius: 4px; font-size: 0.85rem; margin-bottom: 15px; }
         
-        .modal-highlight {
-            background: var(--rule-bg);
-            border-left: 4px solid var(--rule-border);
-            padding: 10px;
-            border-radius: 4px;
-            margin: 10px 0;
-            font-size: 0.85rem;
-            color: var(--text-main);
-        }
-
         .close-modal-btn {
             background: var(--primary);
             color: white;
@@ -341,30 +392,49 @@
 
     <button id="scrollTopBtn" onclick="scrollToTop()">⬆️</button>
 
+    <!-- MODAL DE AYUDA -->
     <div class="modal-overlay" id="infoModal">
         <div class="modal-content">
-            <h3>⚠️ Guía: ¿No encuentras el sitio?</h3>
-            <p>Para saber si una conexión es <strong>RÍGIDA</strong> (y por eso no aparece en esta app), haz estos 2 chequeos en tu orden:</p>
-            <ol>
-                <li><strong>Revisa el nombre del contenedor:</strong> Si dice algo como <b>"SECTOR 3"</b> o <b>"SECTOR 1 AL 8"</b>, <u>no existen armarios con esos nombres</u>. Es muy probable que sea rígida.</li>
-                <li><strong>Revisa la lista de elementos (como en Oracle):</strong> Busca si tu orden tiene <b>AMBOS</b> de estos elementos:
-                    <ul style="margin-top: 5px; color: var(--text-main);">
-                        <li><code>ALTA:Filamento Splitter P.</code> (Primario)</li>
-                        <li><code>ALTA:Filamento Splitter S.</code> (Secundario)</li>
-                    </ul>
-                </li>
-            </ol>
-            <div class="modal-highlight">
+            <h3>⚠️ GUÍA: CONEXIÓN RÍGIDA</h3>
+            <p>Para que no se te olvide, si el contenedor indica <b>"SECTOR"</b> y un número (ej: <i>CONT-PRIM-VLDV-VILLA ALBORADA SECTOR 3</i>), <u>no existen armarios con esos nombres</u>.</p>
+            
+            <p>Además, <b>solo las cuentas rígidas tienen ambos elementos</b>:</p>
+            
+            <!-- TABLA ORACLE VISUAL -->
+            <table class="oracle-table">
+                <thead>
+                    <tr>
+                        <th>TIPO ELEMENTO</th>
+                        <th>CÓDIGO ELEMENTO</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>ALTA:Contenedor</td>
+                        <td>... VILLA ALBORADA<br><span class="highlight-sector">SECTOR 3</span></td>
+                    </tr>
+                    <tr>
+                        <td class="highlight-red-box">ALTA:Filamento<br>Splitter P.</td>
+                        <td class="highlight-red-box">1</td>
+                    </tr>
+                    <tr>
+                        <td class="highlight-red-box">ALTA:Filamento<br>Splitter S.</td>
+                        <td class="highlight-red-box">14</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="note-box">
                 <strong>Conclusión:</strong><br>
-                ✔️ Si dice "Sector X" Y tiene <b>AMBOS</b> filamentos (P y S): Es <b>RÍGIDA</b>. No debe buscarla aquí.<br><br>
-                ❌ Si dice "Sector X" pero <b>solo tiene Filamento P</b> (Primario) y le falta el Secundario: Es <b>FLEXIBLE</b>. El sitio debería estar aquí. <b>Contacta a Supervisión.</b>
+                ✅ Si tiene <b>AMBOS</b> filamentos (recuadro rojo): Es <b>RÍGIDA</b>. No debe buscarla aquí.<br><br>
+                ❌ Por lógica, si <b>SOLO tiene el Primario (P)</b> y le falta el Secundario: Es <b>FLEXIBLE</b>. Debería estar en la app. Contacta a Supervisión.
             </div>
+            
             <button class="close-modal-btn" onclick="closeModal()">Entendido</button>
         </div>
     </div>
 
     <script>
-        // Detector de errores para evitar pantallas en blanco
         window.onerror = function(message, source, lineno, colno, error) {
             var errorDiv = document.createElement('div');
             errorDiv.style.cssText = "background: #ffebee; color: #b71c1c; padding: 20px; border-radius: 8px; font-family: monospace; font-size: 14px; margin: 15px;";
@@ -400,10 +470,7 @@
 
         function openModal() { infoModal.style.display = 'flex'; }
         function closeModal() { infoModal.style.display = 'none'; }
-        
-        infoModal.addEventListener('click', function(e) { 
-            if (e.target === infoModal) closeModal(); 
-        });
+        infoModal.addEventListener('click', function(e) { if (e.target === infoModal) closeModal(); });
 
         function escapeHtml(str) {
             return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
@@ -561,28 +628,37 @@
             updateCounter(dataArray.length);
 
             var searchTerm = searchInput.value.toLowerCase().trim();
-            var isSectorSearch = /sector\s*\d+/i.test(searchTerm);
+            var isSectorSearch = /sect/i.test(searchTerm); 
 
             var frag = document.createDocumentFragment();
 
             if (isSectorSearch) {
                 var ruleCard = document.createElement('div');
-                ruleCard.className = 'card';
-                ruleCard.style.setProperty('--tag-bg', '#ffebee');
-                ruleCard.style.setProperty('--tag-color', '#d32f2f');
-                ruleCard.style.borderLeft = "5px solid #d32f2f"; 
+                ruleCard.className = 'card rule-card';
+                ruleCard.style.setProperty('--tag-bg', '#ffcdd2');
+                ruleCard.style.setProperty('--tag-color', '#b71c1c');
 
                 ruleCard.innerHTML = 
-                    '<div class="card-header"><span class="tag">REGLA RÍGIDA</span></div>' +
-                    '<div class="card-title">⚠️ Verificación de Conexión</div>' +
+                    '<div class="card-header"><span class="tag">REGLA DE ORO</span></div>' +
+                    '<div class="card-title">⚠️ Verificación de Conexión Rígida</div>' +
                     '<div class="obs-box" style="font-size: 0.85rem; color: var(--text-main); font-family: inherit; line-height: 1.4;">' +
-                        '<b>1er Check:</b> El nombre contiene "Sector". <u>No existen armarios con esos nombres</u>, por lo que asumimos que es RÍGIDA.<br><br>' +
-                        '<b>2do Check (en tu orden):</b> Busca si aparecen ambos elementos:<br>' +
-                        '<span style="color: #2e7d32; font-weight: bold;">✔️ ALTA:Filamento Splitter P. (Primario)</span><br>' +
-                        '<span style="color: #2e7d32; font-weight: bold;">✔️ ALTA:Filamento Splitter S. (Secundario)</span><br><br>' +
-                        '<b>Conclusión:</b><br>' +
-                        'Si tiene <b>AMBOS</b>: Es Rígida (no debe buscarla aquí).<br>' +
-                        'Si <b>SOLO tiene el Primario</b>: Es Flexible (falta en la app, avisa a Supervisión).' +
+                        'Para que no se te olvide: Si el contenedor indica <b>"SECTOR"</b> y un número (ej: <i>CONT-PRIM... <span style="background:#fff59d; color:#000; padding:0 2px;">SECTOR 3</span></i>), <u>no existen armarios con esos nombres</u>.<br><br>' +
+                        '<b>Otra forma de saberlo:</b> Solo las cuentas rígidas tienen ambos elementos:' +
+                    '</div>' +
+                    
+                    // Tabla visual incrustada
+                    '<table class="oracle-table">' +
+                        '<thead><tr><th>TIPO ELEMENTO</th><th>CÓDIGO</th></tr></thead>' +
+                        '<tbody>' +
+                            '<tr><td>ALTA:Contenedor</td><td>... SECTOR 3</td></tr>' +
+                            '<tr><td class="highlight-red-box">ALTA:Filamento<br>Splitter P.</td><td class="highlight-red-box">1</td></tr>' +
+                            '<tr><td class="highlight-red-box">ALTA:Filamento<br>Splitter S.</td><td class="highlight-red-box">14</td></tr>' +
+                        '</tbody>' +
+                    '</table>' +
+                    
+                    '<div class="obs-box" style="font-size: 0.85rem; color: var(--text-main); font-family: inherit; line-height: 1.4;">' +
+                        '✅ <b>Si tiene AMBOS (recuadro rojo):</b> Es RÍGIDA. No debe buscarla aquí.<br><br>' +
+                        '❌ <b>Por lógica, si SOLO tiene el Primario (P):</b> Es FLEXIBLE. Debería estar en la app, contacta a Supervisión.' +
                     '</div>';
                 frag.appendChild(ruleCard);
             }
