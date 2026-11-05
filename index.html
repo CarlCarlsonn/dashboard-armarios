@@ -94,11 +94,11 @@
             height: 36px;
         }
 
-        .search-wrapper { position: relative; }
+        .search-wrapper { position: relative; display: flex; align-items: center; }
 
         #searchInput {
             width: 100%;
-            padding: 12px 15px 12px 40px;
+            padding: 12px 40px 12px 40px; /* Espacio extra a la derecha para la X */
             border: none;
             border-radius: 25px;
             font-size: 15px;
@@ -109,6 +109,29 @@
         }
 
         .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 1.1rem; }
+
+        /* BOTÓN DE BORRAR (X) EN EL BUSCADOR */
+        #clearSearchBtn {
+            display: none; /* Oculto por defecto */
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #e0e0e0;
+            color: #555;
+            border: none;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            line-height: 1;
+        }
+        body.dark-mode #clearSearchBtn { background: #444; color: #ccc; }
 
         .info-bar {
             display: flex;
@@ -173,7 +196,6 @@
             background-color: var(--tag-color, var(--primary));
         }
 
-        /* Estilo especial para la tarjeta de regla */
         .rule-card {
             border: 2px solid var(--danger-color);
             background-color: var(--card-bg);
@@ -271,7 +293,6 @@
             transition: opacity 0.3s;
         }
 
-        /* --- ESTILOS DE LA TABLA ORACLE --- */
         .oracle-table {
             width: 100%;
             border-collapse: collapse;
@@ -314,7 +335,6 @@
         }
         body.dark-mode .highlight-red-box { background-color: #3e1a1a; color: #ef5350 !important; }
 
-        /* MODAL */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -373,6 +393,7 @@
         <div class="search-wrapper">
             <span class="search-icon">🔍</span>
             <input type="text" id="searchInput" placeholder="Buscar armario, cable o coordenada...">
+            <button id="clearSearchBtn" onclick="clearSearch()">✖</button>
         </div>
         
         <div class="info-bar">
@@ -393,7 +414,6 @@
 
     <button id="scrollTopBtn" onclick="scrollToTop()">⬆️</button>
 
-    <!-- MODAL DE AYUDA -->
     <div class="modal-overlay" id="infoModal">
         <div class="modal-content">
             <h3>⚠️ COMPRUEBA QUE LA CUENTA NO SEA RÍGIDA</h3>
@@ -403,7 +423,6 @@
             
             <p><b>2. Otra forma de saberlo:</b> Solo las cuentas rígidas tienen <b>Filamento splitter primario</b> y <b>Filamento splitter secundario</b>:</p>
             
-            <!-- TABLA ORACLE VISUAL -->
             <table class="oracle-table">
                 <thead>
                     <tr>
@@ -455,6 +474,7 @@
         
         var resultsContainer = document.getElementById('resultsContainer');
         var searchInput = document.getElementById('searchInput');
+        var clearSearchBtn = document.getElementById('clearSearchBtn');
         var scrollTopBtn = document.getElementById('scrollTopBtn');
         var siteCounter = document.getElementById('siteCounter');
         var infoModal = document.getElementById('infoModal');
@@ -474,6 +494,38 @@
         function openModal() { infoModal.style.display = 'flex'; }
         function closeModal() { infoModal.style.display = 'none'; }
         infoModal.addEventListener('click', function(e) { if (e.target === infoModal) closeModal(); });
+
+        // --- LOGICA DEL BOTÓN BORRAR (X) Y GUARDADO DE BÚSQUEDA ---
+        function updateClearBtnVisibility() {
+            if (searchInput.value.length > 0) {
+                clearSearchBtn.style.display = 'flex';
+            } else {
+                clearSearchBtn.style.display = 'none';
+            }
+        }
+
+        function clearSearch() {
+            searchInput.value = '';
+            localStorage.removeItem('lastSearchTerm'); // Borra la memoria
+            updateClearBtnVisibility();
+            filterData();
+            searchInput.focus();
+        }
+
+        // Restaurar última búsqueda al abrir
+        var savedSearch = localStorage.getItem('lastSearchTerm');
+        if (savedSearch) {
+            searchInput.value = savedSearch;
+        }
+        updateClearBtnVisibility();
+
+        // Guardar mientras escribe
+        searchInput.addEventListener('input', function() {
+            localStorage.setItem('lastSearchTerm', searchInput.value);
+            updateClearBtnVisibility();
+            filterData();
+        });
+
 
         function escapeHtml(str) {
             return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
@@ -564,7 +616,7 @@
                 try {
                     globalData = JSON.parse(cached);
                     updateCounter(globalData.length);
-                    renderCards(globalData);
+                    filterData(); // CAMBIO: Llamamos a filterData para respetar la búsqueda guardada
                     var cachedTime = localStorage.getItem('dashboardTime');
                     if (cachedTime) lastUpdatedEl.innerText = 'Offline: ' + cachedTime;
                 } catch (e) { console.error("Error leyendo caché", e); }
@@ -631,13 +683,10 @@
             updateCounter(dataArray.length);
 
             var searchTerm = searchInput.value.toLowerCase().trim();
-            
-            // CORRECCIÓN CLAVE: Ahora detecta "sec", "sect", "sector", etc.
             var isSectorSearch = /sec/i.test(searchTerm); 
 
             var frag = document.createDocumentFragment();
 
-            // Si detecta la búsqueda, inyecta la tarjeta completa
             if (isSectorSearch) {
                 var ruleCard = document.createElement('div');
                 ruleCard.className = 'card rule-card';
@@ -648,7 +697,8 @@
                     '<div class="card-header"><span class="tag">REGLA DE ORO</span></div>' +
                     '<div class="card-title">⚠️ Comprueba que la cuenta NO SEA RÍGIDA</div>' +
                     '<div class="obs-box" style="font-size: 0.85rem; color: var(--text-main); font-family: inherit; line-height: 1.4;">' +
-                        'Para que no se te olvide, si el contenedor indica <b>"SECTOR"</b> y un número (como CONT-PRIM-VLDV-VILLA ALBORADA <span style="background:#fff59d; color:#000; padding:0 2px;">SECTOR 3</span>, o cuando dice <b>Sector X al Sector Y</b>), <u>no existen armarios con esos nombres</u>, por lo que asumimos que es RÍGIDA.<br><br>' +
+                        // CAMBIO: Se eliminó el "Para que no se te olvide"
+                        'Si el contenedor indica <b>"SECTOR"</b> y un número (como CONT-PRIM-VLDV-VILLA ALBORADA <span style="background:#fff59d; color:#000; padding:0 2px;">SECTOR 3</span>, o cuando dice <b>Sector X al Sector Y</b>), <u>no existen armarios con esos nombres</u>, por lo que asumimos que es RÍGIDA.<br><br>' +
                         '<b>Otra forma de saberlo:</b> Solo las cuentas rígidas tienen <b>Filamento splitter primario</b> y <b>Filamento splitter secundario</b>:' +
                     '</div>' +
                     
@@ -668,13 +718,11 @@
                 frag.appendChild(ruleCard);
             }
 
-            // Si no hay resultados pero es búsqueda de sector, muestra solo la tarjeta
             if (dataArray.length === 0 && isSectorSearch) {
                 resultsContainer.appendChild(frag);
                 return;
             }
 
-            // Si no hay resultados y NO es búsqueda de sector, muestra el mensaje genérico
             if (dataArray.length === 0) {
                 resultsContainer.innerHTML = 
                     '<div class="no-results">No hay resultados para tu búsqueda.<br><br>' +
@@ -685,7 +733,6 @@
                 return;
             }
 
-            // Si hay resultados, los dibuja (junto a la tarjeta de regla si estaba activa)
             for (var i = 0; i < dataArray.length; i++) {
                 var item = dataArray[i];
                 var card = document.createElement('div');
@@ -766,7 +813,7 @@
             renderCards(filtered, currentSearchWords);
         }
 
-        searchInput.addEventListener('input', filterData);
+        // Se eliminó el 'searchInput.addEventListener' que estaba aquí para unificarlo arriba con el guardado
 
         window.applyFilter = function (filterTerm, element) {
             currentFilter = filterTerm;
@@ -793,6 +840,7 @@
             }).catch(function(err) { console.log("Error SW:", err); });
         }
 
+        // Arrancar la carga
         loadData();
     </script>
 </body>
