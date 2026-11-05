@@ -98,7 +98,7 @@
 
         #searchInput {
             width: 100%;
-            padding: 12px 40px 12px 40px; /* Espacio extra a la derecha para la X */
+            padding: 12px 40px 12px 40px;
             border: none;
             border-radius: 25px;
             font-size: 15px;
@@ -110,9 +110,8 @@
 
         .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 1.1rem; }
 
-        /* BOTÓN DE BORRAR (X) EN EL BUSCADOR */
         #clearSearchBtn {
-            display: none; /* Oculto por defecto */
+            display: none;
             position: absolute;
             right: 14px;
             top: 50%;
@@ -262,7 +261,7 @@
         }
         .nav-btn:active { opacity: 0.8; }
 
-        .loading, .no-results { text-align: center; padding: 30px 20px; color: var(--text-muted); }
+        .loading, .no-results { text-align: center; padding: 20px; color: var(--text-muted); }
         
         .contact-footer {
             text-align: center;
@@ -479,6 +478,27 @@
         var siteCounter = document.getElementById('siteCounter');
         var infoModal = document.getElementById('infoModal');
 
+        // --- HTML DE LA TARJETA DE REGLA (Para reusar en el buscador y en el modal) ---
+        var reglaHtml = 
+            '<div class="card-header"><span class="tag">REGLA DE ORO</span></div>' +
+            '<div class="card-title">⚠️ Comprueba que la cuenta NO SEA RÍGIDA</div>' +
+            '<div class="obs-box" style="font-size: 0.85rem; color: var(--text-main); font-family: inherit; line-height: 1.4;">' +
+                'Si el contenedor indica <b>"SECTOR"</b> y un número (como CONT-PRIM-VLDV-VILLA ALBORADA <span style="background:#fff59d; color:#000; padding:0 2px;">SECTOR 3</span>, o cuando dice <b>Sector X al Sector Y</b>), <u>no existen armarios con esos nombres</u>, por lo que asumimos que es RÍGIDA.<br><br>' +
+                '<b>Otra forma de saberlo:</b> Solo las cuentas rígidas tienen <b>Filamento splitter primario</b> y <b>Filamento splitter secundario</b>:' +
+            '</div>' +
+            '<table class="oracle-table">' +
+                '<thead><tr><th>TIPO ELEMENTO</th><th>CÓDIGO</th></tr></thead>' +
+                '<tbody>' +
+                    '<tr><td>ALTA:Contenedor</td><td>... SECTOR 3</td></tr>' +
+                    '<tr><td class="highlight-red-box">ALTA:Filamento<br>Splitter P. (Primario)</td><td class="highlight-red-box">1</td></tr>' +
+                    '<tr><td class="highlight-red-box">ALTAA:Filamento<br>Splitter S. (Secundario)</td><td class="highlight-red-box">14</td></tr>' +
+                '</tbody>' +
+            '</table>' +
+            '<div class="obs-box" style="font-size: 0.85rem; color: var(--text-main); font-family: inherit; line-height: 1.4;">' +
+                '✅ <b>Si tiene AMBOS (recuadro rojo):</b> Es RÍGIDA. No debe buscarla aquí.<br><br>' +
+                '❌ <b>Por lógica, las que tienen solo Filamento splitter primario son FLEXIBLES.</b> Si no está en la app, contacta a Supervisión.' +
+            '</div>';
+
         if (localStorage.getItem('theme') === 'dark') {
             document.body.classList.add('dark-mode');
             document.getElementById('themeToggle').innerText = '☀️';
@@ -495,7 +515,6 @@
         function closeModal() { infoModal.style.display = 'none'; }
         infoModal.addEventListener('click', function(e) { if (e.target === infoModal) closeModal(); });
 
-        // --- LOGICA DEL BOTÓN BORRAR (X) Y GUARDADO DE BÚSQUEDA ---
         function updateClearBtnVisibility() {
             if (searchInput.value.length > 0) {
                 clearSearchBtn.style.display = 'flex';
@@ -506,20 +525,18 @@
 
         function clearSearch() {
             searchInput.value = '';
-            localStorage.removeItem('lastSearchTerm'); // Borra la memoria
+            localStorage.removeItem('lastSearchTerm');
             updateClearBtnVisibility();
             filterData();
             searchInput.focus();
         }
 
-        // Restaurar última búsqueda al abrir
         var savedSearch = localStorage.getItem('lastSearchTerm');
         if (savedSearch) {
             searchInput.value = savedSearch;
         }
         updateClearBtnVisibility();
 
-        // Guardar mientras escribe
         searchInput.addEventListener('input', function() {
             localStorage.setItem('lastSearchTerm', searchInput.value);
             updateClearBtnVisibility();
@@ -616,7 +633,7 @@
                 try {
                     globalData = JSON.parse(cached);
                     updateCounter(globalData.length);
-                    filterData(); // CAMBIO: Llamamos a filterData para respetar la búsqueda guardada
+                    filterData();
                     var cachedTime = localStorage.getItem('dashboardTime');
                     if (cachedTime) lastUpdatedEl.innerText = 'Offline: ' + cachedTime;
                 } catch (e) { console.error("Error leyendo caché", e); }
@@ -687,52 +704,38 @@
 
             var frag = document.createDocumentFragment();
 
-            if (isSectorSearch) {
+            // 1. Si HAY resultados y buscan con "sec", mostramos la regla arriba.
+            if (isSectorSearch && dataArray.length > 0) {
                 var ruleCard = document.createElement('div');
                 ruleCard.className = 'card rule-card';
                 ruleCard.style.setProperty('--tag-bg', '#ffcdd2');
                 ruleCard.style.setProperty('--tag-color', '#b71c1c');
-
-                ruleCard.innerHTML = 
-                    '<div class="card-header"><span class="tag">REGLA DE ORO</span></div>' +
-                    '<div class="card-title">⚠️ Comprueba que la cuenta NO SEA RÍGIDA</div>' +
-                    '<div class="obs-box" style="font-size: 0.85rem; color: var(--text-main); font-family: inherit; line-height: 1.4;">' +
-                        // CAMBIO: Se eliminó el "Para que no se te olvide"
-                        'Si el contenedor indica <b>"SECTOR"</b> y un número (como CONT-PRIM-VLDV-VILLA ALBORADA <span style="background:#fff59d; color:#000; padding:0 2px;">SECTOR 3</span>, o cuando dice <b>Sector X al Sector Y</b>), <u>no existen armarios con esos nombres</u>, por lo que asumimos que es RÍGIDA.<br><br>' +
-                        '<b>Otra forma de saberlo:</b> Solo las cuentas rígidas tienen <b>Filamento splitter primario</b> y <b>Filamento splitter secundario</b>:' +
-                    '</div>' +
-                    
-                    '<table class="oracle-table">' +
-                        '<thead><tr><th>TIPO ELEMENTO</th><th>CÓDIGO</th></tr></thead>' +
-                        '<tbody>' +
-                            '<tr><td>ALTA:Contenedor</td><td>... SECTOR 3</td></tr>' +
-                            '<tr><td class="highlight-red-box">ALTA:Filamento<br>Splitter P. (Primario)</td><td class="highlight-red-box">1</td></tr>' +
-                            '<tr><td class="highlight-red-box">ALTA:Filamento<br>Splitter S. (Secundario)</td><td class="highlight-red-box">14</td></tr>' +
-                        '</tbody>' +
-                    '</table>' +
-                    
-                    '<div class="obs-box" style="font-size: 0.85rem; color: var(--text-main); font-family: inherit; line-height: 1.4;">' +
-                        '✅ <b>Si tiene AMBOS (recuadro rojo):</b> Es RÍGIDA. No debe buscarla aquí.<br><br>' +
-                        '❌ <b>Por lógica, las que tienen solo Filamento splitter primario son FLEXIBLES.</b> Si no está en la app, contacta a Supervisión.' +
-                    '</div>';
+                ruleCard.innerHTML = reglaHtml;
                 frag.appendChild(ruleCard);
             }
 
-            if (dataArray.length === 0 && isSectorSearch) {
-                resultsContainer.appendChild(frag);
-                return;
-            }
-
+            // 2. Si NO HAY resultados (sin importar qué buscaron), mostramos la explicación completa de una vez.
             if (dataArray.length === 0) {
-                resultsContainer.innerHTML = 
-                    '<div class="no-results">No hay resultados para tu búsqueda.<br><br>' +
-                    '<div style="background: var(--rule-bg); border-left: 4px solid var(--rule-border); padding: 10px; text-align: left; border-radius: 4px; color: var(--text-main);">' +
-                        '¿No encuentras el sitio? Verifica si es una conexión RÍGIDA (Sector X + ambos Filamentos Splitter).' +
-                        '<button onclick="openModal()" style="margin-top: 8px; background: var(--primary); border: none; padding: 5px 10px; border-radius: 5px; color: white; font-weight: bold; cursor: pointer; display: block; width: 100%;">Ver guía completa aquí ℹ️</button>' +
-                    '</div></div>';
+                resultsContainer.innerHTML = '<div class="no-results" style="margin-bottom: 15px;">No hay resultados para tu búsqueda.</div>';
+                
+                var emptyCard = document.createElement('div');
+                emptyCard.className = 'card rule-card';
+                emptyCard.style.setProperty('--tag-bg', '#ffcdd2');
+                emptyCard.style.setProperty('--tag-color', '#b71c1c');
+                emptyCard.innerHTML = reglaHtml;
+                
+                resultsContainer.appendChild(emptyCard);
+                
+                // Pie de página de contacto
+                var footer = document.createElement('div');
+                footer.className = 'contact-footer';
+                footer.innerHTML = '¿Falta un armario o hay que editar un dato?<br>Por favor, contacta a <strong>Supervisión</strong> para agregarlo o corregirlo.';
+                resultsContainer.appendChild(footer);
+                
                 return;
             }
 
+            // 3. Si HAY resultados, se dibujan normalmente.
             for (var i = 0; i < dataArray.length; i++) {
                 var item = dataArray[i];
                 var card = document.createElement('div');
@@ -813,8 +816,6 @@
             renderCards(filtered, currentSearchWords);
         }
 
-        // Se eliminó el 'searchInput.addEventListener' que estaba aquí para unificarlo arriba con el guardado
-
         window.applyFilter = function (filterTerm, element) {
             currentFilter = filterTerm;
             document.querySelectorAll('.chip').forEach(function(c) { c.classList.remove('active'); });
@@ -840,7 +841,6 @@
             }).catch(function(err) { console.log("Error SW:", err); });
         }
 
-        // Arrancar la carga
         loadData();
     </script>
 </body>
