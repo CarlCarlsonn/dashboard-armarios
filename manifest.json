@@ -1,19 +1,19 @@
 {
-  "name": "Armarios y Centrales",
-  "short_name": "Red Telsur",
+  "name": "Buscador de Red - Telsur",
+  "short_name": "Busca Red",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#f0f2f5",
   "theme_color": "#2e7d32",
   "icons": [
     {
-      "src": "https://cdn-icons-png.flaticon.com/512/2942/2942854.png",
+      "src": "./launchericon-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "https://cdn-icons-png.flaticon.com/512/2942/2942854.png",
+      "src": "./launchericon-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
