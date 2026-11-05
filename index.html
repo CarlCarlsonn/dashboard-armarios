@@ -401,7 +401,7 @@
             
             <p><b>1. Nomenclatura:</b> Si el contenedor indica <b>"SECTOR"</b> y un número (como <i>CONT-PRIM-VLDV-VILLA ALBORADA SECTOR 3</i> o <i>Sector X al Sector Y</i>), <u>no existen armarios con esos nombres</u>. Asumimos que es RÍGIDA.</p>
             
-            <p><b>2. Otra forma de saberlo:</b> Solo las cuentas rígidas tienen <b>AMBOS</b> elementos:</p>
+            <p><b>2. Otra forma de saberlo:</b> Solo las cuentas rígidas tienen <b>Filamento splitter primario</b> y <b>Filamento splitter secundario</b>:</p>
             
             <!-- TABLA ORACLE VISUAL -->
             <table class="oracle-table">
@@ -430,7 +430,7 @@
             <div class="note-box">
                 <strong>Conclusión:</strong><br>
                 ✅ Si tiene <b>AMBOS</b> filamentos (recuadro rojo): Es <b>RÍGIDA</b>. No debe buscarla aquí.<br><br>
-                ❌ Por lógica, las que tienen <b>solo Filamento Splitter P. (Primario)</b> son <b>FLEXIBLES</b>. Si tu cuenta es flexible y no está en la app, contacta a Supervisión.
+                ❌ Por lógica, las que tienen <b>solo Filamento splitter primario</b> son <b>FLEXIBLES</b>. Si tu cuenta es flexible y no está en la app, contacta a Supervisión.
             </div>
             
             <button class="close-modal-btn" onclick="closeModal()">Entendido</button>
@@ -631,10 +631,13 @@
             updateCounter(dataArray.length);
 
             var searchTerm = searchInput.value.toLowerCase().trim();
-            var isSectorSearch = /sect/i.test(searchTerm); 
+            
+            // CORRECCIÓN CLAVE: Ahora detecta "sec", "sect", "sector", etc.
+            var isSectorSearch = /sec/i.test(searchTerm); 
 
             var frag = document.createDocumentFragment();
 
+            // Si detecta la búsqueda, inyecta la tarjeta completa
             if (isSectorSearch) {
                 var ruleCard = document.createElement('div');
                 ruleCard.className = 'card rule-card';
@@ -646,7 +649,7 @@
                     '<div class="card-title">⚠️ Comprueba que la cuenta NO SEA RÍGIDA</div>' +
                     '<div class="obs-box" style="font-size: 0.85rem; color: var(--text-main); font-family: inherit; line-height: 1.4;">' +
                         'Para que no se te olvide, si el contenedor indica <b>"SECTOR"</b> y un número (como CONT-PRIM-VLDV-VILLA ALBORADA <span style="background:#fff59d; color:#000; padding:0 2px;">SECTOR 3</span>, o cuando dice <b>Sector X al Sector Y</b>), <u>no existen armarios con esos nombres</u>, por lo que asumimos que es RÍGIDA.<br><br>' +
-                        'Otra forma de saberlo es que, <b>solo las cuentas rígidas tienen Filamento splitter P. (primario) y Filamento splitter S. (secundario)</b>:' +
+                        '<b>Otra forma de saberlo:</b> Solo las cuentas rígidas tienen <b>Filamento splitter primario</b> y <b>Filamento splitter secundario</b>:' +
                     '</div>' +
                     
                     '<table class="oracle-table">' +
@@ -660,16 +663,18 @@
                     
                     '<div class="obs-box" style="font-size: 0.85rem; color: var(--text-main); font-family: inherit; line-height: 1.4;">' +
                         '✅ <b>Si tiene AMBOS (recuadro rojo):</b> Es RÍGIDA. No debe buscarla aquí.<br><br>' +
-                        '❌ <b>Por lógica, las que tienen solo Filamento splitter P. (Primario) son FLEXIBLES.</b> Si no está en la app, contacta a Supervisión.' +
+                        '❌ <b>Por lógica, las que tienen solo Filamento splitter primario son FLEXIBLES.</b> Si no está en la app, contacta a Supervisión.' +
                     '</div>';
                 frag.appendChild(ruleCard);
             }
 
+            // Si no hay resultados pero es búsqueda de sector, muestra solo la tarjeta
             if (dataArray.length === 0 && isSectorSearch) {
                 resultsContainer.appendChild(frag);
                 return;
             }
 
+            // Si no hay resultados y NO es búsqueda de sector, muestra el mensaje genérico
             if (dataArray.length === 0) {
                 resultsContainer.innerHTML = 
                     '<div class="no-results">No hay resultados para tu búsqueda.<br><br>' +
@@ -680,6 +685,7 @@
                 return;
             }
 
+            // Si hay resultados, los dibuja (junto a la tarjeta de regla si estaba activa)
             for (var i = 0; i < dataArray.length; i++) {
                 var item = dataArray[i];
                 var card = document.createElement('div');
