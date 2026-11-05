@@ -597,7 +597,6 @@
             return 0;
         }
 
-        // --- LÓGICA DE FILTRADO (Solo para saber si es central o armario) ---
         function classify(nombre, tipoCol) {
             if (tipoCol) {
                 var t = tipoCol.toUpperCase();
@@ -609,24 +608,20 @@
             return 'armario';
         }
 
-        // --- LÓGICA DE ETIQUETAS VISUALES (Ahora lee exactamente lo que dice la Columna D) ---
         function getTipoEtiqueta(item) {
-            // Si la Columna D (Tipo) tiene texto, usamos ese texto exacto
             if (item.tipo && item.tipo.trim() !== '') {
                 var tipoTexto = item.tipo.trim();
                 var t = tipoTexto.toUpperCase();
                 
                 if (t.indexOf('CENTRAL') !== -1) {
-                    return { texto: tipoTexto, tagBg: '#fff9c4', tagColor: '#f57f17' }; // Amarillo
+                    return { texto: tipoTexto, tagBg: '#fff9c4', tagColor: '#f57f17' };
                 } else if (t.indexOf('EDIF') !== -1 || t.indexOf('COND') !== -1) {
-                    return { texto: tipoTexto, tagBg: '#e3f2fd', tagColor: '#1976d2' }; // Azul
+                    return { texto: tipoTexto, tagBg: '#e3f2fd', tagColor: '#1976d2' };
                 } else {
-                    // Para "Armario aereo", "Subterraneo", etc.
-                    return { texto: tipoTexto, tagBg: '#e8f5e9', tagColor: '#2e7d32' }; // Verde
+                    return { texto: tipoTexto, tagBg: '#e8f5e9', tagColor: '#2e7d32' };
                 }
             }
 
-            // Si la columna D está vacía, adivinamos por el nombre
             var n = (item.nombre || '').toUpperCase();
             if (n.indexOf('CENTRAL') !== -1) return { texto: 'Central', tagBg: '#fff9c4', tagColor: '#f57f17' };
             if (n.indexOf('CONDOMINIO') !== -1 || n.indexOf('EDIF') !== -1 || n.indexOf('VILLA') !== -1) return { texto: 'Condominio', tagBg: '#e3f2fd', tagColor: '#1976d2' };
@@ -755,7 +750,6 @@
                 var card = document.createElement('div');
                 card.className = 'card';
                 
-                // LLAMADA A LA NUEVA FUNCIÓN DINÁMICA
                 var etiqueta = getTipoEtiqueta(item);
 
                 card.style.setProperty('--tag-bg', etiqueta.tagBg);
@@ -808,13 +802,17 @@
             var term = searchInput.value.toLowerCase().trim();
             currentSearchWords = term.split(/\s+/).filter(function(w) { return w !== ''; });
 
+            // MAGIA AQUÍ: Si el buscador tiene texto, forzamos el filtro a '' (Todos).
+            // Si el buscador está vacío, usamos el currentFilter (el chip seleccionado).
+            var filterToApply = (term !== '') ? '' : currentFilter;
+
             var filtered = globalData.filter(function(item) {
                 var searchable = (item.nombre + ' ' + item.coordenadas + ' ' + item.tipo + ' ' + item.obs).toLowerCase();
                 var matchesSearch = currentSearchWords.every(function(w) { return searchable.indexOf(w) !== -1; });
-                return matchesSearch && chipMatches(item, currentFilter);
+                return matchesSearch && chipMatches(item, filterToApply);
             });
 
-            if (currentFilter === 'CENTRAL') {
+            if (filterToApply === 'CENTRAL') {
                 filtered.sort(function(a, b) {
                     var prioA = getCentralPriority(a.nombre);
                     var prioB = getCentralPriority(b.nombre);
@@ -827,14 +825,17 @@
         }
 
         window.applyFilter = function (filterTerm, element) {
+            // Al tocar un chip, borramos el buscador
             searchInput.value = '';
             localStorage.removeItem('lastSearchTerm');
             updateClearBtnVisibility();
 
+            // Aplicamos el nuevo filtro del chip
             currentFilter = filterTerm;
             document.querySelectorAll('.chip').forEach(function(c) { c.classList.remove('active'); });
             if (element) element.classList.add('active');
 
+            // Refrescamos (como el buscador está vacío, respetará el chip)
             filterData();
         };
 
