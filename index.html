@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="theme-color" content="#2e7d32">
     <title>Armarios y Centrales - C.Saez</title>
+    <!-- Enlaces para la PWA -->
     <link rel="manifest" href="manifest.json">
-    <!-- Enlace para que la imagen aparezca en la pestaña del navegador -->
-    <link rel="icon" type="image/png" href="icon.png">
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2942/2942854.png">
     <style>
         :root {
             --primary: #2e7d32;
@@ -788,9 +788,6 @@
             var term = searchInput.value.toLowerCase().trim();
             currentSearchWords = term.split(/\s+/).filter(function(w) { return w !== ''; });
 
-            // Se eliminó la condición que reiniciaba el filtro a 'Todos' al escribir, 
-            // ahora el usuario puede buscar mientras tiene un chip seleccionado.
-
             var filtered = globalData.filter(function(item) {
                 var searchable = (item.nombre + ' ' + item.coordenadas + ' ' + item.tipo + ' ' + item.obs).toLowerCase();
                 var matchesSearch = currentSearchWords.every(function(w) { return searchable.indexOf(w) !== -1; });
@@ -810,17 +807,14 @@
         }
 
         window.applyFilter = function (filterTerm, element) {
-            // 1. Borramos la búsqueda de texto automáticamente al tocar un chip
             searchInput.value = '';
             localStorage.removeItem('lastSearchTerm');
             updateClearBtnVisibility();
 
-            // 2. Aplicamos el nuevo filtro del chip
             currentFilter = filterTerm;
             document.querySelectorAll('.chip').forEach(function(c) { c.classList.remove('active'); });
             if (element) element.classList.add('active');
 
-            // 3. Refrescamos
             filterData();
         };
 
