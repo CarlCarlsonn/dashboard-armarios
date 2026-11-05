@@ -570,15 +570,16 @@
                 <span id="lastUpdatedCodigos">Sincronizando...</span>
             </div>
 
-            <!-- CHIPS PARA CÓDIGOS -->
+            <!-- CHIPS PARA CÓDIGOS ACTUALIZADOS -->
             <div class="filters-container">
                 <div class="chip active" onclick="applyFilterCodigos('', this)">Todos</div>
                 <div class="chip" onclick="applyFilterCodigos('Samsung', this)">Samsung</div>
                 <div class="chip" onclick="applyFilterCodigos('LG', this)">LG</div>
                 <div class="chip" onclick="applyFilterCodigos('Hisense', this)">Hisense</div>
                 <div class="chip" onclick="applyFilterCodigos('TCL', this)">TCL</div>
-                <div class="chip" onclick="applyFilterCodigos('Madeforyou', this)">Madeforyou</div>
-                <div class="chip" onclick="applyFilterCodigos('Xtratech', this)">Xtratech</div>
+                <div class="chip" onclick="applyFilterCodigos('Polaroid', this)">Polaroid</div>
+                <div class="chip" onclick="applyFilterCodigos('Philips', this)">Philips</div>
+                <div class="chip" onclick="applyFilterCodigos('RCA', this)">RCA</div>
             </div>
         </header>
 
@@ -647,7 +648,7 @@
         var currentSearchWords = [];
         
         var globalCodigos = [];
-        var currentFilterCodigos = ''; // Variable para el chip de marcas
+        var currentFilterCodigos = '';
 
         var resultsContainer = document.getElementById('resultsContainer');
         var searchInput = document.getElementById('searchInput');
@@ -1041,7 +1042,6 @@
             resultsContainer.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // --- LOGICA DE CÓDIGOS ---
         function updateClearBtnVisibilityCodigos() {
             clearSearchBtnCodigos.style.display = searchInputCodigos.value.length > 0 ? 'flex' : 'none';
         }
@@ -1085,7 +1085,6 @@
                     var mUpper = marca.toUpperCase();
                     var cUpper = codigos.toUpperCase();
 
-                    // FILTRO: Ignorar si es el título de la hoja o los encabezados
                     if (mUpper === '' || mUpper === 'MARCA' || mUpper.includes('CHAMPION') || cUpper === 'CÓDIGOS' || cUpper === 'CODIGOS') {
                         continue;
                     }
@@ -1093,7 +1092,6 @@
                     globalCodigos.push({ marca: marca, codigos: codigos });
                 }
 
-                // ORDENAR ALFABÉTICAMENTE LAS MARCAS
                 globalCodigos.sort(function(a, b) {
                     return a.marca.localeCompare(b.marca);
                 });
@@ -1113,11 +1111,10 @@
             var term = searchInputCodigos.value.toLowerCase().trim();
             var words = term.split(/\s+/).filter(function(w) { return w !== ''; });
 
-            // Logica: Si escribes, ignoras el chip.
             if (term !== '' && currentFilterCodigos !== '') {
                 currentFilterCodigos = '';
                 document.querySelectorAll('#view-codigos .chip').forEach(function(c) { c.classList.remove('active'); });
-                document.querySelector('#view-codigos .chip').classList.add('active'); // Reset a Todos
+                document.querySelector('#view-codigos .chip').classList.add('active');
             }
 
             var filterToApply = (term !== '') ? '' : currentFilterCodigos;
