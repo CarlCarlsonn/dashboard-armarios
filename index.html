@@ -6,6 +6,8 @@
     <meta name="theme-color" content="#2e7d32">
     <title>Armarios y Centrales - C.Saez</title>
     <link rel="manifest" href="manifest.json">
+    <!-- Enlace para que la imagen aparezca en la pestaña del navegador -->
+    <link rel="icon" type="image/png" href="icon.png">
     <style>
         :root {
             --primary: #2e7d32;
@@ -478,7 +480,6 @@
         var siteCounter = document.getElementById('siteCounter');
         var infoModal = document.getElementById('infoModal');
 
-        // --- HTML DE LA TARJETA DE REGLA (Para reusar en el buscador y en el modal) ---
         var reglaHtml = 
             '<div class="card-header"><span class="tag">REGLA DE ORO</span></div>' +
             '<div class="card-title">⚠️ Comprueba que la cuenta NO SEA RÍGIDA</div>' +
@@ -491,7 +492,7 @@
                 '<tbody>' +
                     '<tr><td>ALTA:Contenedor</td><td>... SECTOR 3</td></tr>' +
                     '<tr><td class="highlight-red-box">ALTA:Filamento<br>Splitter P. (Primario)</td><td class="highlight-red-box">1</td></tr>' +
-                    '<tr><td class="highlight-red-box">ALTAA:Filamento<br>Splitter S. (Secundario)</td><td class="highlight-red-box">14</td></tr>' +
+                    '<tr><td class="highlight-red-box">ALTA:Filamento<br>Splitter S. (Secundario)</td><td class="highlight-red-box">14</td></tr>' +
                 '</tbody>' +
             '</table>' +
             '<div class="obs-box" style="font-size: 0.85rem; color: var(--text-main); font-family: inherit; line-height: 1.4;">' +
@@ -542,7 +543,6 @@
             updateClearBtnVisibility();
             filterData();
         });
-
 
         function escapeHtml(str) {
             return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
@@ -704,7 +704,6 @@
 
             var frag = document.createDocumentFragment();
 
-            // 1. Si HAY resultados y buscan con "sec", mostramos la regla arriba.
             if (isSectorSearch && dataArray.length > 0) {
                 var ruleCard = document.createElement('div');
                 ruleCard.className = 'card rule-card';
@@ -714,7 +713,6 @@
                 frag.appendChild(ruleCard);
             }
 
-            // 2. Si NO HAY resultados (sin importar qué buscaron), mostramos la explicación completa de una vez.
             if (dataArray.length === 0) {
                 resultsContainer.innerHTML = '<div class="no-results" style="margin-bottom: 15px;">No hay resultados para tu búsqueda.</div>';
                 
@@ -726,7 +724,6 @@
                 
                 resultsContainer.appendChild(emptyCard);
                 
-                // Pie de página de contacto
                 var footer = document.createElement('div');
                 footer.className = 'contact-footer';
                 footer.innerHTML = '¿Falta un armario o hay que editar un dato?<br>Por favor, contacta a <strong>Supervisión</strong> para agregarlo o corregirlo.';
@@ -735,7 +732,6 @@
                 return;
             }
 
-            // 3. Si HAY resultados, se dibujan normalmente.
             for (var i = 0; i < dataArray.length; i++) {
                 var item = dataArray[i];
                 var card = document.createElement('div');
@@ -792,11 +788,8 @@
             var term = searchInput.value.toLowerCase().trim();
             currentSearchWords = term.split(/\s+/).filter(function(w) { return w !== ''; });
 
-            if (term !== '' && currentFilter !== '') {
-                currentFilter = '';
-                document.querySelectorAll('.chip').forEach(function(c) { c.classList.remove('active'); });
-                document.querySelector('.chip').classList.add('active');
-            }
+            // Se eliminó la condición que reiniciaba el filtro a 'Todos' al escribir, 
+            // ahora el usuario puede buscar mientras tiene un chip seleccionado.
 
             var filtered = globalData.filter(function(item) {
                 var searchable = (item.nombre + ' ' + item.coordenadas + ' ' + item.tipo + ' ' + item.obs).toLowerCase();
@@ -817,9 +810,17 @@
         }
 
         window.applyFilter = function (filterTerm, element) {
+            // 1. Borramos la búsqueda de texto automáticamente al tocar un chip
+            searchInput.value = '';
+            localStorage.removeItem('lastSearchTerm');
+            updateClearBtnVisibility();
+
+            // 2. Aplicamos el nuevo filtro del chip
             currentFilter = filterTerm;
             document.querySelectorAll('.chip').forEach(function(c) { c.classList.remove('active'); });
             if (element) element.classList.add('active');
+
+            // 3. Refrescamos
             filterData();
         };
 
