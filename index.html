@@ -5,9 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="theme-color" content="#2e7d32">
     <title>Armarios y Centrales - C.Saez</title>
-    <!-- Enlaces para la PWA -->
     <link rel="manifest" href="manifest.json">
-    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2942/2942854.png">
+    <link rel="icon" type="image/png" href="icon.png">
     <style>
         :root {
             --primary: #2e7d32;
@@ -598,6 +597,7 @@
             return 0;
         }
 
+        // --- LÓGICA DE FILTRADO (Solo para saber si es central o armario) ---
         function classify(nombre, tipoCol) {
             if (tipoCol) {
                 var t = tipoCol.toUpperCase();
@@ -609,9 +609,27 @@
             return 'armario';
         }
 
+        // --- LÓGICA DE ETIQUETAS VISUALES (Ahora lee exactamente lo que dice la Columna D) ---
         function getTipoEtiqueta(item) {
-            var cat = classify(item.nombre, item.tipo);
-            if (cat === 'central') return { texto: 'Central', tagBg: '#fff9c4', tagColor: '#f57f17' };
+            // Si la Columna D (Tipo) tiene texto, usamos ese texto exacto
+            if (item.tipo && item.tipo.trim() !== '') {
+                var tipoTexto = item.tipo.trim();
+                var t = tipoTexto.toUpperCase();
+                
+                if (t.indexOf('CENTRAL') !== -1) {
+                    return { texto: tipoTexto, tagBg: '#fff9c4', tagColor: '#f57f17' }; // Amarillo
+                } else if (t.indexOf('EDIF') !== -1 || t.indexOf('COND') !== -1) {
+                    return { texto: tipoTexto, tagBg: '#e3f2fd', tagColor: '#1976d2' }; // Azul
+                } else {
+                    // Para "Armario aereo", "Subterraneo", etc.
+                    return { texto: tipoTexto, tagBg: '#e8f5e9', tagColor: '#2e7d32' }; // Verde
+                }
+            }
+
+            // Si la columna D está vacía, adivinamos por el nombre
+            var n = (item.nombre || '').toUpperCase();
+            if (n.indexOf('CENTRAL') !== -1) return { texto: 'Central', tagBg: '#fff9c4', tagColor: '#f57f17' };
+            if (n.indexOf('CONDOMINIO') !== -1 || n.indexOf('EDIF') !== -1 || n.indexOf('VILLA') !== -1) return { texto: 'Condominio', tagBg: '#e3f2fd', tagColor: '#1976d2' };
             return { texto: 'Armario', tagBg: '#e8f5e9', tagColor: '#2e7d32' };
         }
 
@@ -736,6 +754,8 @@
                 var item = dataArray[i];
                 var card = document.createElement('div');
                 card.className = 'card';
+                
+                // LLAMADA A LA NUEVA FUNCIÓN DINÁMICA
                 var etiqueta = getTipoEtiqueta(item);
 
                 card.style.setProperty('--tag-bg', etiqueta.tagBg);
