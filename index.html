@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="theme-color" content="#2e7d32">
-    <title>Armarios y Centrales - C.Saez</title>
+    <title>Red Telsur - App Terreno</title>
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" href="icon.png">
     <style>
@@ -24,6 +24,7 @@
             --danger-bg: #ffebee;
             --danger-color: #d32f2f;
             --table-bg: #f8f9fa;
+            --sidebar-bg: #ffffff;
         }
 
         body.dark-mode {
@@ -41,6 +42,7 @@
             --danger-bg: #3e1a1a;
             --danger-color: #ef5350;
             --table-bg: #2a2a2a;
+            --sidebar-bg: #1e1e1e;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -57,6 +59,16 @@
             transition: background-color 0.3s, color 0.3s;
         }
 
+        /* VISTAS */
+        #view-armarios, #view-codigos {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            overflow: hidden;
+        }
+        #view-codigos { display: none; }
+
+        /* HEADER Y MENÚ */
         header {
             background-color: var(--primary);
             color: white;
@@ -66,6 +78,11 @@
             top: 0;
             z-index: 100;
             box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+            transition: background-color 0.3s;
+        }
+
+        #view-codigos header {
+            background-color: #1976d2; /* Azul para diferenciar */
         }
 
         .header-top {
@@ -73,6 +90,26 @@
             justify-content: space-between;
             align-items: flex-start;
             margin-bottom: 12px;
+        }
+
+        .title-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .menu-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            padding: 0 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            line-height: 1;
+            height: 36px;
+            display: flex;
+            align-items: center;
         }
 
         .header-title { font-size: 1.15rem; font-weight: 700; margin: 0; display: flex; align-items: center; gap: 8px; }
@@ -95,9 +132,10 @@
             height: 36px;
         }
 
+        /* BUSCADOR */
         .search-wrapper { position: relative; display: flex; align-items: center; }
 
-        #searchInput {
+        .search-input {
             width: 100%;
             padding: 12px 40px 12px 40px;
             border: none;
@@ -111,7 +149,7 @@
 
         .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 1.1rem; }
 
-        #clearSearchBtn {
+        .clear-search-btn {
             display: none;
             position: absolute;
             right: 14px;
@@ -131,7 +169,7 @@
             padding: 0;
             line-height: 1;
         }
-        body.dark-mode #clearSearchBtn { background: #444; color: #ccc; }
+        body.dark-mode .clear-search-btn { background: #444; color: #ccc; }
 
         .info-bar {
             display: flex;
@@ -150,7 +188,6 @@
             font-weight: 600;
         }
 
-        /* ESTILO DEL BOTÓN DE ACTUALIZAR */
         .update-wrapper {
             display: flex;
             align-items: center;
@@ -159,19 +196,13 @@
             background: rgba(255,255,255,0.1);
             padding: 4px 8px;
             border-radius: 12px;
-            transition: background 0.2s;
         }
         .update-wrapper:active { background: rgba(255,255,255,0.3); }
         
-        #refreshIcon {
-            font-size: 0.9rem;
-            transition: transform 0.5s;
-        }
-        .rotating {
-            animation: spin 1s linear infinite;
-        }
+        .rotating { animation: spin 1s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
+        /* FILTROS (Solo armarios) */
         .filters-container {
             display: flex;
             overflow-x: auto;
@@ -196,10 +227,10 @@
             user-select: none;
         }
         body.dark-mode .chip { border-color: #444; }
-
         .chip.active { background: var(--primary-dark); color: white; }
 
-        #resultsContainer { flex: 1; overflow-y: auto; padding: 15px; }
+        /* RESULTADOS */
+        .results-container { flex: 1; overflow-y: auto; padding: 15px; }
 
         .card {
             background: var(--card-bg);
@@ -298,7 +329,7 @@
         body.dark-mode .contact-footer { border-top-color: rgba(255,255,255,0.1); }
         .contact-footer strong { color: var(--primary); }
 
-        #scrollTopBtn {
+        #scrollTopBtn, #scrollTopBtnCodigos {
             display: none;
             position: fixed;
             bottom: 20px;
@@ -315,6 +346,77 @@
             transition: opacity 0.3s;
         }
 
+        /* MENÚ LATERAL (SIDEBAR) */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .sidebar-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -80%;
+            width: 80%;
+            max-width: 320px;
+            height: 100%;
+            background-color: var(--sidebar-bg);
+            z-index: 1001;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+            transition: left 0.3s ease-in-out;
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar.active {
+            left: 0;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            background-color: var(--primary);
+            color: white;
+        }
+        .sidebar-header h2 { margin: 0; font-size: 1.2rem; }
+        .sidebar-header p { margin: 5px 0 0 0; font-size: 0.8rem; opacity: 0.8; }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .sidebar-item {
+            padding: 16px 20px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-weight: 600;
+            color: var(--text-main);
+            transition: background 0.2s;
+        }
+        body.dark-mode .sidebar-item { border-bottom-color: rgba(255,255,255,0.05); }
+        .sidebar-item:hover { background-color: rgba(0,0,0,0.05); }
+        body.dark-mode .sidebar-item:hover { background-color: rgba(255,255,255,0.1); }
+        .sidebar-item.active {
+            background-color: rgba(46, 125, 50, 0.1);
+            color: var(--primary);
+            border-left: 4px solid var(--primary);
+        }
+        .sidebar-item span.icon { font-size: 1.3rem; }
+
+        /* TABLA ORACLE */
         .oracle-table {
             width: 100%;
             border-collapse: collapse;
@@ -341,28 +443,17 @@
         }
         body.dark-mode .oracle-table td { border-color: #444; }
         
-        .highlight-sector {
-            background-color: #fff59d;
-            color: #000;
-            font-weight: bold;
-            padding: 2px 4px;
-            border-radius: 3px;
-        }
-        
-        .highlight-red-box {
-            border: 2px solid #d32f2f !important;
-            background-color: #ffebee;
-            color: #b71c1c !important;
-            font-weight: bold;
-        }
+        .highlight-sector { background-color: #fff59d; color: #000; font-weight: bold; padding: 2px 4px; border-radius: 3px; }
+        .highlight-red-box { border: 2px solid #d32f2f !important; background-color: #ffebee; color: #b71c1c !important; font-weight: bold; }
         body.dark-mode .highlight-red-box { background-color: #3e1a1a; color: #ef5350 !important; }
 
+        /* MODAL */
         .modal-overlay {
             display: none;
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(0,0,0,0.6);
-            z-index: 1000;
+            z-index: 1002;
             justify-content: center;
             align-items: center;
             padding: 20px;
@@ -400,47 +491,106 @@
 </head>
 <body>
 
-    <header>
-        <div class="header-top">
-            <div>
-                <div class="header-title">📊 Armarios y Centrales</div>
-                <div class="subtitle">Creado por Carlos Saez para la búsqueda eficiente en terreno.</div>
-            </div>
-            <div class="header-buttons">
-                <button class="icon-btn" onclick="openModal()" title="Información importante">ℹ️</button>
-                <button class="icon-btn" id="themeToggle" onclick="toggleTheme()">🌙</button>
-            </div>
+    <!-- OVERLAY Y MENÚ LATERAL -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleMenu()"></div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>Menú Principal</h2>
+            <p>App de Terreno - C.Saez</p>
         </div>
-
-        <div class="search-wrapper">
-            <span class="search-icon">🔍</span>
-            <input type="text" id="searchInput" placeholder="Buscar armario, cable o coordenada...">
-            <button id="clearSearchBtn" onclick="clearSearch()">✖</button>
-        </div>
-        
-        <div class="info-bar">
-            <span id="siteCounter" class="site-counter">0 sitios</span>
-            
-            <!-- NUEVO BOTÓN DE ACTUALIZAR -->
-            <div class="update-wrapper" onclick="forceUpdate()" title="Buscar nuevos datos">
-                <span id="lastUpdated">Sincronizando...</span>
-                <span id="refreshIcon">🔄</span>
-            </div>
-        </div>
-        
-        <div class="filters-container">
-            <div class="chip active" onclick="applyFilter('', this)">Todos</div>
-            <div class="chip" onclick="applyFilter('CENTRAL', this)">Centrales</div>
-            <div class="chip" onclick="applyFilter('ARMA', this)">Armarios</div>
-        </div>
-    </header>
-
-    <div id="resultsContainer">
-        <div class="loading" id="mainLoader">Cargando datos...</div>
+        <ul class="sidebar-menu">
+            <li class="sidebar-item active" id="menu-armarios" onclick="switchView('armarios')">
+                <span class="icon">📦</span> Armarios y Centrales
+            </li>
+            <li class="sidebar-item" id="menu-codigos" onclick="switchView('codigos')">
+                <span class="icon">📺</span> Cod Champion
+            </li>
+        </ul>
     </div>
 
-    <button id="scrollTopBtn" onclick="scrollToTop()">⬆️</button>
+    <!-- ========================================== -->
+    <!-- VISTA 1: ARMARIOS Y CENTRALES (INTACTA)    -->
+    <!-- ========================================== -->
+    <div id="view-armarios">
+        <header>
+            <div class="header-top">
+                <div class="title-group">
+                    <button class="menu-btn" onclick="toggleMenu()">☰</button>
+                    <div>
+                        <div class="header-title">📊 Armarios y Centrales</div>
+                        <div class="subtitle">Búsqueda eficiente en terreno.</div>
+                    </div>
+                </div>
+                <div class="header-buttons">
+                    <button class="icon-btn" onclick="openModal()" title="Información importante">ℹ️</button>
+                    <button class="icon-btn" id="themeToggle" onclick="toggleTheme()">🌙</button>
+                </div>
+            </div>
 
+            <div class="search-wrapper">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchInput" class="search-input" placeholder="Buscar armario, cable o coordenada...">
+                <button id="clearSearchBtn" class="clear-search-btn" onclick="clearSearch()">✖</button>
+            </div>
+            
+            <div class="info-bar">
+                <span id="siteCounter" class="site-counter">0 sitios</span>
+                <div class="update-wrapper" onclick="forceUpdate()" title="Buscar nuevos datos">
+                    <span id="lastUpdated">Sincronizando...</span>
+                    <span id="refreshIcon">🔄</span>
+                </div>
+            </div>
+            
+            <div class="filters-container">
+                <div class="chip active" onclick="applyFilter('', this)">Todos</div>
+                <div class="chip" onclick="applyFilter('CENTRAL', this)">Centrales</div>
+                <div class="chip" onclick="applyFilter('ARMA', this)">Armarios</div>
+            </div>
+        </header>
+
+        <div class="results-container" id="resultsContainer">
+            <div class="loading">Cargando datos...</div>
+        </div>
+        <button id="scrollTopBtn" onclick="scrollToTopArmarios()">⬆️</button>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- VISTA 2: CÓDIGOS DE CONTROL (NUEVA)        -->
+    <!-- ========================================== -->
+    <div id="view-codigos">
+        <header>
+            <div class="header-top">
+                <div class="title-group">
+                    <button class="menu-btn" onclick="toggleMenu()">☰</button>
+                    <div>
+                        <div class="header-title">📺 Códigos de Control</div>
+                        <div class="subtitle">Busca por marca de TV o código directo.</div>
+                    </div>
+                </div>
+                <div class="header-buttons">
+                    <button class="icon-btn" onclick="forceUpdateCodigos()" title="Actualizar">🔄</button>
+                </div>
+            </div>
+
+            <div class="search-wrapper">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchInputCodigos" class="search-input" placeholder="Ej: Aiko, 0092, LG...">
+                <button id="clearSearchBtnCodigos" class="clear-search-btn" onclick="clearSearchCodigos()">✖</button>
+            </div>
+            
+            <div class="info-bar">
+                <span id="counterCodigos" class="site-counter">0 marcas</span>
+                <span id="lastUpdatedCodigos">Sincronizando...</span>
+            </div>
+        </header>
+
+        <div class="results-container" id="resultsCodigosContainer">
+            <div class="loading">Cargando códigos...</div>
+        </div>
+        <button id="scrollTopBtnCodigos" onclick="scrollToTopCodigos()">⬆️</button>
+    </div>
+
+    <!-- MODAL DE AYUDA (Solo para armarios) -->
     <div class="modal-overlay" id="infoModal">
         <div class="modal-content">
             <h3>⚠️ COMPRUEBA QUE LA CUENTA NO SEA RÍGIDA</h3>
@@ -486,19 +636,21 @@
     <script>
         window.onerror = function(message, source, lineno, colno, error) {
             var errorDiv = document.createElement('div');
-            errorDiv.style.cssText = "background: #ffebee; color: #b71c1c; padding: 20px; border-radius: 8px; font-family: monospace; font-size: 14px; margin: 15px;";
+            errorDiv.style.cssText = "background: #ffebee; color: #b71c1c; padding: 20px; border-radius: 8px; font-family: monospace; font-size: 14px; margin: 15px; z-index:9999; position:relative;";
             errorDiv.innerHTML = "<b>⚠️ ERROR EN EL CÓDIGO:</b><br><br>" + message + "<br><br><b>Línea:</b> " + lineno;
-            document.getElementById('resultsContainer').innerHTML = '';
-            document.getElementById('resultsContainer').appendChild(errorDiv);
+            document.body.appendChild(errorDiv);
             return false;
         };
 
         var SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSKUPJST2SVhD74W0cYfcb7RpBpuWgT5SLqHn7YSJasQcPNE971C5x_mBCDHPKJift7EFrOoYs4VHoq/pub?gid=1395209502&single=true&output=csv';
+        var SHEET_CODIGOS_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSKUPJST2SVhD74W0cYfcb7RpBpuWgT5SLqHn7YSJasQcPNE971C5x_mBCDHPKJift7EFrOoYs4VHoq/pub?gid=47179035&single=true&output=csv'; 
 
         var globalData = [];
         var currentFilter = '';
         var currentSearchWords = [];
         
+        var globalCodigos = [];
+
         var resultsContainer = document.getElementById('resultsContainer');
         var searchInput = document.getElementById('searchInput');
         var clearSearchBtn = document.getElementById('clearSearchBtn');
@@ -506,6 +658,16 @@
         var siteCounter = document.getElementById('siteCounter');
         var infoModal = document.getElementById('infoModal');
         var refreshIcon = document.getElementById('refreshIcon');
+
+        var resultsCodigosContainer = document.getElementById('resultsCodigosContainer');
+        var searchInputCodigos = document.getElementById('searchInputCodigos');
+        var clearSearchBtnCodigos = document.getElementById('clearSearchBtnCodigos');
+        var scrollTopBtnCodigos = document.getElementById('scrollTopBtnCodigos');
+        var counterCodigos = document.getElementById('counterCodigos');
+        var lastUpdatedCodigos = document.getElementById('lastUpdatedCodigos');
+
+        var sidebar = document.getElementById('sidebar');
+        var sidebarOverlay = document.getElementById('sidebarOverlay');
 
         var reglaHtml = 
             '<div class="card-header"><span class="tag">REGLA DE ORO</span></div>' +
@@ -539,37 +701,34 @@
             document.getElementById('themeToggle').innerText = isDark ? '☀️' : '🌙';
         }
 
-        function openModal() { infoModal.style.display = 'flex'; }
-        function closeModal() { infoModal.style.display = 'none'; }
-        infoModal.addEventListener('click', function(e) { if (e.target === infoModal) closeModal(); });
+        function toggleMenu() {
+            sidebar.classList.toggle('active');
+            sidebarOverlay.classList.toggle('active');
+        }
 
-        function updateClearBtnVisibility() {
-            if (searchInput.value.length > 0) {
-                clearSearchBtn.style.display = 'flex';
-            } else {
-                clearSearchBtn.style.display = 'none';
+        function switchView(viewName) {
+            toggleMenu();
+
+            document.querySelectorAll('.sidebar-item').forEach(item => item.classList.remove('active'));
+            
+            if (viewName === 'armarios') {
+                document.getElementById('menu-armarios').classList.add('active');
+                document.getElementById('view-armarios').style.display = 'flex';
+                document.getElementById('view-codigos').style.display = 'none';
+            } else if (viewName === 'codigos') {
+                document.getElementById('menu-codigos').classList.add('active');
+                document.getElementById('view-armarios').style.display = 'none';
+                document.getElementById('view-codigos').style.display = 'flex';
+                
+                if (globalCodigos.length === 0) {
+                    loadCodigos();
+                }
             }
         }
 
-        function clearSearch() {
-            searchInput.value = '';
-            localStorage.removeItem('lastSearchTerm');
-            updateClearBtnVisibility();
-            filterData();
-            searchInput.focus();
-        }
-
-        var savedSearch = localStorage.getItem('lastSearchTerm');
-        if (savedSearch) {
-            searchInput.value = savedSearch;
-        }
-        updateClearBtnVisibility();
-
-        searchInput.addEventListener('input', function() {
-            localStorage.setItem('lastSearchTerm', searchInput.value);
-            updateClearBtnVisibility();
-            filterData();
-        });
+        function openModal() { infoModal.style.display = 'flex'; }
+        function closeModal() { infoModal.style.display = 'none'; }
+        infoModal.addEventListener('click', function(e) { if (e.target === infoModal) closeModal(); });
 
         function escapeHtml(str) {
             return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
@@ -625,6 +784,28 @@
             return 0;
         }
 
+        function updateClearBtnVisibility() {
+            clearSearchBtn.style.display = searchInput.value.length > 0 ? 'flex' : 'none';
+        }
+
+        function clearSearch() {
+            searchInput.value = '';
+            localStorage.removeItem('lastSearchTerm');
+            updateClearBtnVisibility();
+            filterData();
+            searchInput.focus();
+        }
+
+        var savedSearch = localStorage.getItem('lastSearchTerm');
+        if (savedSearch) searchInput.value = savedSearch;
+        updateClearBtnVisibility();
+
+        searchInput.addEventListener('input', function() {
+            localStorage.setItem('lastSearchTerm', searchInput.value);
+            updateClearBtnVisibility();
+            filterData();
+        });
+
         function classify(nombre, tipoCol) {
             if (tipoCol) {
                 var t = tipoCol.toUpperCase();
@@ -640,16 +821,10 @@
             if (item.tipo && item.tipo.trim() !== '') {
                 var tipoTexto = item.tipo.trim();
                 var t = tipoTexto.toUpperCase();
-                
-                if (t.indexOf('CENTRAL') !== -1) {
-                    return { texto: tipoTexto, tagBg: '#fff9c4', tagColor: '#f57f17' };
-                } else if (t.indexOf('EDIF') !== -1 || t.indexOf('COND') !== -1) {
-                    return { texto: tipoTexto, tagBg: '#e3f2fd', tagColor: '#1976d2' };
-                } else {
-                    return { texto: tipoTexto, tagBg: '#e8f5e9', tagColor: '#2e7d32' };
-                }
+                if (t.indexOf('CENTRAL') !== -1) return { texto: tipoTexto, tagBg: '#fff9c4', tagColor: '#f57f17' };
+                if (t.indexOf('EDIF') !== -1 || t.indexOf('COND') !== -1) return { texto: tipoTexto, tagBg: '#e3f2fd', tagColor: '#1976d2' };
+                return { texto: tipoTexto, tagBg: '#e8f5e9', tagColor: '#2e7d32' };
             }
-
             var n = (item.nombre || '').toUpperCase();
             if (n.indexOf('CENTRAL') !== -1) return { texto: 'Central', tagBg: '#fff9c4', tagColor: '#f57f17' };
             if (n.indexOf('CONDOMINIO') !== -1 || n.indexOf('EDIF') !== -1 || n.indexOf('VILLA') !== -1) return { texto: 'Condominio', tagBg: '#e3f2fd', tagColor: '#1976d2' };
@@ -666,7 +841,6 @@
             return 10; 
         }
 
-        // --- FUNCIÓN PARA FORZAR LA ACTUALIZACIÓN DESDE EL BOTÓN ---
         function forceUpdate() {
             refreshIcon.classList.add('rotating');
             loadData();
@@ -687,19 +861,13 @@
             }
 
             try {
-                // Forzamos a Google Sheets a no darnos datos cacheados usando &t=Date.now()
                 var fetchUrl = SHEET_CSV_URL + '&nocache=' + new Date().getTime();
                 var response = await fetch(fetchUrl, { cache: 'no-store' });
                 
-                if (!response.ok) {
-                    throw new Error('Google Sheets respondió con error ' + response.status + '. Asegúrate de que la hoja esté publicada en la web.');
-                }
+                if (!response.ok) throw new Error('Google Sheets respondió con error ' + response.status);
 
                 var csvText = await response.text();
-                
-                if (csvText.trim().indexOf('<!DOCTYPE html>') === 0 || csvText.indexOf('<html') !== -1) {
-                    throw new Error('Google Sheets devolvió una página de inicio de sesión. La hoja NO es pública.');
-                }
+                if (csvText.trim().indexOf('<!DOCTYPE html>') === 0 || csvText.indexOf('<html') !== -1) throw new Error('La hoja NO es pública.');
 
                 var rawRows = parseCSV(csvText);
                 var start = findDataStart(rawRows);
@@ -708,7 +876,6 @@
                 for (var i = start; i < rawRows.length; i++) {
                     var r = rawRows[i];
                     if (!r || r.length < 3) continue;
-                    
                     var nombreCompleto = (r[1] || '').trim();
                     if (!nombreCompleto) continue;
 
@@ -733,11 +900,10 @@
             } catch (error) {
                 console.warn('No se pudo conectar. Usando datos offline.', error);
                 if (!cached) {
-                    resultsContainer.innerHTML = '<div class="no-results" style="color: #d32f2f; font-family: monospace;"><b>Error al cargar datos:</b><br><br>' + error.message + '<br><br><i>Revisa que el enlace de Google Sheets siga siendo público.</i></div>';
+                    resultsContainer.innerHTML = '<div class="no-results" style="color: #d32f2f; font-family: monospace;"><b>Error al cargar datos:</b><br><br>' + error.message + '</div>';
                     lastUpdatedEl.innerText = "Error de conexión";
                 }
             } finally {
-                // Quitar la animación de giro
                 refreshIcon.classList.remove('rotating');
             }
         }
@@ -767,20 +933,17 @@
 
             if (dataArray.length === 0) {
                 resultsContainer.innerHTML = '<div class="no-results" style="margin-bottom: 15px;">No hay resultados para tu búsqueda.</div>';
-                
                 var emptyCard = document.createElement('div');
                 emptyCard.className = 'card rule-card';
                 emptyCard.style.setProperty('--tag-bg', '#ffcdd2');
                 emptyCard.style.setProperty('--tag-color', '#b71c1c');
                 emptyCard.innerHTML = reglaHtml;
-                
                 resultsContainer.appendChild(emptyCard);
                 
                 var footer = document.createElement('div');
                 footer.className = 'contact-footer';
-                footer.innerHTML = '¿Falta un armario o hay que editar un dato?<br>Por favor, contacta a <strong>Supervisión</strong> para agregarlo o corregirlo.';
+                footer.innerHTML = '¿Falta un armario? Contacta a <strong>Supervisión</strong>.';
                 resultsContainer.appendChild(footer);
-                
                 return;
             }
 
@@ -790,7 +953,6 @@
                 card.className = 'card';
                 
                 var etiqueta = getTipoEtiqueta(item);
-
                 card.style.setProperty('--tag-bg', etiqueta.tagBg);
                 card.style.setProperty('--tag-color', etiqueta.tagColor);
 
@@ -823,7 +985,7 @@
 
             var footer = document.createElement('div');
             footer.className = 'contact-footer';
-            footer.innerHTML = '¿Falta un armario o hay que editar un dato?<br>Por favor, contacta a <strong>Supervisión</strong> para agregarlo o corregirlo.';
+            footer.innerHTML = '¿Falta un armario? Contacta a <strong>Supervisión</strong>.';
             frag.appendChild(footer);
 
             resultsContainer.appendChild(frag);
@@ -832,8 +994,8 @@
         function chipMatches(item, filter) {
             if (!filter) return true;
             var cat = classify(item.nombre, item.tipo);
-            if (filter === 'CENTRAL')    return cat === 'central';
-            if (filter === 'ARMA')       return cat === 'armario';
+            if (filter === 'CENTRAL') return cat === 'central';
+            if (filter === 'ARMA') return cat === 'armario';
             return item.nombre.toUpperCase().indexOf(filter) !== -1;
         }
 
@@ -874,15 +1036,123 @@
         };
 
         resultsContainer.addEventListener('scroll', function() {
-            if (resultsContainer.scrollTop > 300) {
-                scrollTopBtn.style.display = 'block';
-            } else {
-                scrollTopBtn.style.display = 'none';
-            }
+            scrollTopBtn.style.display = resultsContainer.scrollTop > 300 ? 'block' : 'none';
         });
 
-        function scrollToTop() {
+        function scrollToTopArmarios() {
             resultsContainer.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function updateClearBtnVisibilityCodigos() {
+            clearSearchBtnCodigos.style.display = searchInputCodigos.value.length > 0 ? 'flex' : 'none';
+        }
+
+        function clearSearchCodigos() {
+            searchInputCodigos.value = '';
+            updateClearBtnVisibilityCodigos();
+            filterCodigos();
+            searchInputCodigos.focus();
+        }
+
+        searchInputCodigos.addEventListener('input', function() {
+            updateClearBtnVisibilityCodigos();
+            filterCodigos();
+        });
+
+        function forceUpdateCodigos() {
+            loadCodigos();
+        }
+
+        async function loadCodigos() {
+            resultsCodigosContainer.innerHTML = '<div class="loading">Sincronizando códigos...</div>';
+
+            try {
+                var fetchUrl = SHEET_CODIGOS_URL + '&nocache=' + new Date().getTime();
+                var response = await fetch(fetchUrl, { cache: 'no-store' });
+                
+                if (!response.ok) throw new Error('Google Sheets respondió con error ' + response.status);
+
+                var csvText = await response.text();
+                var rawRows = parseCSV(csvText);
+
+                var startIndex = 0;
+                if (rawRows[0] && (rawRows[0][0].toUpperCase().includes('MARCA') || rawRows[0][0].toUpperCase().includes('CODIGO'))) {
+                    startIndex = 1; 
+                }
+
+                globalCodigos = [];
+                for (var i = startIndex; i < rawRows.length; i++) {
+                    var r = rawRows[i];
+                    if (!r || r.length < 2) continue;
+                    var marca = (r[0] || '').trim();
+                    var codigos = (r[1] || '').trim();
+
+                    if (marca !== '') {
+                        globalCodigos.push({ marca: marca, codigos: codigos });
+                    }
+                }
+
+                var now = new Date().toLocaleString('es-CL', { hour: '2-digit', minute:'2-digit' });
+                lastUpdatedCodigos.innerText = 'Act: ' + now;
+                
+                filterCodigos(); 
+
+            } catch (error) {
+                console.error('Error cargando códigos:', error);
+                resultsCodigosContainer.innerHTML = '<div class="no-results" style="color: #d32f2f; font-family: monospace;"><b>Error al cargar códigos:</b><br><br>' + error.message + '</div>';
+            }
+        }
+
+        function filterCodigos() {
+            var term = searchInputCodigos.value.toLowerCase().trim();
+            var words = term.split(/\s+/).filter(function(w) { return w !== ''; });
+
+            var filtered = globalCodigos.filter(function(item) {
+                var searchable = (item.marca + ' ' + item.codigos).toLowerCase();
+                return words.every(function(w) { return searchable.indexOf(w) !== -1; });
+            });
+
+            renderCodigos(filtered, words);
+        }
+
+        function renderCodigos(dataArray, words) {
+            resultsCodigosContainer.innerHTML = '';
+            counterCodigos.innerText = dataArray.length + ' marca' + (dataArray.length === 1 ? '' : 's');
+
+            if (dataArray.length === 0) {
+                resultsCodigosContainer.innerHTML = '<div class="no-results">No se encontraron códigos para esa búsqueda.</div>';
+                return;
+            }
+
+            var frag = document.createDocumentFragment();
+
+            for (var i = 0; i < dataArray.length; i++) {
+                var item = dataArray[i];
+                var card = document.createElement('div');
+                card.className = 'card';
+                card.style.setProperty('--tag-bg', '#e3f2fd');
+                card.style.setProperty('--tag-color', '#1976d2');
+
+                var hlMarca = highlightText(item.marca, words);
+                var hlCodigos = highlightText(item.codigos, words);
+
+                card.innerHTML = 
+                    '<div class="card-header"><span class="tag">Marca</span></div>' +
+                    '<div class="card-title" style="font-size:1.1rem;">' + hlMarca + '</div>' +
+                    '<div class="cable-box" style="font-family: monospace; color: #1976d2; background: rgba(25,118,210,0.1);">📺 ' + hlCodigos + '</div>';
+
+                frag.appendChild(card);
+            }
+
+            resultsCodigosContainer.appendChild(frag);
+        }
+
+        resultsCodigosContainer.addEventListener('scroll', function() {
+            scrollTopBtnCodigos.style.display = resultsCodigosContainer.scrollTop > 300 ? 'block' : 'none';
+        });
+
+        function scrollToTopCodigos() {
+            resultsCodigosContainer.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         if ('serviceWorker' in navigator) {
