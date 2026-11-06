@@ -75,6 +75,7 @@
             height: 100vh;
             height: 100dvh;
             transition: background-color 0.3s, color 0.3s;
+            overscroll-behavior-y: contain; /* Evita el pull-to-refresh molesto */
         }
 
         #view-armarios, #view-codigos, #view-topologias {
@@ -714,7 +715,7 @@
                     </div>
                 </div>
                 <div class="header-buttons">
-                    <button class="icon-btn" onclick="openModal()" title="Información importante">ℹ️</button>
+                    <button class="icon-btn" onclick="openModal('infoModal')" title="Información importante">ℹ️</button>
                     <button class="icon-btn" id="themeToggle" onclick="toggleTheme()">🌙</button>
                 </div>
             </div>
@@ -785,7 +786,7 @@
             </div>
 
             <div class="guide-btn-container">
-                <button class="guide-btn" onclick="openGuideModal()">⚙️ Guía: Asociar Control a Deco</button>
+                <button class="guide-btn" onclick="openModal('guideModal')">⚙️ Guía: Asociar Control a Deco</button>
             </div>
         </header>
 
@@ -856,7 +857,7 @@
                 ❌ Por lógica, las que tienen <b>solo Filamento splitter primario</b> son <b>FLEXIBLES</b>. Si tu cuenta es flexible y no está en la app, contacta a Supervisión.
             </div>
             
-            <button class="close-modal-btn" onclick="closeModal()">Entendido</button>
+            <button class="close-modal-btn" onclick="closeModal('infoModal')">Entendido</button>
         </div>
     </div>
 
@@ -946,7 +947,7 @@
                 </div>
             </div>
 
-            <button class="close-modal-btn" onclick="closeGuideModal()">Entendido</button>
+            <button class="close-modal-btn" onclick="closeModal('guideModal')">Entendido</button>
         </div>
     </div>
 
@@ -991,10 +992,6 @@
         var clearSearchBtn = document.getElementById('clearSearchBtn');
         var scrollTopBtn = document.getElementById('scrollTopBtn');
         var siteCounter = document.getElementById('siteCounter');
-        var infoModal = document.getElementById('infoModal');
-        var guideModal = document.getElementById('guideModal');
-        var topologiaModal = document.getElementById('topologiaModal');
-        var topologiaModalContent = document.getElementById('topologiaModalContent');
         var refreshIcon = document.getElementById('refreshIcon');
 
         var resultsCodigosContainer = document.getElementById('resultsCodigosContainer');
@@ -1014,6 +1011,10 @@
         var sidebar = document.getElementById('sidebar');
         var sidebarOverlay = document.getElementById('sidebarOverlay');
 
+        // Variables de control de estado de navegación
+        var currentView = 'armarios';
+        var activeModal = null;
+
         if (safeStorage.get('theme') === 'dark') {
             document.body.classList.add('dark-mode');
             document.getElementById('themeToggle').innerText = '☀️';
@@ -1031,8 +1032,15 @@
             sidebarOverlay.classList.toggle('active');
         }
 
-        function switchView(viewName) {
-            toggleMenu();
+        function switchView(viewName, addToHistory = true) {
+            if (sidebar.classList.contains('active')) toggleMenu();
+
+            if (addToHistory) {
+                history.pushState({ view: viewName, modal: null }, '', '#' + viewName);
+            }
+            
+            currentView = viewName;
+            safeStorage.set('currentTab', viewName);
 
             document.querySelectorAll('.sidebar-item').forEach(item => item.classList.remove('active'));
             
@@ -1062,16 +1070,52 @@
             }
         }
 
-        function openModal() { infoModal.style.display = 'flex'; }
-        function closeModal() { infoModal.style.display = 'none'; }
-        infoModal.addEventListener('click', function(e) { if (e.target === infoModal) closeModal(); });
+        function openModal(modalId) {
+            if (activeModal === modalId) return;
+            activeModal = modalId;
+            document.getElementById(modalId).style.display = 'flex';
+            history.pushState({ view: currentView, modal: modalId }, '', '#' + modalId);
+        }
 
-        function openGuideModal() { guideModal.style.display = 'flex'; }
-        function closeGuideModal() { guideModal.style.display = 'none'; }
-        guideModal.addEventListener('click', function(e) { if (e.target === guideModal) closeGuideModal(); });
+        function closeModal(modalId, addToHistory = true) {
+            if (addToHistory) {
+                history.back(); // Esto dispara popstate y cierra el modal
+            } else {
+                activeModal = null;
+                document.getElementById(modalId).style.display = 'none';
+            }
+        }
 
-        function closeTopologiaModal() { topologiaModal.style.display = 'none'; }
-        topologiaModal.addEventListener('click', function(e) { if (e.target === topologiaModal) closeTopologiaModal(); });
+        // Control del botón físico "Atrás" y gesto de deslizar
+        window.addEventListener('popstate', function(event) {
+            var state = event.state;
+
+            // Si el estado no tiene modal, pero hay uno abierto, cerramos el modal
+            if (activeModal && (!state || !state.modal)) {
+                closeModal(activeModal, false);
+                return;
+            }
+
+            // Si hay una vista en el estado, navegamos a ella
+            if (state && state.view) {
+                switchView(state.view, false);
+            } else {
+                // Si no hay estado, volvemos a la vista principal
+                switchView('armarios', false);
+            }
+        });
+
+        // Al cargar la página, restauramos la vista guardada
+        window.addEventListener('load', function() {
+            var savedTab = safeStorage.get('currentTab') || 'armarios';
+            history.replaceState({ view: savedTab, modal: null }, '', '#' + savedTab);
+            switchView(savedTab, false);
+        });
+
+        // Cerrar modales al tocar el fondo oscuro
+        document.getElementById('infoModal').addEventListener('click', function(e) { if (e.target === this) closeModal('infoModal'); });
+        document.getElementById('guideModal').addEventListener('click', function(e) { if (e.target === this) closeModal('guideModal'); });
+        document.getElementById('topologiaModal').addEventListener('click', function(e) { if (e.target === this) closeModal('topologiaModal'); });
 
         function escapeHtml(str) {
             return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
@@ -1387,15 +1431,14 @@
                 var rawRows = parseCSV(csvText);
 
                 globalTopologias = [];
-                // Asumimos que la fila 0 es el encabezado
                 for (var i = 1; i < rawRows.length; i++) {
                     var r = rawRows[i];
                     if (!r || r.length < 3) continue;
-                    var tipo = (r[0] || '').trim().toLowerCase(); // alerta, imagen, texto
+                    var tipo = (r[0] || '').trim().toLowerCase();
                     var titulo = (r[1] || '').trim();
                     var palabras = (r[2] || '').trim();
                     var contenido = (r[3] || '').trim();
-                    var descripcion = (r[4] || '').trim(); // Columna E
+                    var descripcion = (r[4] || '').trim();
 
                     if (titulo === '') continue;
                     globalTopologias.push({ tipo: tipo, titulo: titulo, palabras: palabras, contenido: contenido, descripcion: descripcion });
@@ -1435,7 +1478,14 @@
                 var item = dataArray[i];
                 var card = document.createElement('div');
                 
-                card.className = 'card card-clickable';
+                // EL PRIMER ELEMENTO (i=0) SIEMPRE SE MUESTRA EXPANDIDO
+                var isPinned = (i === 0 && searchInputTopologias.value.trim() === '');
+
+                if (isPinned) {
+                    card.className = 'card'; // Tarjeta normal, no clickeable
+                } else {
+                    card.className = 'card card-clickable';
+                }
                 
                 var hlTitulo = highlightText(item.titulo, words);
                 var tagHtml = '';
@@ -1462,12 +1512,33 @@
 
                 tagHtml = '<div class="card-header"><span class="tag">' + tagText + '</span></div>';
                 
-                card.innerHTML = tagHtml + 
-                                 '<div class="card-title">' + hlTitulo + '<span class="arrow-icon">›</span></div>';
+                if (isPinned) {
+                    // Renderizado completo para la primera tarjeta
+                    var contenidoHtml = '';
+                    if (item.tipo === 'imagen') {
+                        contenidoHtml += '<img src="' + item.contenido + '" style="width:100%; border-radius:8px; margin-top:10px; margin-bottom:10px; background:#fff;" onerror="this.style.display=\'none\'">';
+                        if (item.descripcion) {
+                            var descConSaltos = item.descripcion.replace(/\n/g, '<br>');
+                            contenidoHtml += '<div class="topologia-modal-text" style="color: var(--text-main); font-size: 0.95rem;">' + descConSaltos + '</div>';
+                        }
+                    } else {
+                        var contConSaltos = item.contenido.replace(/\n/g, '<br>');
+                        contenidoHtml += '<div class="topologia-modal-text">' + contConSaltos + '</div>';
+                        if (item.descripcion) {
+                            var descConSaltos = item.descripcion.replace(/\n/g, '<br>');
+                            contenidoHtml += '<div class="topologia-modal-text" style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed #ccc;">' + descConSaltos + '</div>';
+                        }
+                    }
+                    card.innerHTML = tagHtml + '<div class="card-title" style="margin-bottom: 8px;">' + hlTitulo + '</div>' + contenidoHtml;
+                } else {
+                    // Renderizado colapsable para el resto
+                    card.innerHTML = tagHtml + 
+                                     '<div class="card-title">' + hlTitulo + '<span class="arrow-icon">›</span></div>';
 
-                card.onclick = (function(index) {
-                    return function() { openTopologiaDetail(index); };
-                })(i);
+                    card.onclick = (function(index) {
+                        return function() { openTopologiaDetail(index); };
+                    })(i);
+                }
 
                 frag.appendChild(card);
             }
@@ -1517,10 +1588,10 @@
                 }
             }
 
-            htmlContent += '<button class="close-modal-btn" onclick="closeTopologiaModal()">Entendido</button>';
+            htmlContent += '<button class="close-modal-btn" onclick="closeModal(\'topologiaModal\')">Entendido</button>';
 
             topologiaModalContent.innerHTML = htmlContent;
-            topologiaModal.style.display = 'flex';
+            openModal('topologiaModal');
         };
 
         resultsTopologiasContainer.addEventListener('scroll', function() { scrollTopBtnTopologias.style.display = resultsTopologiasContainer.scrollTop > 300 ? 'block' : 'none'; });
