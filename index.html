@@ -26,9 +26,16 @@
             --table-bg: #f8f9fa;
             --sidebar-bg: #ffffff;
             
-            /* Colores específicos para Códigos */
             --blue-primary: #1976d2;
             --blue-dark: #0d47a1;
+            
+            /* Colores para la Guía */
+            --btn-setup: #424242;
+            --btn-red: #d32f2f;
+            --btn-blue: #1976d2;
+            --btn-green: #2e7d32;
+            --btn-grey: #757575;
+            --btn-orange: #f57c00;
         }
 
         body.dark-mode {
@@ -229,6 +236,29 @@
         
         .chip.active { background: var(--primary-dark); color: white; }
         #view-codigos .chip.active { background: var(--blue-dark); color: white; }
+
+        /* BOTÓN DE GUÍA */
+        .guide-btn-container {
+            background: var(--blue-primary);
+            padding: 0 15px 15px 15px;
+        }
+        .guide-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            background-color: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            gap: 8px;
+            text-transform: uppercase;
+        }
+        .guide-btn:active { background-color: rgba(255,255,255,0.3); }
 
         /* RESULTADOS */
         .results-container { flex: 1; overflow-y: auto; padding: 15px; }
@@ -442,6 +472,7 @@
         .highlight-red-box { border: 2px solid #d32f2f !important; background-color: #ffebee; color: #b71c1c !important; font-weight: bold; }
         body.dark-mode .highlight-red-box { background-color: #3e1a1a; color: #ef5350 !important; }
 
+        /* MODALES */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -458,7 +489,7 @@
             color: var(--text-main);
             padding: 20px;
             border-radius: 12px;
-            max-width: 500px;
+            max-width: 600px;
             width: 100%;
             max-height: 90vh;
             overflow-y: auto;
@@ -481,6 +512,102 @@
             cursor: pointer;
             margin-top: 10px;
         }
+
+        /* --- ESTILOS GUÍA DE DECOS --- */
+        .guide-modal-title { color: #1976d2 !important; }
+        
+        .guide-card {
+            background: rgba(0,0,0,0.02);
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+        body.dark-mode .guide-card { background: rgba(255,255,255,0.05); border-color: #444; }
+        
+        .guide-card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            border-bottom: 1px dashed rgba(0,0,0,0.1);
+            padding-bottom: 10px;
+        }
+        body.dark-mode .guide-card-header { border-color: #444; }
+        
+        .guide-img {
+            width: 90px;
+            height: 70px;
+            object-fit: contain;
+            border-radius: 8px;
+            background: #fff;
+            padding: 5px;
+        }
+        .guide-card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin: 0;
+        }
+        
+        .control-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px dotted rgba(0,0,0,0.1);
+        }
+        body.dark-mode .control-row { border-color: #444; }
+        .control-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        
+        .control-img {
+            width: 50px;
+            height: 70px;
+            object-fit: contain;
+            border-radius: 6px;
+            background: #fff;
+            padding: 3px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .control-details {
+            flex: 1;
+        }
+
+        .control-name {
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .control-instructions {
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: var(--text-main);
+        }
+        
+        .btn-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-weight: 700;
+            color: white;
+            font-size: 0.8rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            margin: 0 2px;
+        }
+        .btn-setup { background-color: var(--btn-setup); }
+        .btn-red { background-color: var(--btn-red); }
+        .btn-blue { background-color: var(--btn-blue); }
+        .btn-green { background-color: var(--btn-green); }
+        .btn-grey { background-color: var(--btn-grey); }
+        .btn-orange { background-color: var(--btn-orange); }
     </style>
 </head>
 <body>
@@ -570,7 +697,6 @@
                 <span id="lastUpdatedCodigos">Sincronizando...</span>
             </div>
 
-            <!-- CHIPS PARA CÓDIGOS ACTUALIZADOS -->
             <div class="filters-container">
                 <div class="chip active" onclick="applyFilterCodigos('', this)">Todos</div>
                 <div class="chip" onclick="applyFilterCodigos('Samsung', this)">Samsung</div>
@@ -580,6 +706,10 @@
                 <div class="chip" onclick="applyFilterCodigos('Polaroid', this)">Polaroid</div>
                 <div class="chip" onclick="applyFilterCodigos('Philips', this)">Philips</div>
                 <div class="chip" onclick="applyFilterCodigos('RCA', this)">RCA</div>
+            </div>
+
+            <div class="guide-btn-container">
+                <button class="guide-btn" onclick="openGuideModal()">⚙️ Guía: Configurar Control con Deco</button>
             </div>
         </header>
 
@@ -631,6 +761,107 @@
         </div>
     </div>
 
+    <!-- MODAL GUÍA DECOS Y CONTROLES -->
+    <div class="modal-overlay" id="guideModal">
+        <div class="modal-content">
+            <h3 class="guide-modal-title">⚙️ Guía de Configuración</h3>
+            
+            <!-- NUEVA TARJETA: ASOCIAR A LA TV -->
+            <div class="guide-card" style="border: 2px solid var(--btn-orange);">
+                <div class="guide-card-header" style="border-bottom: none; margin-bottom: 5px; padding-bottom: 0;">
+                    <h4 class="guide-card-title" style="color: var(--btn-orange);">📺 Asociar Control a la TV</h4>
+                </div>
+                <p style="font-size: 0.85rem; margin-bottom: 10px; font-style: italic;">Detección Automática</p>
+                
+                <div class="control-row">
+                    <img src="control-champion.png" alt="Control Champion" class="control-img" onerror="this.style.display='none'">
+                    <div class="control-details">
+                        <div class="control-name">Control Champion:</div>
+                        <div class="control-instructions">Presiona <span class="btn-badge btn-setup">SETUP</span> hasta que parpadee 2 veces, luego presiona <span class="btn-badge btn-green">TV</span> y mantén presionado <span class="btn-badge btn-grey">OK</span> hasta que el TV se apague.</div>
+                    </div>
+                </div>
+                
+                <div class="control-row">
+                    <img src="control-curve.png" alt="Control Curve" class="control-img" onerror="this.style.display='none'">
+                    <div class="control-details">
+                        <div class="control-name">Control Curve:</div>
+                        <div class="control-instructions">Presiona <span class="btn-badge btn-setup">SETUP</span> hasta que el botón <span class="btn-badge btn-green">TV (power)</span> quede encendido, luego mantén presionado <span class="btn-badge btn-green">TV (power)</span> hasta que el TV se apague.</div>
+                    </div>
+                </div>
+            </div>
+
+            <p style="text-align: center; margin: 20px 0 15px 0; font-weight: 700; color: var(--text-muted);">Asociar Control al STB (Deco)</p>
+
+            <!-- TARJETA AMINO -->
+            <div class="guide-card">
+                <div class="guide-card-header">
+                    <img src="deco-amino.png" alt="Deco Amino" class="guide-img" onerror="this.style.display='none'">
+                    <h4 class="guide-card-title">STB Modelo Amino</h4>
+                </div>
+                
+                <div class="control-row">
+                    <div class="control-details">
+                        <div class="control-name"><span style="color:var(--btn-red)">🔴</span> Control Champion:</div>
+                        <div class="control-instructions">Presiona <span class="btn-badge btn-setup">SETUP</span> + <span class="btn-badge btn-red">TRIÁNGULO ROJO</span> al mismo tiempo.</div>
+                    </div>
+                </div>
+                
+                <div class="control-row">
+                    <div class="control-details">
+                        <div class="control-name"><span style="color:var(--btn-green)">🟢</span> Control Curve:</div>
+                        <div class="control-instructions">Presiona <span class="btn-badge btn-setup">SETUP</span> + <span class="btn-badge btn-green">FAVORITOS</span> hasta que el botón TV quede fijo, luego ingresa el número <b>1</b>.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TARJETA ENTONE -->
+            <div class="guide-card">
+                <div class="guide-card-header">
+                    <img src="deco-entone.png" alt="Deco Entone" class="guide-img" onerror="this.style.display='none'">
+                    <h4 class="guide-card-title">STB Modelo Entone</h4>
+                </div>
+                
+                <div class="control-row">
+                    <div class="control-details">
+                        <div class="control-name"><span style="color:var(--btn-red)">🔴</span> Control Champion:</div>
+                        <div class="control-instructions">Presiona <span class="btn-badge btn-setup">SETUP</span> + <span class="btn-badge btn-blue">ROMBO AZUL</span> al mismo tiempo.</div>
+                    </div>
+                </div>
+                
+                <div class="control-row">
+                    <div class="control-details">
+                        <div class="control-name"><span style="color:var(--btn-green)">🟢</span> Control Curve:</div>
+                        <div class="control-instructions">Presiona <span class="btn-badge btn-setup">SETUP</span> + <span class="btn-badge btn-green">FAVORITOS</span> hasta que el botón TV quede fijo, luego ingresa el número <b>2</b>.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TARJETA ADB -->
+            <div class="guide-card">
+                <div class="guide-card-header">
+                    <img src="deco-adb.png" alt="Deco Adb" class="guide-img" onerror="this.style.display='none'">
+                    <h4 class="guide-card-title">STB Modelo Adb</h4>
+                </div>
+                
+                <div class="control-row">
+                    <div class="control-details">
+                        <div class="control-name"><span style="color:var(--btn-red)">🔴</span> Control Champion:</div>
+                        <div class="control-instructions">Presiona <span class="btn-badge btn-setup">SETUP</span> + <span class="btn-badge btn-grey">MENÚ</span> al mismo tiempo.</div>
+                    </div>
+                </div>
+                
+                <div class="control-row">
+                    <div class="control-details">
+                        <div class="control-name"><span style="color:var(--btn-green)">🟢</span> Control Curve:</div>
+                        <div class="control-instructions">Presiona <span class="btn-badge btn-setup">SETUP</span> + <span class="btn-badge btn-green">FAVORITOS</span> hasta que el botón TV quede fijo, luego ingresa el número <b>5</b>.</div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="close-modal-btn" onclick="closeGuideModal()">Entendido</button>
+        </div>
+    </div>
+
     <script>
         window.onerror = function(message, source, lineno, colno, error) {
             var errorDiv = document.createElement('div');
@@ -656,6 +887,7 @@
         var scrollTopBtn = document.getElementById('scrollTopBtn');
         var siteCounter = document.getElementById('siteCounter');
         var infoModal = document.getElementById('infoModal');
+        var guideModal = document.getElementById('guideModal');
         var refreshIcon = document.getElementById('refreshIcon');
 
         var resultsCodigosContainer = document.getElementById('resultsCodigosContainer');
@@ -728,6 +960,10 @@
         function openModal() { infoModal.style.display = 'flex'; }
         function closeModal() { infoModal.style.display = 'none'; }
         infoModal.addEventListener('click', function(e) { if (e.target === infoModal) closeModal(); });
+
+        function openGuideModal() { guideModal.style.display = 'flex'; }
+        function closeGuideModal() { guideModal.style.display = 'none'; }
+        guideModal.addEventListener('click', function(e) { if (e.target === guideModal) closeGuideModal(); });
 
         function escapeHtml(str) {
             return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
