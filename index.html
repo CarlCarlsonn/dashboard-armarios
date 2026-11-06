@@ -28,6 +28,8 @@
             
             --blue-primary: #1976d2;
             --blue-dark: #0d47a1;
+            --purple-primary: #8e24aa;
+            --purple-dark: #4a148c;
             
             --btn-setup: #3a3a3a;
             --btn-red: #d32f2f;
@@ -57,6 +59,8 @@
             
             --blue-primary: #1e88e5;
             --blue-dark: #1565c0;
+            --purple-primary: #ab47bc;
+            --purple-dark: #6a1b9a;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -94,7 +98,7 @@
         }
 
         #view-codigos header { background-color: var(--blue-primary); }
-        #view-topologias header { background-color: #8e24aa; } /* Morado para topologías */
+        #view-topologias header { background-color: var(--purple-primary); }
 
         .header-top {
             display: flex;
@@ -217,7 +221,7 @@
             scrollbar-width: none;
         }
         #view-codigos .filters-container { background: var(--blue-primary); }
-        #view-topologias .filters-container { background: #8e24aa; }
+        #view-topologias .filters-container { background: var(--purple-primary); }
         .filters-container::-webkit-scrollbar { display: none; }
 
         .chip {
@@ -237,7 +241,7 @@
         
         .chip.active { background: var(--primary-dark); color: white; }
         #view-codigos .chip.active { background: var(--blue-dark); color: white; }
-        #view-topologias .chip.active { background: #4a148c; color: white; }
+        #view-topologias .chip.active { background: var(--purple-dark); color: white; }
 
         .guide-btn-container {
             background: var(--blue-primary);
@@ -280,6 +284,25 @@
             background-color: var(--tag-color, var(--primary));
         }
 
+        .card-clickable {
+            cursor: pointer;
+            transition: transform 0.1s, box-shadow 0.2s;
+        }
+        .card-clickable:active {
+            transform: scale(0.98);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .card-clickable .card-title {
+            margin-bottom: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .card-clickable .arrow-icon {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+        }
+
         .rule-card {
             border: 2px solid var(--danger-color);
             background-color: var(--card-bg);
@@ -309,7 +332,7 @@
             text-transform: uppercase;
         }
 
-        .card-title { font-weight: 700; color: var(--text-main); font-size: 1.05rem; line-height: 1.3; margin-bottom: 8px; word-break: break-word; }
+        .card-title { font-weight: 700; color: var(--text-main); font-size: 1.05rem; line-height: 1.3; word-break: break-word; }
 
         .cable-box, .obs-box {
             background: rgba(0,0,0,0.03);
@@ -382,7 +405,7 @@
             transition: opacity 0.3s;
         }
         #scrollTopBtnCodigos { background-color: var(--blue-primary); }
-        #scrollTopBtnTopologias { background-color: #8e24aa; }
+        #scrollTopBtnTopologias { background-color: var(--purple-primary); }
 
         .sidebar-overlay {
             display: none;
@@ -621,22 +644,40 @@
 
         .icon-shape { font-size: 0.9rem; margin-right: 4px; }
         
-        /* ESTILOS TOPOLOGÍAS */
-        .topologia-img-container {
+        /* MODAL TOPOLOGIAS DETALLE */
+        .topologia-modal-content {
+            background: var(--card-bg);
+            color: var(--text-main);
+            padding: 20px;
+            border-radius: 12px;
+            max-width: 800px;
             width: 100%;
-            border-radius: 8px;
-            overflow: hidden;
-            margin-top: 10px;
-            background: #fff;
-            display: flex;
-            justify-content: center;
+            max-height: 95vh;
+            overflow-y: auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            position: relative;
         }
-        .topologia-img {
+        .topologia-modal-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-top: 0;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border-color, #ddd);
+        }
+        .topologia-modal-img {
             width: 100%;
             height: auto;
-            max-height: 250px;
-            object-fit: contain;
-            cursor: pointer;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .topologia-modal-text {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-main);
+            white-space: pre-wrap;
         }
     </style>
 </head>
@@ -653,7 +694,7 @@
                 <span class="icon">📦</span> Armarios y Centrales
             </li>
             <li class="sidebar-item" id="menu-codigos" onclick="switchView('codigos')">
-                <span class="icon">🎮</span> Control TV-Deco
+                <span class="icon">📺</span> Control TV-Deco
             </li>
             <li class="sidebar-item" id="menu-topologias" onclick="switchView('topologias')">
                 <span class="icon">🗺️</span> Topologías y Alertas
@@ -712,7 +753,7 @@
                 <div class="title-group">
                     <button class="menu-btn" onclick="toggleMenu()">☰</button>
                     <div>
-                        <div class="header-title">🎮 Control TV-Deco</div>
+                        <div class="header-title">📺 Control TV-Deco</div>
                         <div class="subtitle">Códigos y guía de configuración.</div>
                     </div>
                 </div>
@@ -754,7 +795,7 @@
         <button id="scrollTopBtnCodigos" onclick="scrollToTopCodigos()">⬆️</button>
     </div>
 
-    <!-- VISTA TOPOLOGIAS (NUEVA) -->
+    <!-- VISTA TOPOLOGIAS -->
     <div id="view-topologias">
         <header>
             <div class="header-top">
@@ -762,7 +803,7 @@
                     <button class="menu-btn" onclick="toggleMenu()">☰</button>
                     <div>
                         <div class="header-title">🗺️ Topologías y Alertas</div>
-                        <div class="subtitle">Diagramas y reglas de oro en terreno.</div>
+                        <div class="subtitle">Toca un título para ver el detalle.</div>
                     </div>
                 </div>
                 <div class="header-buttons">
@@ -909,6 +950,13 @@
         </div>
     </div>
 
+    <!-- MODAL DETALLE TOPOLOGIA -->
+    <div class="modal-overlay" id="topologiaModal">
+        <div class="topologia-modal-content" id="topologiaModalContent">
+            <!-- Se llena por JS -->
+        </div>
+    </div>
+
     <script>
         var safeStorage = {
             get: function(key) { try { return localStorage.getItem(key); } catch(e) { return null; } },
@@ -924,7 +972,6 @@
             return false;
         };
 
-        // ⚠️ ENLACE CSV DE TOPOLOGIAS
         var SHEET_TOPOLOGIAS_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSKUPJST2SVhD74W0cYfcb7RpBpuWgT5SLqHn7YSJasQcPNE971C5x_mBCDHPKJift7EFrOoYs4VHoq/pub?gid=1245245166&single=true&output=csv'; 
         
         var SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSKUPJST2SVhD74W0cYfcb7RpBpuWgT5SLqHn7YSJasQcPNE971C5x_mBCDHPKJift7EFrOoYs4VHoq/pub?gid=1395209502&single=true&output=csv';
@@ -946,6 +993,8 @@
         var siteCounter = document.getElementById('siteCounter');
         var infoModal = document.getElementById('infoModal');
         var guideModal = document.getElementById('guideModal');
+        var topologiaModal = document.getElementById('topologiaModal');
+        var topologiaModalContent = document.getElementById('topologiaModalContent');
         var refreshIcon = document.getElementById('refreshIcon');
 
         var resultsCodigosContainer = document.getElementById('resultsCodigosContainer');
@@ -964,26 +1013,6 @@
 
         var sidebar = document.getElementById('sidebar');
         var sidebarOverlay = document.getElementById('sidebarOverlay');
-
-        var reglaHtml = 
-            '<div class="card-header"><span class="tag">REGLA DE ORO</span></div>' +
-            '<div class="card-title">⚠️ Comprueba que la cuenta NO SEA RÍGIDA</div>' +
-            '<div class="obs-box" style="font-size: 0.85rem; color: var(--text-main); font-family: inherit; line-height: 1.4;">' +
-                'Si el contenedor indica <b>"SECTOR"</b> y un número (como CONT-PRIM-VLDV-VILLA ALBORADA <span style="background:#fff59d; color:#000; padding:0 2px;">SECTOR 3</span>, o cuando dice <b>Sector X al Sector Y</b>), <u>no existen armarios con esos nombres</u>, por lo que asumimos que es RÍGIDA.<br><br>' +
-                '<b>Otra forma de saberlo:</b> Solo las cuentas rígidas tienen <b>Filamento splitter primario</b> y <b>Filamento splitter secundario</b>:' +
-            '</div>' +
-            '<table class="oracle-table">' +
-                '<thead><tr><th>TIPO ELEMENTO</th><th>CÓDIGO</th></tr></thead>' +
-                '<tbody>' +
-                    '<tr><td>ALTA:Contenedor</td><td>... SECTOR 3</td></tr>' +
-                    '<tr><td class="highlight-red-box">ALTA:Filamento<br>Splitter P. (Primario)</td><td class="highlight-red-box">1</td></tr>' +
-                    '<tr><td class="highlight-red-box">ALTA:Filamento<br>Splitter S. (Secundario)</td><td class="highlight-red-box">14</td></tr>' +
-                '</tbody>' +
-            '</table>' +
-            '<div class="obs-box" style="font-size: 0.85rem; color: var(--text-main); font-family: inherit; line-height: 1.4;">' +
-                '✅ <b>Si tiene AMBOS (recuadro rojo):</b> Es RÍGIDA. No debe buscarla aquí.<br><br>' +
-                '❌ <b>Por lógica, las que tienen solo Filamento splitter primario son FLEXIBLES.</b> Si no está en la app, contacta a Supervisión.' +
-            '</div>';
 
         if (safeStorage.get('theme') === 'dark') {
             document.body.classList.add('dark-mode');
@@ -1040,6 +1069,9 @@
         function openGuideModal() { guideModal.style.display = 'flex'; }
         function closeGuideModal() { guideModal.style.display = 'none'; }
         guideModal.addEventListener('click', function(e) { if (e.target === guideModal) closeGuideModal(); });
+
+        function closeTopologiaModal() { topologiaModal.style.display = 'none'; }
+        topologiaModal.addEventListener('click', function(e) { if (e.target === topologiaModal) closeTopologiaModal(); });
 
         function escapeHtml(str) {
             return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
@@ -1339,7 +1371,7 @@
         resultsCodigosContainer.addEventListener('scroll', function() { scrollTopBtnCodigos.style.display = resultsCodigosContainer.scrollTop > 300 ? 'block' : 'none'; });
         function scrollToTopCodigos() { resultsCodigosContainer.scrollTo({ top: 0, behavior: 'smooth' }); }
 
-        /* LÓGICA TOPOLOGIAS (NUEVA) */
+        /* LÓGICA TOPOLOGIAS (COLAPSABLES) */
         function updateClearBtnVisibilityTopologias() { clearSearchBtnTopologias.style.display = searchInputTopologias.value.length > 0 ? 'flex' : 'none'; }
         function clearSearchTopologias() { searchInputTopologias.value = ''; updateClearBtnVisibilityTopologias(); filterTopologias(); searchInputTopologias.focus(); }
         searchInputTopologias.addEventListener('input', function() { updateClearBtnVisibilityTopologias(); filterTopologias(); });
@@ -1355,11 +1387,10 @@
                 var rawRows = parseCSV(csvText);
 
                 globalTopologias = [];
-                // Asumimos que la fila 0 es el encabezado (TIPO, TÍTULO, etc.)
                 for (var i = 1; i < rawRows.length; i++) {
                     var r = rawRows[i];
                     if (!r || r.length < 3) continue;
-                    var tipo = (r[0] || '').trim().toLowerCase(); // alerta, imagen, texto
+                    var tipo = (r[0] || '').trim().toLowerCase();
                     var titulo = (r[1] || '').trim();
                     var palabras = (r[2] || '').trim();
                     var contenido = (r[3] || '').trim();
@@ -1401,48 +1432,87 @@
             for (var i = 0; i < dataArray.length; i++) {
                 var item = dataArray[i];
                 var card = document.createElement('div');
-                card.className = 'card';
-
+                
+                card.className = 'card card-clickable';
+                
                 var hlTitulo = highlightText(item.titulo, words);
-                var hlPalabras = item.palabras ? highlightText(item.palabras, words) : '';
-                var hlContenido = item.contenido ? highlightText(item.contenido, words) : '';
-
-                var htmlContent = '';
+                var tagHtml = '';
+                var tagText = 'INFO';
+                var tagBg = '#e8f5e9';
+                var tagColor = '#2e7d32';
+                var borderColor = '#2e7d32';
 
                 if (item.tipo === 'alerta') {
-                    card.classList.add('alerta-card');
-                    card.style.setProperty('--tag-bg', '#ffcdd2');
-                    card.style.setProperty('--tag-color', '#b71c1c');
-                    card.style.setProperty('--tag-color', '#d32f2f'); // Forzar borde izquierdo rojo
-                    htmlContent = 
-                        '<div class="card-header"><span class="tag">ALERTA CRÍTICA</span></div>' +
-                        '<div class="card-title">' + hlTitulo + '</div>' +
-                        '<div class="obs-box" style="border-color: transparent; background: rgba(255,255,255,0.5);">' + hlContenido + '</div>';
-                } 
-                else if (item.tipo === 'imagen') {
-                    card.style.setProperty('--tag-bg', '#e3f2fd');
-                    card.style.setProperty('--tag-color', '#1976d2');
-                    htmlContent = 
-                        '<div class="card-header"><span class="tag">DIAGRAMA</span></div>' +
-                        '<div class="card-title">' + hlTitulo + '</div>' +
-                        '<div class="topologia-img-container"><img src="' + item.contenido + '" class="topologia-img" alt="Diagrama"></div>';
-                } 
-                else {
-                    // Texto por defecto
-                    card.style.setProperty('--tag-bg', '#e8f5e9');
-                    card.style.setProperty('--tag-color', '#2e7d32');
-                    htmlContent = 
-                        '<div class="card-header"><span class="tag">INFO</span></div>' +
-                        '<div class="card-title">' + hlTitulo + '</div>' +
-                        '<div class="obs-box">' + hlContenido + '</div>';
+                    tagText = 'ALERTA CRÍTICA';
+                    tagBg = '#ffcdd2';
+                    tagColor = '#b71c1c';
+                    borderColor = '#d32f2f';
+                } else if (item.tipo === 'imagen') {
+                    tagText = 'DIAGRAMA';
+                    tagBg = '#e3f2fd';
+                    tagColor = '#1976d2';
+                    borderColor = '#1976d2';
                 }
 
-                card.innerHTML = htmlContent;
+                card.style.setProperty('--tag-bg', tagBg);
+                card.style.setProperty('--tag-color', tagColor);
+                card.style.setProperty('--tag-color', borderColor);
+
+                tagHtml = '<div class="card-header"><span class="tag">' + tagText + '</span></div>';
+                
+                card.innerHTML = tagHtml + 
+                                 '<div class="card-title">' + hlTitulo + '<span class="arrow-icon">›</span></div>';
+
+                card.onclick = (function(index) {
+                    return function() { openTopologiaDetail(index); };
+                })(i);
+
                 frag.appendChild(card);
             }
 
             resultsTopologiasContainer.appendChild(frag);
         }
+
+        window.openTopologiaDetail = function(index) {
+            var item = globalTopologias[index];
+            if (!item) return;
+
+            var tagText = 'INFO';
+            var tagBg = '#e8f5e9';
+            var tagColor = '#2e7d32';
+            var borderColor = '#2e7d32';
+            var htmlContent = '';
+
+            if (item.tipo === 'alerta') {
+                tagText = 'ALERTA CRÍTICA';
+                tagBg = '#ffcdd2';
+                tagColor = '#b71c1c';
+                borderColor = '#d32f2f';
+            } else if (item.tipo === 'imagen') {
+                tagText = 'DIAGRAMA';
+                tagBg = '#e3f2fd';
+                tagColor = '#1976d2';
+                borderColor = '#1976d2';
+            }
+
+            htmlContent = 
+                '<h3 class="topologia-modal-title">' + item.titulo + '</h3>' +
+                '<div style="margin-bottom: 15px;"><span class="tag" style="background-color:'+tagBg+'; color:'+tagColor+';">'+tagText+'</span></div>';
+
+            if (item.tipo === 'imagen') {
+                htmlContent += '<img src="' + item.contenido + '" class="topologia-modal-img" alt="Diagrama">';
+                if (item.palabras) {
+                    htmlContent += '<div class="topologia-modal-text" style="color: var(--text-muted); font-size: 0.85rem;">' + item.palabras + '</div>';
+                }
+            } else {
+                htmlContent += '<div class="topologia-modal-text">' + item.contenido + '</div>';
+            }
+
+            htmlContent += '<button class="close-modal-btn" onclick="closeTopologiaModal()">Entendido</button>';
+
+            topologiaModalContent.innerHTML = htmlContent;
+            topologiaModal.style.display = 'flex';
+        };
 
         resultsTopologiasContainer.addEventListener('scroll', function() { scrollTopBtnTopologias.style.display = resultsTopologiasContainer.scrollTop > 300 ? 'block' : 'none'; });
         function scrollToTopTopologias() { resultsTopologiasContainer.scrollTo({ top: 0, behavior: 'smooth' }); }
