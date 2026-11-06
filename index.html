@@ -697,7 +697,7 @@
                 <span class="icon">📺</span> Control TV-Deco
             </li>
             <li class="sidebar-item" id="menu-topologias" onclick="switchView('topologias')">
-                <span class="icon">🗺️</span> Topologías y Alertas
+                <span class="icon">🗺️</span> HUAWEI Topología y Alertas
             </li>
         </ul>
     </div>
@@ -802,7 +802,7 @@
                 <div class="title-group">
                     <button class="menu-btn" onclick="toggleMenu()">☰</button>
                     <div>
-                        <div class="header-title">🗺️ Topologías y Alertas</div>
+                        <div class="header-title">🗺️ HUAWEI Topología y Alertas</div>
                         <div class="subtitle">Toca un título para ver el detalle.</div>
                     </div>
                 </div>
@@ -1371,7 +1371,7 @@
         resultsCodigosContainer.addEventListener('scroll', function() { scrollTopBtnCodigos.style.display = resultsCodigosContainer.scrollTop > 300 ? 'block' : 'none'; });
         function scrollToTopCodigos() { resultsCodigosContainer.scrollTo({ top: 0, behavior: 'smooth' }); }
 
-        /* LÓGICA TOPOLOGIAS (COLAPSABLES) */
+        /* LÓGICA TOPOLOGIAS */
         function updateClearBtnVisibilityTopologias() { clearSearchBtnTopologias.style.display = searchInputTopologias.value.length > 0 ? 'flex' : 'none'; }
         function clearSearchTopologias() { searchInputTopologias.value = ''; updateClearBtnVisibilityTopologias(); filterTopologias(); searchInputTopologias.focus(); }
         searchInputTopologias.addEventListener('input', function() { updateClearBtnVisibilityTopologias(); filterTopologias(); });
@@ -1387,16 +1387,18 @@
                 var rawRows = parseCSV(csvText);
 
                 globalTopologias = [];
+                // Asumimos que la fila 0 es el encabezado
                 for (var i = 1; i < rawRows.length; i++) {
                     var r = rawRows[i];
                     if (!r || r.length < 3) continue;
-                    var tipo = (r[0] || '').trim().toLowerCase();
+                    var tipo = (r[0] || '').trim().toLowerCase(); // alerta, imagen, texto
                     var titulo = (r[1] || '').trim();
                     var palabras = (r[2] || '').trim();
                     var contenido = (r[3] || '').trim();
+                    var descripcion = (r[4] || '').trim(); // Columna E
 
                     if (titulo === '') continue;
-                    globalTopologias.push({ tipo: tipo, titulo: titulo, palabras: palabras, contenido: contenido });
+                    globalTopologias.push({ tipo: tipo, titulo: titulo, palabras: palabras, contenido: contenido, descripcion: descripcion });
                 }
 
                 var now = new Date().toLocaleString('es-CL', { hour: '2-digit', minute:'2-digit' });
@@ -1412,7 +1414,7 @@
             var words = term.split(/\s+/).filter(function(w) { return w !== ''; });
 
             var filtered = globalTopologias.filter(function(item) {
-                var searchable = (item.titulo + ' ' + item.palabras + ' ' + item.contenido).toLowerCase();
+                var searchable = (item.titulo + ' ' + item.palabras + ' ' + item.contenido + ' ' + item.descripcion).toLowerCase();
                 return words.every(function(w) { return searchable.indexOf(w) !== -1; });
             });
             renderTopologias(filtered, words);
@@ -1496,16 +1498,23 @@
             }
 
             htmlContent = 
-                '<h3 class="topologia-modal-title">' + item.titulo + '</h3>' +
+                '<h3 class="topologia-modal-title" style="border-color:'+borderColor+';">' + item.titulo + '</h3>' +
                 '<div style="margin-bottom: 15px;"><span class="tag" style="background-color:'+tagBg+'; color:'+tagColor+';">'+tagText+'</span></div>';
 
             if (item.tipo === 'imagen') {
                 htmlContent += '<img src="' + item.contenido + '" class="topologia-modal-img" alt="Diagrama">';
-                if (item.palabras) {
-                    htmlContent += '<div class="topologia-modal-text" style="color: var(--text-muted); font-size: 0.85rem;">' + item.palabras + '</div>';
+                if (item.descripcion) {
+                    var descConSaltos = item.descripcion.replace(/\n/g, '<br>');
+                    htmlContent += '<div class="topologia-modal-text" style="color: var(--text-main); font-size: 0.95rem; margin-top: 10px;">' + descConSaltos + '</div>';
                 }
             } else {
-                htmlContent += '<div class="topologia-modal-text">' + item.contenido + '</div>';
+                var contConSaltos = item.contenido.replace(/\n/g, '<br>');
+                htmlContent += '<div class="topologia-modal-text">' + contConSaltos + '</div>';
+                
+                if (item.descripcion) {
+                    var descConSaltos = item.descripcion.replace(/\n/g, '<br>');
+                    htmlContent += '<div class="topologia-modal-text" style="margin-top: 15px; padding-top: 15px; border-top: 1px dashed #ccc;">' + descConSaltos + '</div>';
+                }
             }
 
             htmlContent += '<button class="close-modal-btn" onclick="closeTopologiaModal()">Entendido</button>';
