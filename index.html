@@ -29,13 +29,14 @@
             --blue-primary: #1976d2;
             --blue-dark: #0d47a1;
             
-            /* Colores para la Guía */
-            --btn-setup: #424242;
+            /* Colores exactos de los botones físicos */
+            --btn-setup: #3a3a3a;
             --btn-red: #d32f2f;
             --btn-blue: #1976d2;
             --btn-green: #2e7d32;
             --btn-grey: #757575;
             --btn-orange: #f57c00;
+            --btn-light-grey: #e0e0e0;
         }
 
         body.dark-mode {
@@ -587,27 +588,38 @@
         }
         .control-instructions {
             font-size: 0.85rem;
-            line-height: 1.5;
+            line-height: 1.6;
             color: var(--text-main);
         }
         
+        /* BOTONES DE LA GUÍA (Diseño de teclas reales) */
         .btn-badge {
-            display: inline-block;
-            padding: 2px 8px;
-            border-radius: 4px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3px 8px;
+            border-radius: 5px;
             font-family: monospace;
             font-weight: 700;
             color: white;
             font-size: 0.8rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            box-shadow: inset 0 -2px 0 rgba(0,0,0,0.3), 0 1px 3px rgba(0,0,0,0.2); /* Efecto 3D */
             margin: 0 2px;
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+            vertical-align: middle;
         }
+        
+        /* Colores exactos para no confundir */
         .btn-setup { background-color: var(--btn-setup); }
         .btn-red { background-color: var(--btn-red); }
         .btn-blue { background-color: var(--btn-blue); }
         .btn-green { background-color: var(--btn-green); }
         .btn-grey { background-color: var(--btn-grey); }
         .btn-orange { background-color: var(--btn-orange); }
+        .btn-light-grey { background-color: var(--btn-light-grey); color: #000; text-shadow: none; box-shadow: inset 0 -2px 0 rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.2); }
+
+        /* Iconos dentro de los botones */
+        .icon-shape { font-size: 0.9rem; margin-right: 4px; }
     </style>
 </head>
 <body>
@@ -766,7 +778,7 @@
         <div class="modal-content">
             <h3 class="guide-modal-title">⚙️ Guía de Configuración</h3>
             
-            <!-- NUEVA TARJETA: ASOCIAR A LA TV -->
+            <!-- TARJETA ASOCIAR A LA TV -->
             <div class="guide-card" style="border: 2px solid var(--btn-orange);">
                 <div class="guide-card-header" style="border-bottom: none; margin-bottom: 5px; padding-bottom: 0;">
                     <h4 class="guide-card-title" style="color: var(--btn-orange);">📺 Asociar Control a la TV</h4>
@@ -777,7 +789,7 @@
                     <img src="control-champion.png" alt="Control Champion" class="control-img" onerror="this.style.display='none'">
                     <div class="control-details">
                         <div class="control-name">Control Champion:</div>
-                        <div class="control-instructions">Presiona <span class="btn-badge btn-setup">SETUP</span> hasta que parpadee 2 veces, luego presiona <span class="btn-badge btn-green">TV</span> y mantén presionado <span class="btn-badge btn-grey">OK</span> hasta que el TV se apague.</div>
+                        <div class="control-instructions">Presiona <span class="btn-badge btn-setup">SETUP</span> hasta que parpadee 2 veces, luego presiona <span class="btn-badge btn-green">📺 TV</span> y mantén presionado <span class="btn-badge btn-light-grey">OK</span> hasta que el TV se apague.</div>
                     </div>
                 </div>
                 
@@ -785,7 +797,7 @@
                     <img src="control-curve.png" alt="Control Curve" class="control-img" onerror="this.style.display='none'">
                     <div class="control-details">
                         <div class="control-name">Control Curve:</div>
-                        <div class="control-instructions">Presiona <span class="btn-badge btn-setup">SETUP</span> hasta que el botón <span class="btn-badge btn-green">TV (power)</span> quede encendido, luego mantén presionado <span class="btn-badge btn-green">TV (power)</span> hasta que el TV se apague.</div>
+                        <div class="control-instructions">Presiona <span class="btn-badge btn-setup">SETUP</span> hasta que el botón <span class="btn-badge btn-green">⏻ TV (power)</span> quede encendido, luego mantén presionado <span class="btn-badge btn-green">⏻ TV (power)</span> hasta que el TV se apague.</div>
                     </div>
                 </div>
             </div>
@@ -802,7 +814,7 @@
                 <div class="control-row">
                     <div class="control-details">
                         <div class="control-name"><span style="color:var(--btn-red)">🔴</span> Control Champion:</div>
-                        <div class="control-instructions">Presiona <span class="btn-badge btn-setup">SETUP</span> + <span class="btn-badge btn-red">TRIÁNGULO ROJO</span> al mismo tiempo.</div>
+                        <div class="control-instructions">Presiona <span class="btn-badge btn-setup">SETUP</span> + <span class="btn-badge btn-red"><span class="icon-shape">▲</span> ROJO</span> al mismo tiempo.</div>
                     </div>
                 </div>
                 
@@ -824,7 +836,7 @@
                 <div class="control-row">
                     <div class="control-details">
                         <div class="control-name"><span style="color:var(--btn-red)">🔴</span> Control Champion:</div>
-                        <div class="control-instructions">Presiona <span class="btn-badge btn-setup">SETUP</span> + <span class="btn-badge btn-blue">ROMBO AZUL</span> al mismo tiempo.</div>
+                        <div class="control-instructions">Presiona <span class="btn-badge btn-setup">SETUP</span> + <span class="btn-badge btn-blue"><span class="icon-shape">◆</span> AZUL</span> al mismo tiempo.</div>
                     </div>
                 </div>
                 
