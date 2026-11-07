@@ -282,45 +282,56 @@
         .hero-card {
             background: var(--card-bg);
             border-radius: 12px;
-            padding: 16px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            overflow: hidden;
             margin-bottom: 15px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            display: flex;
-            align-items: flex-start;
-            gap: 15px;
             border-left: 6px solid var(--primary);
             animation: slideDown 0.3s ease-out;
         }
         
-        .hero-img {
-            width: 100px;
-            height: 100px;
-            object-fit: contain;
-            border-radius: 8px;
-            background: #fff;
-            padding: 5px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            flex-shrink: 0;
+        .hero-top {
+            display: flex;
+            gap: 15px;
+            padding: 15px;
+            align-items: center;
+            border-bottom: 2px solid rgba(0,0,0,0.05);
         }
+        body.dark-mode .hero-top { border-bottom-color: rgba(255,255,255,0.1); }
         
-        .hero-details { flex: 1; }
+        .hero-img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            background: #fff;
+            border-radius: 8px;
+        }
         
         .hero-title {
-            font-weight: 700;
-            font-size: 1.1rem;
+            font-weight: 800;
+            font-size: 1.2rem;
+            margin: 0;
             color: var(--text-main);
-            margin: 0 0 5px 0;
+            flex: 1;
         }
         
-        .hero-desc {
-            font-size: 0.85rem;
-            line-height: 1.5;
+        .hero-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            font-size: 0.9rem;
+            line-height: 1.4;
             color: var(--text-main);
-            margin: 0;
-            white-space: pre-wrap;
         }
+        body.dark-mode .hero-row { border-bottom-color: rgba(255,255,255,0.1); }
+        .hero-row:last-child { border-bottom: none; }
+        
+        .hero-row-icon { font-size: 1.3rem; line-height: 1; flex-shrink: 0; }
+        .hero-row-text { flex: 1; }
+        .hero-row-text b { color: var(--danger-color); }
 
-        /* Banner de Advertencia (Nuevo) */
+        /* Banner de Advertencia (Si se usa) */
         .warning-banner {
             background: var(--warning-bg);
             border-left: 6px solid var(--warning-border);
@@ -334,15 +345,8 @@
             align-items: flex-start;
             animation: slideDown 0.3s ease-out;
         }
-        
         .warning-icon { font-size: 1.5rem; line-height: 1; }
-        
-        .warning-text {
-            font-size: 0.9rem;
-            font-weight: 600;
-            line-height: 1.4;
-            margin: 0;
-        }
+        .warning-text { font-size: 0.9rem; font-weight: 600; line-height: 1.4; margin: 0; }
 
         /* Botones de lista */
         .list-item {
@@ -356,20 +360,13 @@
             cursor: pointer;
             transition: transform 0.1s;
         }
-        
         .list-item:active { transform: scale(0.98); background: rgba(0,0,0,0.02); }
-        
         .list-icon { font-size: 1.6rem; margin-right: 15px; width: 40px; text-align: center; }
         .list-title { flex: 1; font-weight: 700; font-size: 1rem; color: var(--text-main); }
         .list-arrow { color: var(--text-muted); font-size: 1.2rem; font-weight: bold; }
 
         /* El resto de estilos generales... */
-        .rule-card {
-            border: 2px solid var(--danger-color);
-            background-color: var(--card-bg);
-            border-left: 6px solid var(--danger-color);
-            animation: slideDown 0.3s ease-out;
-        }
+        .rule-card { border: 2px solid var(--danger-color); background-color: var(--card-bg); border-left: 6px solid var(--danger-color); animation: slideDown 0.3s ease-out; }
         
         @keyframes slideDown {
             from { opacity: 0; transform: translateY(-10px); }
@@ -406,13 +403,7 @@
         .cable-box { color: var(--primary-dark); }
         .obs-box { font-family: inherit; color: var(--text-main); font-weight: normal; font-size: 0.85rem; }
 
-        mark {
-            background-color: var(--highlight-bg);
-            color: var(--highlight-text);
-            padding: 0 2px;
-            border-radius: 3px;
-            font-weight: bold;
-        }
+        mark { background-color: var(--highlight-bg); color: var(--highlight-text); padding: 0 2px; border-radius: 3px; font-weight: bold; }
 
         .nav-btn {
             background-color: var(--accent);
@@ -490,21 +481,11 @@
         }
         .sidebar.active { left: 0; }
 
-        .sidebar-header {
-            padding: 20px;
-            background-color: var(--primary);
-            color: white;
-        }
+        .sidebar-header { padding: 20px; background-color: var(--primary); color: white; }
         .sidebar-header h2 { margin: 0; font-size: 1.2rem; }
         .sidebar-header p { margin: 5px 0 0 0; font-size: 0.8rem; opacity: 0.8; }
 
-        .sidebar-menu {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            flex: 1;
-            overflow-y: auto;
-        }
+        .sidebar-menu { list-style: none; padding: 0; margin: 0; flex: 1; overflow-y: auto; }
 
         .sidebar-item {
             padding: 16px 20px;
@@ -520,11 +501,7 @@
         body.dark-mode .sidebar-item { border-bottom-color: rgba(255,255,255,0.05); }
         .sidebar-item:hover { background-color: rgba(0,0,0,0.05); }
         body.dark-mode .sidebar-item:hover { background-color: rgba(255,255,255,0.1); }
-        .sidebar-item.active {
-            background-color: rgba(46, 125, 50, 0.1);
-            color: var(--primary);
-            border-left: 4px solid var(--primary);
-        }
+        .sidebar-item.active { background-color: rgba(46, 125, 50, 0.1); color: var(--primary); border-left: 4px solid var(--primary); }
         .sidebar-item span.icon { font-size: 1.3rem; }
 
         .oracle-table {
@@ -537,156 +514,47 @@
             overflow: hidden;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
-        .oracle-table th {
-            background-color: #0d3b66;
-            color: white;
-            padding: 8px 6px;
-            text-align: center;
-            font-weight: bold;
-        }
-        .oracle-table td {
-            border: 1px solid rgba(0,0,0,0.1);
-            padding: 8px 6px;
-            text-align: center;
-            color: var(--text-main);
-            line-height: 1.3;
-        }
+        .oracle-table th { background-color: #0d3b66; color: white; padding: 8px 6px; text-align: center; font-weight: bold; }
+        .oracle-table td { border: 1px solid rgba(0,0,0,0.1); padding: 8px 6px; text-align: center; color: var(--text-main); line-height: 1.3; }
         body.dark-mode .oracle-table td { border-color: #444; }
         
         .highlight-sector { background-color: #fff59d; color: #000; font-weight: bold; padding: 2px 4px; border-radius: 3px; }
         .highlight-red-box { border: 2px solid #d32f2f !important; background-color: #ffebee; color: #b71c1c !important; font-weight: bold; }
         body.dark-mode .highlight-red-box { background-color: #3e1a1a; color: #ef5350 !important; }
 
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.6);
-            z-index: 1002;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 1002; justify-content: center; align-items: center; padding: 20px; }
 
-        .modal-content {
-            background: var(--modal-bg);
-            color: var(--text-main);
-            padding: 20px;
-            border-radius: 12px;
-            max-width: 600px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
+        .modal-content { background: var(--modal-bg); color: var(--text-main); padding: 20px; border-radius: 12px; max-width: 600px; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
 
         .modal-content h3 { margin-top: 0; color: var(--danger-color); font-size: 1.1rem; text-align: center; }
         .modal-content p { font-size: 0.9rem; line-height: 1.5; margin-bottom: 10px; }
         .modal-content .note-box { background: var(--rule-bg); border-left: 4px solid var(--rule-border); padding: 10px; border-radius: 4px; font-size: 0.85rem; margin-bottom: 15px; }
         
-        .close-modal-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 12px 15px;
-            border-radius: 8px;
-            width: 100%;
-            font-weight: bold;
-            font-size: 1rem;
-            cursor: pointer;
-            margin-top: 10px;
-        }
+        .close-modal-btn { background: var(--primary); color: white; border: none; padding: 12px 15px; border-radius: 8px; width: 100%; font-weight: bold; font-size: 1rem; cursor: pointer; margin-top: 10px; }
 
         .guide-modal-title { color: #1976d2 !important; }
         
-        .guide-card {
-            background: rgba(0,0,0,0.02);
-            border: 1px solid rgba(0,0,0,0.1);
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 15px;
-            display: flex;
-            flex-direction: column;
-        }
+        .guide-card { background: rgba(0,0,0,0.02); border: 1px solid rgba(0,0,0,0.1); border-radius: 10px; padding: 15px; margin-bottom: 15px; display: flex; flex-direction: column; }
         body.dark-mode .guide-card { background: rgba(255,255,255,0.05); border-color: #444; }
         
-        .guide-card-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-            border-bottom: 1px dashed rgba(0,0,0,0.1);
-            padding-bottom: 10px;
-        }
+        .guide-card-header { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; border-bottom: 1px dashed rgba(0,0,0,0.1); padding-bottom: 10px; }
         body.dark-mode .guide-card-header { border-color: #444; }
         
-        .guide-img {
-            width: 90px;
-            height: 70px;
-            object-fit: contain;
-            border-radius: 8px;
-            background: #fff;
-            padding: 5px;
-        }
-        .guide-card-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--text-main);
-            margin: 0;
-        }
+        .guide-img { width: 90px; height: 70px; object-fit: contain; border-radius: 8px; background: #fff; padding: 5px; }
+        .guide-card-title { font-size: 1.1rem; font-weight: 700; color: var(--text-main); margin: 0; }
         
-        .control-row {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            margin-bottom: 12px;
-            padding-bottom: 12px;
-            border-bottom: 1px dotted rgba(0,0,0,0.1);
-        }
+        .control-row { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px dotted rgba(0,0,0,0.1); }
         body.dark-mode .control-row { border-color: #444; }
         .control-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
         
-        .control-img {
-            width: 50px;
-            height: 70px;
-            object-fit: contain;
-            border-radius: 6px;
-            background: #fff;
-            padding: 3px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
+        .control-img { width: 50px; height: 70px; object-fit: contain; border-radius: 6px; background: #fff; padding: 3px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
         
         .control-details { flex: 1; }
 
-        .control-name {
-            font-weight: 700;
-            font-size: 0.95rem;
-            margin-bottom: 4px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        .control-instructions {
-            font-size: 0.85rem;
-            line-height: 1.6;
-            color: var(--text-main);
-        }
+        .control-name { font-weight: 700; font-size: 0.95rem; margin-bottom: 4px; display: flex; align-items: center; gap: 5px; }
+        .control-instructions { font-size: 0.85rem; line-height: 1.6; color: var(--text-main); }
         
-        .btn-badge {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 3px 8px;
-            border-radius: 5px;
-            font-family: monospace;
-            font-weight: 700;
-            color: white;
-            font-size: 0.8rem;
-            box-shadow: inset 0 -2px 0 rgba(0,0,0,0.3), 0 1px 3px rgba(0,0,0,0.2);
-            margin: 0 2px;
-            text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
-            vertical-align: middle;
-        }
+        .btn-badge { display: inline-flex; align-items: center; justify-content: center; padding: 3px 8px; border-radius: 5px; font-family: monospace; font-weight: 700; color: white; font-size: 0.8rem; box-shadow: inset 0 -2px 0 rgba(0,0,0,0.3), 0 1px 3px rgba(0,0,0,0.2); margin: 0 2px; text-shadow: 1px 1px 1px rgba(0,0,0,0.5); vertical-align: middle; }
         
         .btn-setup { background-color: var(--btn-setup); }
         .btn-red { background-color: var(--btn-red); }
@@ -698,41 +566,10 @@
 
         .icon-shape { font-size: 0.9rem; margin-right: 4px; }
         
-        /* MODAL TOPOLOGIAS DETALLE */
-        .topologia-modal-content {
-            background: var(--card-bg);
-            color: var(--text-main);
-            padding: 20px;
-            border-radius: 12px;
-            max-width: 800px;
-            width: 100%;
-            max-height: 95vh;
-            overflow-y: auto;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            position: relative;
-        }
-        .topologia-modal-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-top: 0;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--border-color, #ddd);
-        }
-        .topologia-modal-img {
-            width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            background: #fff;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .topologia-modal-text {
-            font-size: 0.95rem;
-            line-height: 1.6;
-            color: var(--text-main);
-            white-space: pre-wrap;
-        }
+        .topologia-modal-content { background: var(--card-bg); color: var(--text-main); padding: 20px; border-radius: 12px; max-width: 800px; width: 100%; max-height: 95vh; overflow-y: auto; box-shadow: 0 4px 15px rgba(0,0,0,0.3); position: relative; }
+        .topologia-modal-title { font-size: 1.2rem; font-weight: 700; margin-top: 0; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid var(--border-color, #ddd); }
+        .topologia-modal-img { width: 100%; height: auto; border-radius: 8px; margin-bottom: 15px; background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .topologia-modal-text { font-size: 0.95rem; line-height: 1.6; color: var(--text-main); white-space: pre-wrap; }
     </style>
 </head>
 <body>
@@ -756,7 +593,6 @@
         </ul>
     </div>
 
-    <!-- VISTA ARMARIOS -->
     <div id="view-armarios">
         <header>
             <div class="header-top">
@@ -800,7 +636,6 @@
         <button id="scrollTopBtn" onclick="scrollToTopArmarios()">⬆️</button>
     </div>
 
-    <!-- VISTA CODIGOS -->
     <div id="view-codigos">
         <header>
             <div class="header-top">
@@ -849,7 +684,6 @@
         <button id="scrollTopBtnCodigos" onclick="scrollToTopCodigos()">⬆️</button>
     </div>
 
-    <!-- VISTA TOPOLOGIAS -->
     <div id="view-topologias">
         <header>
             <div class="header-top">
@@ -883,7 +717,6 @@
         <button id="scrollTopBtnTopologias" onclick="scrollToTopTopologias()">⬆️</button>
     </div>
 
-    <!-- MODALES -->
     <div class="modal-overlay" id="infoModal">
         <div class="modal-content">
             <h3>⚠️ COMPRUEBA QUE LA CUENTA NO SEA RÍGIDA</h3>
@@ -894,9 +727,7 @@
             <p><b>2. Otra forma de saberlo:</b> Solo las cuentas rígidas tienen <b>Filamento splitter primario</b> y <b>Filamento splitter secundario</b>:</p>
             
             <table class="oracle-table">
-                <thead>
-                    <tr><th>TIPO ELEMENTO</th><th>CÓDIGO ELEMENTO</th></tr>
-                </thead>
+                <thead><tr><th>TIPO ELEMENTO</th><th>CÓDIGO ELEMENTO</th></tr></thead>
                 <tbody>
                     <tr><td>ALTA:Contenedor</td><td>... VILLA ALBORADA<br><span class="highlight-sector">SECTOR 3</span></td></tr>
                     <tr><td class="highlight-red-box">ALTA:Filamento<br>Splitter P. (Primario)</td><td class="highlight-red-box">1</td></tr>
@@ -1004,11 +835,8 @@
         </div>
     </div>
 
-    <!-- MODAL DETALLE TOPOLOGIA -->
     <div class="modal-overlay" id="topologiaModal">
-        <div class="topologia-modal-content" id="topologiaModalContent">
-            <!-- Se llena por JS -->
-        </div>
+        <div class="topologia-modal-content" id="topologiaModalContent"></div>
     </div>
 
     <script>
@@ -1064,7 +892,6 @@
         var sidebar = document.getElementById('sidebar');
         var sidebarOverlay = document.getElementById('sidebarOverlay');
 
-        // Variables de control de estado de navegación
         var currentView = 'armarios';
         var activeModal = null;
 
@@ -1132,40 +959,32 @@
 
         function closeModal(modalId, addToHistory = true) {
             if (addToHistory) {
-                history.back(); // Esto dispara popstate y cierra el modal
+                history.back();
             } else {
                 activeModal = null;
                 document.getElementById(modalId).style.display = 'none';
             }
         }
 
-        // Control del botón físico "Atrás" y gesto de deslizar
         window.addEventListener('popstate', function(event) {
             var state = event.state;
-
-            // Si el estado no tiene modal, pero hay uno abierto, cerramos el modal
             if (activeModal && (!state || !state.modal)) {
                 closeModal(activeModal, false);
                 return;
             }
-
-            // Si hay una vista en el estado, navegamos a ella
             if (state && state.view) {
                 switchView(state.view, false);
             } else {
-                // Si no hay estado, volvemos a la vista principal
                 switchView('armarios', false);
             }
         });
 
-        // Al cargar la página, restauramos la vista guardada
         window.addEventListener('load', function() {
             var savedTab = safeStorage.get('currentTab') || 'armarios';
             history.replaceState({ view: savedTab, modal: null }, '', '#' + savedTab);
             switchView(savedTab, false);
         });
 
-        // Cerrar modales al tocar el fondo oscuro
         document.getElementById('infoModal').addEventListener('click', function(e) { if (e.target === this) closeModal('infoModal'); });
         document.getElementById('guideModal').addEventListener('click', function(e) { if (e.target === this) closeModal('guideModal'); });
         document.getElementById('topologiaModal').addEventListener('click', function(e) { if (e.target === this) closeModal('topologiaModal'); });
@@ -1530,40 +1349,64 @@
             for (var i = 0; i < dataArray.length; i++) {
                 var item = dataArray[i];
                 
-                // Si es de tipo HERO, renderizamos la tarjeta grande
                 if (item.tipo === 'hero') {
                     var heroCard = document.createElement('div');
                     heroCard.className = 'hero-card';
                     
                     var imgHtml = item.contenido ? '<img src="' + item.contenido + '" class="hero-img" onerror="this.style.display=\'none\'">' : '';
-                    var descHtml = item.descripcion ? item.descripcion.replace(/\n/g, '<br>') : '';
+                    
+                    // Parsear la descripción para crear las filas de alto impacto
+                    var rowsHtml = '';
+                    if (item.descripcion) {
+                        var lines = item.descripcion.split('\n');
+                        for (var j = 0; j < lines.length; j++) {
+                            var line = lines[j].trim();
+                            if (!line) continue;
+                            
+                            var icon = '💡';
+                            var text = line;
+                            
+                            // Asignación inteligente de íconos
+                            if (line.toUpperCase().includes('NO USAR') || line.toUpperCase().includes('NODOS')) { icon = '❌'; }
+                            else if (line.toUpperCase().includes('CAMBIAR') || line.toUpperCase().includes('REEMPLAZAR')) { icon = '🔄'; }
+                            
+                            // Formatear la parte clave en negrita (opcional, si tiene ':')
+                            var formattedText = highlightText(line, words);
+                            var parts = formattedText.split(':');
+                            if (parts.length > 1) {
+                                formattedText = '<b>' + parts[0] + ':</b>' + parts.slice(1).join(':');
+                            }
+
+                            rowsHtml += 
+                                '<div class="hero-row">' +
+                                    '<div class="hero-row-icon">' + icon + '</div>' +
+                                    '<div class="hero-row-text">' + formattedText + '</div>' +
+                                '</div>';
+                        }
+                    }
 
                     heroCard.innerHTML = 
-                        imgHtml +
-                        '<div class="hero-details">' +
+                        '<div class="hero-top">' +
+                            imgHtml +
                             '<h3 class="hero-title">' + highlightText(item.titulo, words) + '</h3>' +
-                            '<p class="hero-desc">' + highlightText(descHtml, words).replace(/&lt;br&gt;/g, '<br>') + '</p>' +
-                        '</div>';
+                        '</div>' +
+                        rowsHtml;
                     
                     frag.appendChild(heroCard);
                     continue;
                 }
 
-                // Si es de tipo BANNER, renderizamos la franja amarilla
                 if (item.tipo === 'banner') {
                     var bannerCard = document.createElement('div');
                     bannerCard.className = 'warning-banner';
-                    
                     var textBanner = item.contenido ? item.contenido.replace(/\n/g, '<br>') : '';
                     bannerCard.innerHTML = 
                         '<div class="warning-icon">⚠️</div>' +
                         '<p class="warning-text">' + highlightText(textBanner, words).replace(/&lt;br&gt;/g, '<br>') + '</p>';
-                    
                     frag.appendChild(bannerCard);
                     continue;
                 }
 
-                // Para el resto (Alerta, Imagen, Texto), renderizamos el botón de lista
                 var listItem = document.createElement('div');
                 listItem.className = 'list-item';
                 
