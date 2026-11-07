@@ -276,7 +276,9 @@
 
         .results-container { flex: 1; overflow-y: auto; padding: 15px; }
 
-        /* --- 🛑 INICIO MÓDULO BLINDADO: ESTILOS ARMARIOS --- */
+        /* ========================================== */
+        /* 🛑 INICIO MÓDULO BLINDADO: ESTILOS ARMARIOS */
+        /* ========================================== */
         .card {
             background: var(--card-bg);
             border-radius: 12px;
@@ -287,7 +289,7 @@
             flex-direction: column;
             position: relative;
             overflow: hidden;
-            height: 100%; /* Obliga a que todas midan lo mismo en la grilla */
+            min-height: 140px; /* Altura mínima para que se vean alineadas */
         }
 
         .card::before {
@@ -301,7 +303,7 @@
             border-left: 6px solid var(--danger-color);
             animation: slideDown 0.3s ease-out;
         }
-
+        
         @keyframes slideDown {
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -350,12 +352,16 @@
             align-items: center;
             gap: 8px;
             font-size: 0.95rem;
-            margin-top: auto; /* Esto empuja el botón siempre al fondo de la tarjeta */
+            margin-top: auto; /* Empuja el botón al fondo de la tarjeta */
         }
         .nav-btn:active { opacity: 0.8; }
-        /* --- FIN MÓDULO BLINDADO: ESTILOS ARMARIOS --- */
+        /* ========================================== */
+        /* FIN MÓDULO BLINDADO: ESTILOS ARMARIOS       */
+        /* ========================================== */
 
-        /* --- 🛑 INICIO MÓDULO BLINDADO: ESTILOS TOPOLOGÍAS --- */
+        /* ========================================== */
+        /* 🛑 INICIO MÓDULO BLINDADO: ESTILOS TOPOLOGÍAS */
+        /* ========================================== */
         .hero-card {
             background: var(--card-bg);
             border-radius: 12px;
@@ -476,7 +482,9 @@
             align-items: center;
             justify-content: center;
         }
-        /* --- FIN MÓDULO BLINDADO: ESTILOS TOPOLOGÍAS --- */
+        /* ========================================== */
+        /* FIN MÓDULO BLINDADO: ESTILOS TOPOLOGÍAS     */
+        /* ========================================== */
 
         /* --- ESTILOS GENERALES (Compartidos) --- */
         .loading, .no-results { text-align: center; padding: 20px; color: var(--text-muted); }
@@ -595,7 +603,9 @@
         .modal-content .note-box { background: var(--rule-bg); border-left: 4px solid var(--rule-border); padding: 10px; border-radius: 4px; font-size: 0.85rem; margin-bottom: 15px; }
         .close-modal-btn { background: var(--primary); color: white; border: none; padding: 12px 15px; border-radius: 8px; width: 100%; font-weight: bold; font-size: 1rem; cursor: pointer; margin-top: 10px; }
 
-        /* --- 🛑 INICIO MÓDULO BLINDADO: ESTILOS TV-DECO --- */
+        /* ========================================== */
+        /* 🛑 INICIO MÓDULO BLINDADO: ESTILOS TV-DECO */
+        /* ========================================== */
         .guide-modal-title { color: #1976d2 !important; }
         .guide-card { background: rgba(0,0,0,0.02); border: 1px solid rgba(0,0,0,0.1); border-radius: 10px; padding: 15px; margin-bottom: 15px; display: flex; flex-direction: column; }
         body.dark-mode .guide-card { background: rgba(255,255,255,0.05); border-color: #444; }
@@ -623,7 +633,9 @@
         .topologia-modal-title { font-size: 1.2rem; font-weight: 700; margin-top: 0; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid var(--border-color, #ddd); }
         .topologia-modal-img { width: 100%; height: auto; border-radius: 8px; margin-bottom: 15px; background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         .topologia-modal-text { font-size: 0.95rem; line-height: 1.6; color: var(--text-main); white-space: pre-wrap; }
-        /* --- FIN MÓDULO BLINDADO: ESTILOS TV-DECO --- */
+        /* ========================================== */
+        /* FIN MÓDULO BLINDADO: ESTILOS TV-DECO        */
+        /* ========================================== */
     </style>
 </head>
 <body>
