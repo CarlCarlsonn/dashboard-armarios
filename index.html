@@ -276,7 +276,86 @@
 
         .results-container { flex: 1; overflow-y: auto; padding: 15px; }
 
-        /* --- ESTILOS TOPOLOGIAS --- */
+        /* --- 🛑 INICIO MÓDULO BLINDADO: ESTILOS ARMARIOS --- */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            height: 100%; /* Obliga a que todas midan lo mismo en la grilla */
+        }
+
+        .card::before {
+            content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 5px;
+            background-color: var(--tag-color, var(--primary));
+        }
+
+        .rule-card {
+            border: 2px solid var(--danger-color);
+            background-color: var(--card-bg);
+            border-left: 6px solid var(--danger-color);
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+
+        .tag {
+            background-color: var(--tag-bg);
+            color: var(--tag-color);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .card-title { font-weight: 700; color: var(--text-main); font-size: 1.05rem; line-height: 1.3; margin-bottom: 8px; word-break: break-word; }
+
+        .cable-box, .obs-box {
+            background: rgba(0,0,0,0.03);
+            border: 1px dashed rgba(0,0,0,0.1);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+            font-weight: 600;
+            word-break: break-word;
+        }
+        body.dark-mode .cable-box, body.dark-mode .obs-box { background: rgba(255,255,255,0.05); border-color: #444; }
+        
+        .cable-box { color: var(--primary-dark); }
+        .obs-box { font-family: inherit; color: var(--text-main); font-weight: normal; font-size: 0.85rem; }
+
+        .nav-btn {
+            background-color: var(--accent);
+            color: white;
+            text-decoration: none;
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 600;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            margin-top: auto; /* Esto empuja el botón siempre al fondo de la tarjeta */
+        }
+        .nav-btn:active { opacity: 0.8; }
+        /* --- FIN MÓDULO BLINDADO: ESTILOS ARMARIOS --- */
+
+        /* --- 🛑 INICIO MÓDULO BLINDADO: ESTILOS TOPOLOGÍAS --- */
         .hero-card {
             background: var(--card-bg);
             border-radius: 12px;
@@ -310,7 +389,6 @@
             margin: 0 0 10px 0;
         }
         
-        /* Corrección de alineación con Grid */
         .hero-row {
             display: grid;
             grid-template-columns: 20px 1fr;
@@ -343,7 +421,6 @@
         .warning-icon { font-size: 1.5rem; line-height: 1; }
         .warning-text { font-size: 0.9rem; font-weight: 600; line-height: 1.4; margin: 0; }
 
-        /* GRID DE 2 COLUMNAS */
         .grid-container {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -399,63 +476,9 @@
             align-items: center;
             justify-content: center;
         }
+        /* --- FIN MÓDULO BLINDADO: ESTILOS TOPOLOGÍAS --- */
 
-        /* El resto de estilos generales... */
-        .rule-card { border: 2px solid var(--danger-color); background-color: var(--card-bg); border-left: 6px solid var(--danger-color); animation: slideDown 0.3s ease-out; }
-        
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
-
-        .tag {
-            background-color: var(--tag-bg);
-            color: var(--tag-color);
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-
-        .card-title { font-weight: 700; color: var(--text-main); font-size: 1.05rem; line-height: 1.3; word-break: break-word; }
-
-        .cable-box, .obs-box {
-            background: rgba(0,0,0,0.03);
-            border: 1px dashed rgba(0,0,0,0.1);
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-family: monospace;
-            font-size: 0.95rem;
-            margin-bottom: 12px;
-            font-weight: 600;
-            word-break: break-word;
-        }
-        body.dark-mode .cable-box, body.dark-mode .obs-box { background: rgba(255,255,255,0.05); border-color: #444; }
-        
-        .cable-box { color: var(--primary-dark); }
-        .obs-box { font-family: inherit; color: var(--text-main); font-weight: normal; font-size: 0.85rem; }
-
-        mark { background-color: var(--highlight-bg); color: var(--highlight-text); padding: 0 2px; border-radius: 3px; font-weight: bold; }
-
-        .nav-btn {
-            background-color: var(--accent);
-            color: white;
-            text-decoration: none;
-            padding: 12px;
-            border-radius: 10px;
-            text-align: center;
-            font-weight: 600;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.95rem;
-        }
-        .nav-btn:active { opacity: 0.8; }
-
+        /* --- ESTILOS GENERALES (Compartidos) --- */
         .loading, .no-results { text-align: center; padding: 20px; color: var(--text-muted); }
         
         .contact-footer {
@@ -469,6 +492,14 @@
         }
         body.dark-mode .contact-footer { border-top-color: rgba(255,255,255,0.1); }
         .contact-footer strong { color: var(--primary); }
+
+        mark {
+            background-color: var(--highlight-bg);
+            color: var(--highlight-text);
+            padding: 0 2px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
 
         #scrollTopBtn, #scrollTopBtnCodigos, #scrollTopBtnTopologias {
             display: none;
@@ -558,39 +589,28 @@
         body.dark-mode .highlight-red-box { background-color: #3e1a1a; color: #ef5350 !important; }
 
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 1002; justify-content: center; align-items: center; padding: 20px; }
-
         .modal-content { background: var(--modal-bg); color: var(--text-main); padding: 20px; border-radius: 12px; max-width: 600px; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-
         .modal-content h3 { margin-top: 0; color: var(--danger-color); font-size: 1.1rem; text-align: center; }
         .modal-content p { font-size: 0.9rem; line-height: 1.5; margin-bottom: 10px; }
         .modal-content .note-box { background: var(--rule-bg); border-left: 4px solid var(--rule-border); padding: 10px; border-radius: 4px; font-size: 0.85rem; margin-bottom: 15px; }
-        
         .close-modal-btn { background: var(--primary); color: white; border: none; padding: 12px 15px; border-radius: 8px; width: 100%; font-weight: bold; font-size: 1rem; cursor: pointer; margin-top: 10px; }
 
+        /* --- 🛑 INICIO MÓDULO BLINDADO: ESTILOS TV-DECO --- */
         .guide-modal-title { color: #1976d2 !important; }
-        
         .guide-card { background: rgba(0,0,0,0.02); border: 1px solid rgba(0,0,0,0.1); border-radius: 10px; padding: 15px; margin-bottom: 15px; display: flex; flex-direction: column; }
         body.dark-mode .guide-card { background: rgba(255,255,255,0.05); border-color: #444; }
-        
         .guide-card-header { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; border-bottom: 1px dashed rgba(0,0,0,0.1); padding-bottom: 10px; }
         body.dark-mode .guide-card-header { border-color: #444; }
-        
         .guide-img { width: 90px; height: 70px; object-fit: contain; border-radius: 8px; background: #fff; padding: 5px; }
         .guide-card-title { font-size: 1.1rem; font-weight: 700; color: var(--text-main); margin: 0; }
-        
         .control-row { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px dotted rgba(0,0,0,0.1); }
         body.dark-mode .control-row { border-color: #444; }
         .control-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-        
         .control-img { width: 50px; height: 70px; object-fit: contain; border-radius: 6px; background: #fff; padding: 3px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-        
         .control-details { flex: 1; }
-
         .control-name { font-weight: 700; font-size: 0.95rem; margin-bottom: 4px; display: flex; align-items: center; gap: 5px; }
         .control-instructions { font-size: 0.85rem; line-height: 1.6; color: var(--text-main); }
-        
         .btn-badge { display: inline-flex; align-items: center; justify-content: center; padding: 3px 8px; border-radius: 5px; font-family: monospace; font-weight: 700; color: white; font-size: 0.8rem; box-shadow: inset 0 -2px 0 rgba(0,0,0,0.3), 0 1px 3px rgba(0,0,0,0.2); margin: 0 2px; text-shadow: 1px 1px 1px rgba(0,0,0,0.5); vertical-align: middle; }
-        
         .btn-setup { background-color: var(--btn-setup); }
         .btn-red { background-color: var(--btn-red); }
         .btn-blue { background-color: var(--btn-blue); }
@@ -598,17 +618,19 @@
         .btn-grey { background-color: var(--btn-grey); }
         .btn-orange { background-color: var(--btn-orange); }
         .btn-light-grey { background-color: var(--btn-light-grey); color: #000; text-shadow: none; box-shadow: inset 0 -2px 0 rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.2); }
-
         .icon-shape { font-size: 0.9rem; margin-right: 4px; }
-        
         .topologia-modal-content { background: var(--card-bg); color: var(--text-main); padding: 20px; border-radius: 12px; max-width: 800px; width: 100%; max-height: 95vh; overflow-y: auto; box-shadow: 0 4px 15px rgba(0,0,0,0.3); position: relative; }
         .topologia-modal-title { font-size: 1.2rem; font-weight: 700; margin-top: 0; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid var(--border-color, #ddd); }
         .topologia-modal-img { width: 100%; height: auto; border-radius: 8px; margin-bottom: 15px; background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         .topologia-modal-text { font-size: 0.95rem; line-height: 1.6; color: var(--text-main); white-space: pre-wrap; }
+        /* --- FIN MÓDULO BLINDADO: ESTILOS TV-DECO --- */
     </style>
 </head>
 <body>
 
+    <!-- ========================================== -->
+    <!-- 🛑 INICIO MÓDULO BLINDADO: MENÚ LATERAL    -->
+    <!-- ========================================== -->
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleMenu()"></div>
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
@@ -627,7 +649,13 @@
             </li>
         </ul>
     </div>
+    <!-- ========================================== -->
+    <!-- FIN MÓDULO BLINDADO: MENÚ LATERAL          -->
+    <!-- ========================================== -->
 
+    <!-- ========================================== -->
+    <!-- 🛑 INICIO MÓDULO BLINDADO: VISTA ARMARIOS  -->
+    <!-- ========================================== -->
     <div id="view-armarios">
         <header>
             <div class="header-top">
@@ -670,7 +698,13 @@
         </div>
         <button id="scrollTopBtn" onclick="scrollToTopArmarios()">⬆️</button>
     </div>
+    <!-- ========================================== -->
+    <!-- FIN MÓDULO BLINDADO: VISTA ARMARIOS        -->
+    <!-- ========================================== -->
 
+    <!-- ========================================== -->
+    <!-- 🛑 INICIO MÓDULO BLINDADO: VISTA CODIGOS   -->
+    <!-- ========================================== -->
     <div id="view-codigos">
         <header>
             <div class="header-top">
@@ -718,7 +752,13 @@
         </div>
         <button id="scrollTopBtnCodigos" onclick="scrollToTopCodigos()">⬆️</button>
     </div>
+    <!-- ========================================== -->
+    <!-- FIN MÓDULO BLINDADO: VISTA CODIGOS         -->
+    <!-- ========================================== -->
 
+    <!-- ========================================== -->
+    <!-- 🛑 INICIO MÓDULO BLINDADO: VISTA TOPOLOGIAS-->
+    <!-- ========================================== -->
     <div id="view-topologias">
         <header>
             <div class="header-top">
@@ -751,8 +791,13 @@
         </div>
         <button id="scrollTopBtnTopologias" onclick="scrollToTopTopologias()">⬆️</button>
     </div>
+    <!-- ========================================== -->
+    <!-- FIN MÓDULO BLINDADO: VISTA TOPOLOGIAS      -->
+    <!-- ========================================== -->
 
-    <!-- MODALES -->
+    <!-- ========================================== -->
+    <!-- 🛑 INICIO MÓDULO BLINDADO: MODALES         -->
+    <!-- ========================================== -->
     <div class="modal-overlay" id="infoModal">
         <div class="modal-content">
             <h3>⚠️ COMPRUEBA QUE LA CUENTA NO SEA RÍGIDA</h3>
@@ -874,8 +919,14 @@
     <div class="modal-overlay" id="topologiaModal">
         <div class="topologia-modal-content" id="topologiaModalContent"></div>
     </div>
+    <!-- ========================================== -->
+    <!-- FIN MÓDULO BLINDADO: MODALES               -->
+    <!-- ========================================== -->
 
     <script>
+        /* ========================================== */
+        /* 🛑 INICIO MÓDULO BLINDADO: SEGURIDAD       */
+        /* ========================================== */
         var safeStorage = {
             get: function(key) { try { return localStorage.getItem(key); } catch(e) { return null; } },
             set: function(key, val) { try { localStorage.setItem(key, val); } catch(e) {} },
@@ -889,9 +940,12 @@
             document.body.appendChild(errorDiv);
             return false;
         };
+        /* FIN MÓDULO BLINDADO: SEGURIDAD */
 
+        /* ========================================== */
+        /* 🛑 INICIO MÓDULO BLINDADO: CONFIGURACIÓN   */
+        /* ========================================== */
         var SHEET_TOPOLOGIAS_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSKUPJST2SVhD74W0cYfcb7RpBpuWgT5SLqHn7YSJasQcPNE971C5x_mBCDHPKJift7EFrOoYs4VHoq/pub?gid=1245245166&single=true&output=csv'; 
-        
         var SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSKUPJST2SVhD74W0cYfcb7RpBpuWgT5SLqHn7YSJasQcPNE971C5x_mBCDHPKJift7EFrOoYs4VHoq/pub?gid=1395209502&single=true&output=csv';
         var SHEET_CODIGOS_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSKUPJST2SVhD74W0cYfcb7RpBpuWgT5SLqHn7YSJasQcPNE971C5x_mBCDHPKJift7EFrOoYs4VHoq/pub?gid=47179035&single=true&output=csv'; 
 
@@ -930,7 +984,11 @@
 
         var currentView = 'armarios';
         var activeModal = null;
+        /* FIN MÓDULO BLINDADO: CONFIGURACIÓN */
 
+        /* ========================================== */
+        /* 🛑 INICIO MÓDULO BLINDADO: LÓGICA GENERAL  */
+        /* ========================================== */
         if (safeStorage.get('theme') === 'dark') {
             document.body.classList.add('dark-mode');
             document.getElementById('themeToggle').innerText = '☀️';
@@ -1078,8 +1136,32 @@
             }
             return 0;
         }
+        /* FIN MÓDULO BLINDADO: LÓGICA GENERAL */
 
-        /* LÓGICA ARMARIOS */
+        /* ========================================== */
+        /* 🛑 INICIO MÓDULO BLINDADO: ARMARIOS LOGIC  */
+        /* ========================================== */
+        // RESTAURADO: Regla HTML para Cuentas Rígidas
+        var reglaHtml = 
+            '<div class="card-header"><span class="tag">REGLA DE ORO</span></div>' +
+            '<div class="card-title">⚠️ Comprueba que la cuenta NO SEA RÍGIDA</div>' +
+            '<div class="obs-box" style="font-size: 0.85rem; color: var(--text-main); font-family: inherit; line-height: 1.4;">' +
+                'Si el contenedor indica <b>"SECTOR"</b> y un número (como CONT-PRIM-VLDV-VILLA ALBORADA <span style="background:#fff59d; color:#000; padding:0 2px;">SECTOR 3</span>, o cuando dice <b>Sector X al Sector Y</b>), <u>no existen armarios con esos nombres</u>, por lo que asumimos que es RÍGIDA.<br><br>' +
+                '<b>Otra forma de saberlo:</b> Solo las cuentas rígidas tienen <b>Filamento splitter primario</b> y <b>Filamento splitter secundario</b>:' +
+            '</div>' +
+            '<table class="oracle-table">' +
+                '<thead><tr><th>TIPO ELEMENTO</th><th>CÓDIGO</th></tr></thead>' +
+                '<tbody>' +
+                    '<tr><td>ALTA:Contenedor</td><td>... SECTOR 3</td></tr>' +
+                    '<tr><td class="highlight-red-box">ALTA:Filamento<br>Splitter P. (Primario)</td><td class="highlight-red-box">1</td></tr>' +
+                    '<tr><td class="highlight-red-box">ALTA:Filamento<br>Splitter S. (Secundario)</td><td class="highlight-red-box">14</td></tr>' +
+                '</tbody>' +
+            '</table>' +
+            '<div class="obs-box" style="font-size: 0.85rem; color: var(--text-main); font-family: inherit; line-height: 1.4;">' +
+                '✅ <b>Si tiene AMBOS (recuadro rojo):</b> Es RÍGIDA. No debe buscarla aquí.<br><br>' +
+                '❌ <b>Por lógica, las que tienen solo Filamento splitter primario son FLEXIBLES.</b> Si no está en la app, contacta a Supervisión.' +
+            '</div>';
+
         function updateClearBtnVisibility() { clearSearchBtn.style.display = searchInput.value.length > 0 ? 'flex' : 'none'; }
         function clearSearch() { searchInput.value = ''; safeStorage.remove('lastSearchTerm'); updateClearBtnVisibility(); filterData(); searchInput.focus(); }
         var savedSearch = safeStorage.get('lastSearchTerm');
@@ -1167,6 +1249,7 @@
             var isSectorSearch = /sec/i.test(searchTerm); 
             var frag = document.createDocumentFragment();
 
+            // BLINDAJE: Aquí se inyecta la Regla de Oro si no hay resultados
             if (isSectorSearch && dataArray.length > 0) {
                 var ruleCard = document.createElement('div');
                 ruleCard.className = 'card rule-card';
@@ -1245,8 +1328,11 @@
 
         resultsContainer.addEventListener('scroll', function() { scrollTopBtn.style.display = resultsContainer.scrollTop > 300 ? 'block' : 'none'; });
         function scrollToTopArmarios() { resultsContainer.scrollTo({ top: 0, behavior: 'smooth' }); }
+        /* FIN MÓDULO BLINDADO: ARMARIOS LOGIC */
 
-        /* LÓGICA CODIGOS */
+        /* ========================================== */
+        /* 🛑 INICIO MÓDULO BLINDADO: CODIGOS LOGIC   */
+        /* ========================================== */
         function updateClearBtnVisibilityCodigos() { clearSearchBtnCodigos.style.display = searchInputCodigos.value.length > 0 ? 'flex' : 'none'; }
         function clearSearchCodigos() { searchInputCodigos.value = ''; updateClearBtnVisibilityCodigos(); filterCodigos(); searchInputCodigos.focus(); }
         searchInputCodigos.addEventListener('input', function() { updateClearBtnVisibilityCodigos(); filterCodigos(); });
@@ -1322,8 +1408,11 @@
 
         resultsCodigosContainer.addEventListener('scroll', function() { scrollTopBtnCodigos.style.display = resultsCodigosContainer.scrollTop > 300 ? 'block' : 'none'; });
         function scrollToTopCodigos() { resultsCodigosContainer.scrollTo({ top: 0, behavior: 'smooth' }); }
+        /* FIN MÓDULO BLINDADO: CODIGOS LOGIC */
 
-        /* LÓGICA TOPOLOGIAS (CON GRID) */
+        /* ========================================== */
+        /* 🛑 INICIO MÓDULO BLINDADO: TOPOLOGIAS LOGIC*/
+        /* ========================================== */
         function updateClearBtnVisibilityTopologias() { clearSearchBtnTopologias.style.display = searchInputTopologias.value.length > 0 ? 'flex' : 'none'; }
         function clearSearchTopologias() { searchInputTopologias.value = ''; updateClearBtnVisibilityTopologias(); filterTopologias(); searchInputTopologias.focus(); }
         searchInputTopologias.addEventListener('input', function() { updateClearBtnVisibilityTopologias(); filterTopologias(); });
@@ -1371,28 +1460,14 @@
             renderTopologias(filtered, words);
         }
 
-        // Función para asignar el ícono SVG correcto basado en el título
         function getTopologiaIcon(titulo, tipo) {
             var t = titulo.toUpperCase();
-            
-            if (tipo === 'alerta' || t.includes('LÍMITE') || t.includes('NAT') || t.includes('NO USAR')) {
-                return '<svg class="svg-icon c-red" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>';
-            }
-            if (t.includes('TOPOLOGÍA') || t.includes('MIXTA') || t.includes('CABLEADO')) {
-                return '<svg class="svg-icon c-blue" viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="6" rx="1"/><path d="M12 8v4 M2 12h20 M2 12v3 M12 12v3 M22 12v3"/><rect x="1" y="15" width="6" height="6" rx="1"/><rect x="9" y="15" width="6" height="6" rx="1"/><rect x="17" y="15" width="6" height="6" rx="1"/></svg>';
-            }
-            if (t.includes('NIVEL') || t.includes('CASCADA')) {
-                return '<svg class="svg-icon c-blue" viewBox="0 0 24 24"><polygon points="12 2 22 7 12 12 2 7"/><polyline points="2 12 12 17 22 12"/><polyline points="2 17 12 22 22 17"/></svg>';
-            }
-            if (t.includes('WPS') || t.includes('INALAMBRICO') || t.includes('WIFI')) {
-                return '<svg class="svg-icon c-green" viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>';
-            }
-            if (t.includes('FIRMWARE') || t.includes('VERSIÓN')) {
-                return '<svg class="svg-icon c-orange" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>';
-            }
-            if (t.includes('PROBLEMA') || t.includes('SOLUCIÓN')) {
-                return '<svg class="svg-icon c-green" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>';
-            }
+            if (tipo === 'alerta' || t.includes('LÍMITE') || t.includes('NAT') || t.includes('NO USAR')) return '<svg class="svg-icon c-red" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>';
+            if (t.includes('TOPOLOGÍA') || t.includes('MIXTA') || t.includes('CABLEADO')) return '<svg class="svg-icon c-blue" viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="6" rx="1"/><path d="M12 8v4 M2 12h20 M2 12v3 M12 12v3 M22 12v3"/><rect x="1" y="15" width="6" height="6" rx="1"/><rect x="9" y="15" width="6" height="6" rx="1"/><rect x="17" y="15" width="6" height="6" rx="1"/></svg>';
+            if (t.includes('NIVEL') || t.includes('CASCADA')) return '<svg class="svg-icon c-blue" viewBox="0 0 24 24"><polygon points="12 2 22 7 12 12 2 7"/><polyline points="2 12 12 17 22 12"/><polyline points="2 17 12 22 22 17"/></svg>';
+            if (t.includes('WPS') || t.includes('INALAMBRICO') || t.includes('WIFI')) return '<svg class="svg-icon c-green" viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>';
+            if (t.includes('FIRMWARE') || t.includes('VERSIÓN')) return '<svg class="svg-icon c-orange" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>';
+            if (t.includes('PROBLEMA') || t.includes('SOLUCIÓN')) return '<svg class="svg-icon c-green" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>';
             return '<svg class="svg-icon c-grey" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>';
         }
 
@@ -1418,132 +1493,69 @@
                     heroCard.className = 'hero-card';
                     
                     var imgHtml = item.contenido ? '<img src="' + item.contenido + '" class="hero-img" onerror="this.style.display=\'none\'">' : '';
-                    
                     var rowsHtml = '';
                     if (item.descripcion) {
                         var lines = item.descripcion.split('\n');
                         for (var j = 0; j < lines.length; j++) {
                             var line = lines[j].trim();
                             if (!line) continue;
-                            
                             var icon = '💡';
-                            var text = line;
-                            
                             if (line.toUpperCase().includes('NO USAR') || line.toUpperCase().includes('NODOS')) { icon = '❌'; }
                             else if (line.toUpperCase().includes('CAMBIAR') || line.toUpperCase().includes('REEMPLAZAR')) { icon = '🔄'; }
-                            
                             var formattedText = highlightText(line, words);
                             var parts = formattedText.split(':');
-                            if (parts.length > 1) {
-                                formattedText = '<b>' + parts[0] + ':</b>' + parts.slice(1).join(':');
-                            }
-
-                            rowsHtml += 
-                                '<div class="hero-row">' +
-                                    '<div class="hero-row-icon">' + icon + '</div>' +
-                                    '<div class="hero-row-text">' + formattedText + '</div>' +
-                                '</div>';
+                            if (parts.length > 1) { formattedText = '<b>' + parts[0] + ':</b>' + parts.slice(1).join(':'); }
+                            rowsHtml += '<div class="hero-row"><div class="hero-row-icon">' + icon + '</div><div class="hero-row-text">' + formattedText + '</div></div>';
                         }
                     }
-
-                    heroCard.innerHTML = 
-                        '<div class="hero-top" style="display:flex; align-items:flex-start; gap:15px; padding:16px;">' +
-                            imgHtml +
-                            '<div style="flex:1;">' +
-                                '<h3 class="hero-title">' + highlightText(item.titulo, words) + '</h3>' +
-                                rowsHtml +
-                            '</div>' +
-                        '</div>';
-                    
-                    frag.appendChild(heroCard);
-                    continue;
+                    heroCard.innerHTML = '<div class="hero-top" style="display:flex; align-items:flex-start; gap:15px; padding:16px;">' + imgHtml + '<div style="flex:1;"><h3 class="hero-title">' + highlightText(item.titulo, words) + '</h3>' + rowsHtml + '</div></div>';
+                    frag.appendChild(heroCard); continue;
                 }
 
                 if (item.tipo === 'banner') {
                     var bannerCard = document.createElement('div');
                     bannerCard.className = 'warning-banner';
                     var textBanner = item.contenido ? item.contenido.replace(/\n/g, '<br>') : '';
-                    bannerCard.innerHTML = 
-                        '<div class="warning-icon">⚠️</div>' +
-                        '<p class="warning-text">' + highlightText(textBanner, words).replace(/&lt;br&gt;/g, '<br>') + '</p>';
-                    frag.appendChild(bannerCard);
-                    continue;
+                    bannerCard.innerHTML = '<div class="warning-icon">⚠️</div><p class="warning-text">' + highlightText(textBanner, words).replace(/&lt;br&gt;/g, '<br>') + '</p>';
+                    frag.appendChild(bannerCard); continue;
                 }
 
                 hasGridItems = true;
                 var gridCard = document.createElement('div');
                 gridCard.className = 'grid-card';
-                
                 var iconSvg = getTopologiaIcon(item.titulo, item.tipo);
-                
-                gridCard.innerHTML = 
-                    '<div class="grid-icon-box">' + iconSvg + '</div>' +
-                    '<div class="grid-title">' + highlightText(item.titulo, words) + '</div>';
-
-                gridCard.onclick = (function(index) {
-                    return function() { openTopologiaDetail(index); };
-                })(i);
-
+                gridCard.innerHTML = '<div class="grid-icon-box">' + iconSvg + '</div><div class="grid-title">' + highlightText(item.titulo, words) + '</div>';
+                gridCard.onclick = (function(index) { return function() { openTopologiaDetail(index); }; })(i);
                 gridContainer.appendChild(gridCard);
             }
 
-            if (hasGridItems) {
-                frag.appendChild(gridContainer);
-            }
-
+            if (hasGridItems) { frag.appendChild(gridContainer); }
             resultsTopologiasContainer.appendChild(frag);
         }
 
         window.openTopologiaDetail = function(index) {
             var item = globalTopologias[index];
             if (!item) return;
+            var tagText = 'INFO', tagBg = '#e8f5e9', tagColor = '#2e7d32', borderColor = '#2e7d32';
+            if (item.tipo === 'alerta') { tagText = 'ALERTA CRÍTICA'; tagBg = '#ffcdd2'; tagColor = '#b71c1c'; borderColor = '#d32f2f'; }
+            else if (item.tipo === 'imagen') { tagText = 'DIAGRAMA'; tagBg = '#e3f2fd'; tagColor = '#1976d2'; borderColor = '#1976d2'; }
 
-            var tagText = 'INFO';
-            var tagBg = '#e8f5e9';
-            var tagColor = '#2e7d32';
-            var borderColor = '#2e7d32';
-            var htmlContent = '';
-
-            if (item.tipo === 'alerta') {
-                tagText = 'ALERTA CRÍTICA';
-                tagBg = '#ffcdd2';
-                tagColor = '#b71c1c';
-                borderColor = '#d32f2f';
-            } else if (item.tipo === 'imagen') {
-                tagText = 'DIAGRAMA';
-                tagBg = '#e3f2fd';
-                tagColor = '#1976d2';
-                borderColor = '#1976d2';
-            }
-
-            htmlContent = 
-                '<h3 class="topologia-modal-title" style="border-color:'+borderColor+';">' + item.titulo + '</h3>' +
-                '<div style="margin-bottom: 15px;"><span class="tag" style="background-color:'+tagBg+'; color:'+tagColor+';">'+tagText+'</span></div>';
-
+            var htmlContent = '<h3 class="topologia-modal-title" style="border-color:'+borderColor+';">' + item.titulo + '</h3><div style="margin-bottom: 15px;"><span class="tag" style="background-color:'+tagBg+'; color:'+tagColor+';">'+tagText+'</span></div>';
             if (item.tipo === 'imagen') {
                 htmlContent += '<img src="' + item.contenido + '" class="topologia-modal-img" alt="Diagrama">';
-                if (item.descripcion) {
-                    var descConSaltos = item.descripcion.replace(/\n/g, '<br>');
-                    htmlContent += '<div class="topologia-modal-text" style="color: var(--text-main); font-size: 0.95rem; margin-top: 10px;">' + descConSaltos + '</div>';
-                }
+                if (item.descripcion) { htmlContent += '<div class="topologia-modal-text" style="color: var(--text-main); font-size: 0.95rem; margin-top: 10px;">' + item.descripcion.replace(/\n/g, '<br>') + '</div>'; }
             } else {
-                var contConSaltos = item.contenido.replace(/\n/g, '<br>');
-                htmlContent += '<div class="topologia-modal-text">' + contConSaltos + '</div>';
-                
-                if (item.descripcion) {
-                    var descConSaltos = item.descripcion.replace(/\n/g, '<br>');
-                    htmlContent += '<div class="topologia-modal-text" style="margin-top: 15px; padding-top: 15px; border-top: 1px dashed #ccc;">' + descConSaltos + '</div>';
-                }
+                htmlContent += '<div class="topologia-modal-text">' + item.contenido.replace(/\n/g, '<br>') + '</div>';
+                if (item.descripcion) { htmlContent += '<div class="topologia-modal-text" style="margin-top: 15px; padding-top: 15px; border-top: 1px dashed #ccc;">' + item.descripcion.replace(/\n/g, '<br>') + '</div>'; }
             }
-
             htmlContent += '<button class="close-modal-btn" onclick="closeModal(\'topologiaModal\')">Entendido</button>';
-
             topologiaModalContent.innerHTML = htmlContent;
             openModal('topologiaModal');
         };
 
         resultsTopologiasContainer.addEventListener('scroll', function() { scrollTopBtnTopologias.style.display = resultsTopologiasContainer.scrollTop > 300 ? 'block' : 'none'; });
         function scrollToTopTopologias() { resultsTopologiasContainer.scrollTo({ top: 0, behavior: 'smooth' }); }
+        /* FIN MÓDULO BLINDADO: TOPOLOGIAS LOGIC */
 
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js').then(function(reg) { reg.update(); }).catch(function(err) { console.log("Error SW:", err); });
