@@ -31,6 +31,10 @@
             --purple-primary: #8e24aa;
             --purple-dark: #4a148c;
             
+            --warning-bg: #fff3cd;
+            --warning-border: #ffc107;
+            --warning-text: #856404;
+            
             --btn-setup: #3a3a3a;
             --btn-red: #d32f2f;
             --btn-blue: #1976d2;
@@ -61,6 +65,10 @@
             --blue-dark: #1565c0;
             --purple-primary: #ab47bc;
             --purple-dark: #6a1b9a;
+            
+            --warning-bg: #3e2a1a;
+            --warning-border: #ffb74d;
+            --warning-text: #ffb74d;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -295,9 +303,7 @@
             flex-shrink: 0;
         }
         
-        .hero-details {
-            flex: 1;
-        }
+        .hero-details { flex: 1; }
         
         .hero-title {
             font-weight: 700;
@@ -311,7 +317,31 @@
             line-height: 1.5;
             color: var(--text-main);
             margin: 0;
-            white-space: pre-wrap; /* Mantiene los saltos de línea */
+            white-space: pre-wrap;
+        }
+
+        /* Banner de Advertencia (Nuevo) */
+        .warning-banner {
+            background: var(--warning-bg);
+            border-left: 6px solid var(--warning-border);
+            color: var(--warning-text);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            animation: slideDown 0.3s ease-out;
+        }
+        
+        .warning-icon { font-size: 1.5rem; line-height: 1; }
+        
+        .warning-text {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin: 0;
         }
 
         /* Botones de lista */
@@ -327,30 +357,11 @@
             transition: transform 0.1s;
         }
         
-        .list-item:active {
-            transform: scale(0.98);
-            background: rgba(0,0,0,0.02);
-        }
+        .list-item:active { transform: scale(0.98); background: rgba(0,0,0,0.02); }
         
-        .list-icon {
-            font-size: 1.6rem;
-            margin-right: 15px;
-            width: 40px;
-            text-align: center;
-        }
-        
-        .list-title {
-            flex: 1;
-            font-weight: 700;
-            font-size: 1rem;
-            color: var(--text-main);
-        }
-        
-        .list-arrow {
-            color: var(--text-muted);
-            font-size: 1.2rem;
-            font-weight: bold;
-        }
+        .list-icon { font-size: 1.6rem; margin-right: 15px; width: 40px; text-align: center; }
+        .list-title { flex: 1; font-weight: 700; font-size: 1rem; color: var(--text-main); }
+        .list-arrow { color: var(--text-muted); font-size: 1.2rem; font-weight: bold; }
 
         /* El resto de estilos generales... */
         .rule-card {
@@ -1482,7 +1493,7 @@
                     var contenido = (r[3] || '').trim();
                     var descripcion = (r[4] || '').trim();
 
-                    if (titulo === '') continue;
+                    if (titulo === '' && tipo !== 'banner') continue;
                     globalTopologias.push({ tipo: tipo, titulo: titulo, palabras: palabras, contenido: contenido, descripcion: descripcion });
                 }
 
@@ -1499,7 +1510,6 @@
             var words = term.split(/\s+/).filter(function(w) { return w !== ''; });
 
             var filtered = globalTopologias.filter(function(item) {
-                // Si busca algo, buscamos en todo (título, palabras, contenido, desc)
                 var searchable = (item.titulo + ' ' + item.palabras + ' ' + item.contenido + ' ' + item.descripcion).toLowerCase();
                 return words.every(function(w) { return searchable.indexOf(w) !== -1; });
             });
@@ -1526,7 +1536,6 @@
                     heroCard.className = 'hero-card';
                     
                     var imgHtml = item.contenido ? '<img src="' + item.contenido + '" class="hero-img" onerror="this.style.display=\'none\'">' : '';
-                    // Reemplazamos saltos de línea por <br> para que se vean en el HTML
                     var descHtml = item.descripcion ? item.descripcion.replace(/\n/g, '<br>') : '';
 
                     heroCard.innerHTML = 
@@ -1537,14 +1546,28 @@
                         '</div>';
                     
                     frag.appendChild(heroCard);
-                    continue; // Saltamos el resto del bucle para esta fila
+                    continue;
                 }
 
-                // Si es otro tipo (Alerta, Imagen, Texto), renderizamos el botón de lista
+                // Si es de tipo BANNER, renderizamos la franja amarilla
+                if (item.tipo === 'banner') {
+                    var bannerCard = document.createElement('div');
+                    bannerCard.className = 'warning-banner';
+                    
+                    var textBanner = item.contenido ? item.contenido.replace(/\n/g, '<br>') : '';
+                    bannerCard.innerHTML = 
+                        '<div class="warning-icon">⚠️</div>' +
+                        '<p class="warning-text">' + highlightText(textBanner, words).replace(/&lt;br&gt;/g, '<br>') + '</p>';
+                    
+                    frag.appendChild(bannerCard);
+                    continue;
+                }
+
+                // Para el resto (Alerta, Imagen, Texto), renderizamos el botón de lista
                 var listItem = document.createElement('div');
                 listItem.className = 'list-item';
                 
-                var icon = '📘'; // Icono por defecto
+                var icon = '📘';
                 if (item.tipo === 'alerta') icon = '🚨';
                 else if (item.tipo === 'imagen') icon = '🖼️';
 
