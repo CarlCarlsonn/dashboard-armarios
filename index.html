@@ -1,4 +1,4 @@
-|<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -31,7 +31,6 @@
             --purple-primary: #8e24aa;
             --purple-dark: #4a148c;
             
-            /* NUEVO: Variables EERO */
             --teal-primary: #00897b;
             --teal-dark: #00695c;
             --warning-bg: #fff3cd;
@@ -69,12 +68,19 @@
             --purple-primary: #ab47bc;
             --purple-dark: #6a1b9a;
             
-            /* NUEVO: Variables EERO Dark Mode */
             --teal-primary: #26a69a;
             --teal-dark: #00897b;
             --warning-bg: #3e2a1a;
             --warning-border: #ffb74d;
             --warning-text: #ffb74d;
+        }
+
+        /* ARREGLO: Elimina la franja blanca y bloquea rebotes */
+        html, body { 
+            margin: 0; 
+            padding: 0; 
+            height: 100%; 
+            overflow: hidden; 
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -83,13 +89,11 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-main);
-            margin: 0;
             display: flex;
             flex-direction: column;
             height: 100vh;
             height: 100dvh;
             transition: background-color 0.3s, color 0.3s;
-            overscroll-behavior-y: contain;
         }
 
         #view-armarios, #view-codigos, #view-topologias, #view-eero {
@@ -114,7 +118,7 @@
 
         #view-codigos header { background-color: var(--blue-primary); }
         #view-topologias header { background-color: var(--purple-primary); }
-        #view-eero header { background-color: var(--teal-primary); } /* EERO HEADER */
+        #view-eero header { background-color: var(--teal-primary); }
 
         .header-top {
             display: flex;
@@ -655,8 +659,11 @@
             border-left: 6px solid var(--teal-primary); box-shadow: 0 2px 5px rgba(0,0,0,0.05);
             margin-bottom: 15px; animation: slideDown 0.3s ease-out;
         }
-        .eero-hero-img { width: 80px; height: 80px; object-fit: contain; background: #fff; border-radius: 8px; padding: 15px; flex-shrink: 0; }
-        .eero-hero-details { flex: 1; }
+        .eero-hero-img { width: 80px; height: 80px; object-fit: contain; background: #fff; border-radius: 8px; padding: 15px; flex-shrink: 0; border: 1px solid rgba(0,0,0,0.1); }
+        
+        /* ARREGLO: min-width: 0 evita que el texto colapse */
+        .eero-hero-details { flex: 1; min-width: 0; }
+        
         .eero-hero-title { font-weight: 800; font-size: 1.1rem; margin: 0 0 8px 0; color: var(--text-main); }
         .eero-hero-row { display: grid; grid-template-columns: 20px 1fr; gap: 8px; margin-bottom: 8px; font-size: 0.85rem; line-height: 1.3; color: var(--text-main); align-items: start; }
         .eero-hero-row:last-child { margin-bottom: 0; }
@@ -695,6 +702,7 @@
         body.dark-mode .img-placeholder { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.2); }
         .eero-btn-title { color: var(--teal-primary) !important; }
         .eero-close-btn { background: var(--teal-primary) !important; }
+        .eero-modal-img { width: 100%; border-radius: 8px; margin-top: 10px; border: 1px solid rgba(0,0,0,0.1); }
         /* ========================================== */
         /* FIN MÓDULO BLINDADO: ESTILOS EERO           */
         /* ========================================== */
@@ -721,7 +729,6 @@
             <li class="sidebar-item" id="menu-topologias" onclick="switchView('topologias')">
                 <span class="icon">🗺️</span> HUAWEI Topología y Alertas
             </li>
-            <!-- NUEVO ITEM EERO -->
             <li class="sidebar-item" id="menu-eero" onclick="switchView('eero')">
                 <span class="icon">📡</span> EERO Topología y Alertas
             </li>
@@ -1079,7 +1086,10 @@
             <button class="clear-search-btn" style="display:flex; position:absolute; top:15px; right:15px;" onclick="closeModal('modalSwitch')">✖</button>
             <h3 class="eero-btn-title">Configuración Switch</h3>
             <p style="font-size:0.85rem; font-weight:bold; margin-bottom:10px;">1. Configurar en OST/Puente ANTES.</p>
-            <div class="img-placeholder">[ Aquí va la imagen del Switch recortada del PDF ]</div>
+            
+            <!-- IMAGEN REEMPLAZADA CON LA DE TU GITHUB -->
+            <img src="https://carlcarlsonn.github.io/dashboard-armarios/eero-imagen/eero.png" class="eero-modal-img" alt="Configuración Switch" onerror="this.style.display='none'">
+            
             <ul style="font-size:0.8rem; padding-left:20px; line-height:1.4; margin-top:10px; color:var(--text-main);">
                 <li><b>Puerto 1:</b> Hacia ONT (Internet).</li>
                 <li><b>Puerto 2 y 3:</b> Ambos al eero Maestro.</li>
@@ -1127,7 +1137,7 @@
         var SHEET_TOPOLOGIAS_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSKUPJST2SVhD74W0cYfcb7RpBpuWgT5SLqHn7YSJasQcPNE971C5x_mBCDHPKJift7EFrOoYs4VHoq/pub?gid=1245245166&single=true&output=csv'; 
         var SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSKUPJST2SVhD74W0cYfcb7RpBpuWgT5SLqHn7YSJasQcPNE971C5x_mBCDHPKJift7EFrOoYs4VHoq/pub?gid=1395209502&single=true&output=csv';
         var SHEET_CODIGOS_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSKUPJST2SVhD74W0cYfcb7RpBpuWgT5SLqHn7YSJasQcPNE971C5x_mBCDHPKJift7EFrOoYs4VHoq/pub?gid=47179035&single=true&output=csv'; 
-        var SHEET_EERO_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSKUPJST2SVhD74W0cYfcb7RpBpuWgT5SLqHn7YSJasQcPNE971C5x_mBCDHPKJift7EFrOoYs4VHoq/pub?gid=469526274&single=true&output=csv'; // URL EERO ACTUALIZADA
+        var SHEET_EERO_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSKUPJST2SVhD74W0cYfcb7RpBpuWgT5SLqHn7YSJasQcPNE971C5x_mBCDHPKJift7EFrOoYs4VHoq/pub?gid=469526274&single=true&output=csv';
 
         var globalData = [];
         var currentFilter = '';
@@ -1137,8 +1147,7 @@
         var currentFilterCodigos = '';
 
         var globalTopologias = [];
-        
-        var globalEero = []; // NUEVO: Variable global EERO
+        var globalEero = [];
 
         var resultsContainer = document.getElementById('resultsContainer');
         var searchInput = document.getElementById('searchInput');
@@ -1161,7 +1170,6 @@
         var counterTopologias = document.getElementById('counterTopologias');
         var lastUpdatedTopologias = document.getElementById('lastUpdatedTopologias');
 
-        // NUEVO: DOM EERO
         var resultsEeroContainer = document.getElementById('resultsEeroContainer');
         var searchInputEero = document.getElementById('searchInputEero');
         var clearSearchBtnEero = document.getElementById('clearSearchBtnEero');
@@ -1234,7 +1242,7 @@
                 if (globalTopologias.length === 0) {
                     loadTopologias();
                 }
-            } else if (viewName === 'eero') { // NUEVO: Switch a EERO
+            } else if (viewName === 'eero') {
                 document.getElementById('menu-eero').classList.add('active');
                 document.getElementById('view-armarios').style.display = 'none';
                 document.getElementById('view-codigos').style.display = 'none';
@@ -1285,7 +1293,6 @@
         document.getElementById('infoModal').addEventListener('click', function(e) { if (e.target === this) closeModal('infoModal'); });
         document.getElementById('guideModal').addEventListener('click', function(e) { if (e.target === this) closeModal('guideModal'); });
         document.getElementById('topologiaModal').addEventListener('click', function(e) { if (e.target === this) closeModal('topologiaModal'); });
-        // NUEVO: Eventos para cerrar modales EERO
         document.getElementById('modalLeds').addEventListener('click', function(e) { if (e.target === this) closeModal('modalLeds'); });
         document.getElementById('modalFunciones').addEventListener('click', function(e) { if (e.target === this) closeModal('modalFunciones'); });
         document.getElementById('modalSwitch').addEventListener('click', function(e) { if (e.target === this) closeModal('modalSwitch'); });
@@ -1862,7 +1869,7 @@
                             rowsHtml += '<div class="eero-hero-row"><div class="eero-hero-row-text" style="display:flex; gap:8px; align-items:start;"><span>' + icon + '</span><span>' + formattedText + '</span></div></div>';
                         }
                     }
-                    heroCard.innerHTML = '<div style="display:flex; align-items:flex-start; gap:15px; width:100%;">' + imgHtml + '<div style="flex:1;"><h3 class="eero-hero-title">' + highlightText(item.titulo, words) + '</h3>' + rowsHtml + '</div></div>';
+                    heroCard.innerHTML = '<div style="display:flex; align-items:flex-start; gap:15px; width:100%;">' + imgHtml + '<div class="eero-hero-details"><h3 class="eero-hero-title">' + highlightText(item.titulo, words) + '</h3>' + rowsHtml + '</div></div>';
                     frag.appendChild(heroCard); continue;
                 }
 
@@ -1878,7 +1885,7 @@
                 var gridCard = document.createElement('div');
                 gridCard.className = 'grid-card';
                 var iconSvg = getEeroIcon(item.titulo);
-                var modalId = item.contenido || ''; // Aquí viene el ID del modal (ej: modalLeds)
+                var modalId = item.contenido || ''; 
                 
                 gridCard.innerHTML = '<div class="grid-icon-box">' + iconSvg + '</div><div class="grid-title">' + highlightText(item.titulo, words) + '</div>';
                 gridCard.onclick = function(mid) { return function() { if(mid) openModal(mid); }; }(modalId);
