@@ -288,8 +288,9 @@
             flex: 1; 
             overflow-y: auto; 
             padding: 15px; 
-            -webkit-overflow-scrolling: touch; /* Scroll suave en iOS */
-            padding-bottom: 50px; /* Espacio extra al final */
+            padding-bottom: 50px;
+            -webkit-overflow-scrolling: touch; 
+            touch-action: pan-y;
         }
 
         /* ========================================== */
@@ -1089,10 +1090,12 @@
         <div class="modal-content">
             <button class="clear-search-btn" style="display:flex; position:absolute; top:15px; right:15px;" onclick="closeModal('modalSwitch')">✖</button>
             <h3 class="eero-btn-title">Configuración Switch</h3>
-            <p style="font-size:0.85rem; font-weight:bold; margin-bottom:10px;">1. Configurar en OST/Puente ANTES.</p>
             
-            <!-- IMAGEN SIN EL ONERROR PARA PODER VERLA -->
-            <img src="https://carlcarlsonn.github.io/dashboard-armarios/eero-imagen/eero.png" class="eero-modal-img" alt="Configuración Switch">
+            <!-- NUEVO TEXTO AGREGADO AQUÍ -->
+            <p style="font-size:0.9rem; font-weight:bold; color:var(--danger-color); margin-bottom:15px;">Al utilizar SWITCH este se debe configurar para EERO en APP PUENTE</p>
+            
+            <!-- IMAGEN DEL SWITCH -->
+            <img src="https://raw.githubusercontent.com/CarlCarlsonn/dashboard-armarios/main/eero-imagen/eero.png" class="eero-modal-img" alt="Configuración Switch" onerror="this.src='https://carlcarlsonn.github.io/dashboard-armarios/eero-imagen/eero.png'">
             
             <ul style="font-size:0.8rem; padding-left:20px; line-height:1.4; margin-top:10px; color:var(--text-main);">
                 <li><b>Puerto 1:</b> Hacia ONT (Internet).</li>
@@ -1860,7 +1863,9 @@
                     var heroCard = document.createElement('div');
                     heroCard.className = 'eero-hero-card';
                     
-                    var imgHtml = item.contenido ? '<img src="' + item.contenido + '" class="eero-hero-img">' : '';
+                    // Si el link de Excel falla, se usa el link RAW de GitHub
+                    var imgHtml = item.contenido ? '<img src="' + item.contenido + '" class="eero-hero-img" onerror="this.src=\'https://raw.githubusercontent.com/CarlCarlsonn/dashboard-armarios/main/eero-imagen/principal.png\'">' : '';
+                    
                     var rowsHtml = '';
                     if (item.descripcion) {
                         var lines = item.descripcion.split('\n');
