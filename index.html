@@ -75,7 +75,6 @@
             --warning-text: #ffb74d;
         }
 
-        /* ARREGLO: Elimina la franja blanca y bloquea rebotes */
         html, body { 
             margin: 0; 
             padding: 0; 
@@ -285,7 +284,13 @@
         }
         .guide-btn:active { background-color: rgba(255,255,255,0.3); }
 
-        .results-container { flex: 1; overflow-y: auto; padding: 15px; }
+        .results-container { 
+            flex: 1; 
+            overflow-y: auto; 
+            padding: 15px; 
+            -webkit-overflow-scrolling: touch; /* Scroll suave en iOS */
+            padding-bottom: 50px; /* Espacio extra al final */
+        }
 
         /* ========================================== */
         /* 🛑 INICIO MÓDULO BLINDADO: ESTILOS ARMARIOS */
@@ -1086,8 +1091,8 @@
             <h3 class="eero-btn-title">Configuración Switch</h3>
             <p style="font-size:0.85rem; font-weight:bold; margin-bottom:10px;">1. Configurar en OST/Puente ANTES.</p>
             
-            <!-- IMAGEN REEMPLAZADA CON LA DE TU GITHUB -->
-            <img src="https://carlcarlsonn.github.io/dashboard-armarios/eero-imagen/eero.png" class="eero-modal-img" alt="Configuración Switch" onerror="this.style.display='none'">
+            <!-- IMAGEN SIN EL ONERROR PARA PODER VERLA -->
+            <img src="https://carlcarlsonn.github.io/dashboard-armarios/eero-imagen/eero.png" class="eero-modal-img" alt="Configuración Switch">
             
             <ul style="font-size:0.8rem; padding-left:20px; line-height:1.4; margin-top:10px; color:var(--text-main);">
                 <li><b>Puerto 1:</b> Hacia ONT (Internet).</li>
@@ -1258,7 +1263,7 @@
             var el = document.getElementById(modalId);
             if (!el) {
                 console.warn("Modal no encontrado:", modalId);
-                return; // Previene el colapso si el link está mal en el Excel
+                return; 
             }
             if (activeModal === modalId) return;
             activeModal = modalId;
@@ -1855,7 +1860,7 @@
                     var heroCard = document.createElement('div');
                     heroCard.className = 'eero-hero-card';
                     
-                    var imgHtml = item.contenido ? '<img src="' + item.contenido + '" class="eero-hero-img" onerror="this.style.display=\'none\'">' : '';
+                    var imgHtml = item.contenido ? '<img src="' + item.contenido + '" class="eero-hero-img">' : '';
                     var rowsHtml = '';
                     if (item.descripcion) {
                         var lines = item.descripcion.split('\n');
@@ -1871,7 +1876,6 @@
                             var parts = formattedText.split(':');
                             if (parts.length > 1) { formattedText = '<b>' + parts[0] + ':</b>' + parts.slice(1).join(':'); }
                             
-                            // ARREGLO DE DISEÑO: Se usa Flexbox directo para evitar que el texto se aplaste
                             rowsHtml += '<div style="display:flex; gap:8px; margin-bottom:8px; font-size:0.85rem; line-height:1.3; color:var(--text-main); align-items:flex-start;"><div style="flex-shrink:0;">' + icon + '</div><div style="flex:1;">' + formattedText + '</div></div>';
                         }
                     }
@@ -1891,7 +1895,7 @@
                 var gridCard = document.createElement('div');
                 gridCard.className = 'grid-card';
                 var iconSvg = getEeroIcon(item.titulo);
-                var modalId = item.contenido || ''; // Aquí viene el ID del modal (ej: modalLeds)
+                var modalId = item.contenido || ''; 
                 
                 gridCard.innerHTML = '<div class="grid-icon-box">' + iconSvg + '</div><div class="grid-title">' + highlightText(item.titulo, words) + '</div>';
                 gridCard.onclick = function(mid) { return function() { if(mid) openModal(mid); }; }(modalId);
