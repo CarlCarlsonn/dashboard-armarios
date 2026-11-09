@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+|<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -31,6 +31,9 @@
             --purple-primary: #8e24aa;
             --purple-dark: #4a148c;
             
+            /* NUEVO: Variables EERO */
+            --teal-primary: #00897b;
+            --teal-dark: #00695c;
             --warning-bg: #fff3cd;
             --warning-border: #ffc107;
             --warning-text: #856404;
@@ -66,6 +69,9 @@
             --purple-primary: #ab47bc;
             --purple-dark: #6a1b9a;
             
+            /* NUEVO: Variables EERO Dark Mode */
+            --teal-primary: #26a69a;
+            --teal-dark: #00897b;
             --warning-bg: #3e2a1a;
             --warning-border: #ffb74d;
             --warning-text: #ffb74d;
@@ -86,13 +92,13 @@
             overscroll-behavior-y: contain;
         }
 
-        #view-armarios, #view-codigos, #view-topologias {
+        #view-armarios, #view-codigos, #view-topologias, #view-eero {
             display: flex;
             flex-direction: column;
             height: 100%;
             overflow: hidden;
         }
-        #view-codigos, #view-topologias { display: none; }
+        #view-codigos, #view-topologias, #view-eero { display: none; }
 
         header {
             background-color: var(--primary);
@@ -108,6 +114,7 @@
 
         #view-codigos header { background-color: var(--blue-primary); }
         #view-topologias header { background-color: var(--purple-primary); }
+        #view-eero header { background-color: var(--teal-primary); } /* EERO HEADER */
 
         .header-top {
             display: flex;
@@ -289,7 +296,7 @@
             flex-direction: column;
             position: relative;
             overflow: hidden;
-            min-height: 140px; /* Altura mínima para que se vean alineadas */
+            min-height: 140px; 
         }
 
         .card::before {
@@ -352,7 +359,7 @@
             align-items: center;
             gap: 8px;
             font-size: 0.95rem;
-            margin-top: auto; /* Empuja el botón al fondo de la tarjeta */
+            margin-top: auto; 
         }
         .nav-btn:active { opacity: 0.8; }
         /* ========================================== */
@@ -469,6 +476,7 @@
         .c-red { stroke: #d32f2f; fill: rgba(211,47,47,0.1); }
         .c-orange { stroke: #f57c00; fill: rgba(245,124,0,0.1); }
         .c-grey { stroke: #757575; fill: rgba(117,117,117,0.1); }
+        .c-teal { stroke: var(--teal-primary); fill: rgba(0,137,123,0.1); }
 
         .grid-title {
             padding: 12px 8px;
@@ -509,7 +517,7 @@
             font-weight: bold;
         }
 
-        #scrollTopBtn, #scrollTopBtnCodigos, #scrollTopBtnTopologias {
+        #scrollTopBtn, #scrollTopBtnCodigos, #scrollTopBtnTopologias, #scrollTopBtnEero {
             display: none;
             position: fixed;
             bottom: 20px;
@@ -527,6 +535,7 @@
         }
         #scrollTopBtnCodigos { background-color: var(--blue-primary); }
         #scrollTopBtnTopologias { background-color: var(--purple-primary); }
+        #scrollTopBtnEero { background-color: var(--teal-primary); }
 
         .sidebar-overlay {
             display: none;
@@ -636,6 +645,59 @@
         /* ========================================== */
         /* FIN MÓDULO BLINDADO: ESTILOS TV-DECO        */
         /* ========================================== */
+
+        /* ========================================== */
+        /* 🛑 INICIO MÓDULO BLINDADO: ESTILOS EERO     */
+        /* ========================================== */
+        .eero-hero-card {
+            background: var(--card-bg); border-radius: 12px; padding: 16px;
+            display: flex; align-items: flex-start; gap: 15px;
+            border-left: 6px solid var(--teal-primary); box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            margin-bottom: 15px; animation: slideDown 0.3s ease-out;
+        }
+        .eero-hero-img { width: 80px; height: 80px; object-fit: contain; background: #fff; border-radius: 8px; padding: 15px; flex-shrink: 0; }
+        .eero-hero-details { flex: 1; }
+        .eero-hero-title { font-weight: 800; font-size: 1.1rem; margin: 0 0 8px 0; color: var(--text-main); }
+        .eero-hero-row { display: grid; grid-template-columns: 20px 1fr; gap: 8px; margin-bottom: 8px; font-size: 0.85rem; line-height: 1.3; color: var(--text-main); align-items: start; }
+        .eero-hero-row:last-child { margin-bottom: 0; }
+        .eero-hero-row-text b { color: #d32f2f; }
+        .eero-hero-row-text span { color: var(--teal-primary); font-weight: bold; }
+
+        .eero-warning-banner {
+            background: var(--warning-bg); border-left: 6px solid var(--warning-border);
+            color: var(--warning-text); padding: 12px; border-radius: 12px;
+            margin-bottom: 15px; display: flex; gap: 10px; align-items: flex-start;
+            font-size: 0.85rem; font-weight: 600; line-height: 1.4; animation: slideDown 0.3s ease-out;
+        }
+
+        .led-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; margin-top: 10px; }
+        .led-table th { background: var(--teal-primary); color: white; padding: 10px; text-align: left; }
+        .led-table td { padding: 10px; border-bottom: 1px solid #eee; vertical-align: middle; color: var(--text-main); }
+        body.dark-mode .led-table td { border-bottom-color: #444; }
+        .led-dot { display: inline-block; width: 14px; height: 14px; border-radius: 50%; margin-right: 8px; vertical-align: middle; border: 1px solid #ccc; }
+        .led-grey { background: #d3d3d3; border-color: #999; }
+        .led-white { background: #ffffff; }
+        .led-blue { background: #2196f3; border-color: #1976d2; }
+        .led-green { background: #4caf50; border-color: #388e3c; }
+        .led-yellow { background: #ffeb3b; border-color: #fbc02d; }
+        .led-red { background: #f44336; border-color: #d32f2f; }
+        
+        .eero-compare-table { width:100%; border-collapse:collapse; font-size:0.75rem; margin-top:10px; }
+        .eero-compare-table th { background:var(--teal-primary); color:white; padding:8px; }
+        .eero-compare-table td { padding:8px; border-bottom:1px solid #ddd; color: var(--text-main); text-align: center;}
+        body.dark-mode .eero-compare-table td { border-bottom-color: #444; }
+        
+        .img-placeholder {
+            width: 100%; height: 200px; background: rgba(0,0,0,0.05); border: 2px dashed rgba(0,0,0,0.2);
+            border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            color: var(--text-muted); font-weight: bold; font-size: 0.9rem; margin-top: 10px; text-align: center; padding: 10px;
+        }
+        body.dark-mode .img-placeholder { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.2); }
+        .eero-btn-title { color: var(--teal-primary) !important; }
+        .eero-close-btn { background: var(--teal-primary) !important; }
+        /* ========================================== */
+        /* FIN MÓDULO BLINDADO: ESTILOS EERO           */
+        /* ========================================== */
     </style>
 </head>
 <body>
@@ -658,6 +720,10 @@
             </li>
             <li class="sidebar-item" id="menu-topologias" onclick="switchView('topologias')">
                 <span class="icon">🗺️</span> HUAWEI Topología y Alertas
+            </li>
+            <!-- NUEVO ITEM EERO -->
+            <li class="sidebar-item" id="menu-eero" onclick="switchView('eero')">
+                <span class="icon">📡</span> EERO Topología y Alertas
             </li>
         </ul>
     </div>
@@ -808,6 +874,45 @@
     <!-- ========================================== -->
 
     <!-- ========================================== -->
+    <!-- 🛑 INICIO MÓDULO: VISTA EERO               -->
+    <!-- ========================================== -->
+    <div id="view-eero">
+        <header>
+            <div class="header-top">
+                <div class="title-group">
+                    <button class="menu-btn" onclick="toggleMenu()">☰</button>
+                    <div>
+                        <div class="header-title">📡 EERO Topología y Alertas</div>
+                        <div class="subtitle">Guía de instalación y estado.</div>
+                    </div>
+                </div>
+                <div class="header-buttons">
+                    <button class="icon-btn" onclick="forceUpdateEero()" title="Actualizar">🔄</button>
+                </div>
+            </div>
+
+            <div class="search-wrapper">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchInputEero" class="search-input" placeholder="Buscar en EERO...">
+                <button id="clearSearchBtnEero" class="clear-search-btn" onclick="clearSearchEero()">✖</button>
+            </div>
+            
+            <div class="info-bar">
+                <span id="counterEero" class="site-counter">0 items</span>
+                <span id="lastUpdatedEero">Sincronizando...</span>
+            </div>
+        </header>
+
+        <div class="results-container" id="resultsEeroContainer">
+            <div class="loading">Cargando EERO...</div>
+        </div>
+        <button id="scrollTopBtnEero" onclick="scrollToTopEero()">⬆️</button>
+    </div>
+    <!-- ========================================== -->
+    <!-- FIN MÓDULO: VISTA EERO                     -->
+    <!-- ========================================== -->
+
+    <!-- ========================================== -->
     <!-- 🛑 INICIO MÓDULO BLINDADO: MODALES         -->
     <!-- ========================================== -->
     <div class="modal-overlay" id="infoModal">
@@ -931,6 +1036,68 @@
     <div class="modal-overlay" id="topologiaModal">
         <div class="topologia-modal-content" id="topologiaModalContent"></div>
     </div>
+
+    <!-- MODALES EERO -->
+    <div class="modal-overlay" id="modalLeds">
+        <div class="modal-content">
+            <button class="clear-search-btn" style="display:flex; position:absolute; top:15px; right:15px;" onclick="closeModal('modalLeds')">✖</button>
+            <h3 class="eero-btn-title">Estado de Luces LED</h3>
+            <table class="led-table">
+                <tr><th>Led</th><th>Color de LED</th><th>Qué significa</th></tr>
+                <tr><td><span class="led-dot led-grey"></span></td><td>Gris / Apagado</td><td>Sin energía.</td></tr>
+                <tr><td><span class="led-dot led-white"></span></td><td>Parpadeo Blanco</td><td>Iniciando / Conectando.</td></tr>
+                <tr><td><span class="led-dot led-blue"></span></td><td>Parpadeo Azul</td><td>Listo para adoptar.</td></tr>
+                <tr><td><span class="led-dot led-blue"></span></td><td>Azul Fijo</td><td>Adoptando / Configurando.</td></tr>
+                <tr><td><span class="led-dot led-green"></span></td><td>Parpadeo Verde</td><td>Múltiples eeros detectados.</td></tr>
+                <tr><td><span class="led-dot led-yellow"></span></td><td>Parpadeo Amarillo</td><td><b>¡Fuente USB-C incorrecta!</b></td></tr>
+                <tr><td><span class="led-dot led-white"></span></td><td>Blanco Fijo</td><td>Configurado y con Internet.</td></tr>
+                <tr><td><span class="led-dot led-red"></span></td><td>Rojo Fijo</td><td>Configurado, <b>SIN Internet.</b></td></tr>
+            </table>
+            <button class="close-modal-btn eero-close-btn" onclick="closeModal('modalLeds')">Entendido</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modalFunciones">
+        <div class="modal-content">
+            <button class="clear-search-btn" style="display:flex; position:absolute; top:15px; right:15px;" onclick="closeModal('modalFunciones')">✖</button>
+            <h3 class="eero-btn-title">App eero vs MiTelsur</h3>
+            <table class="eero-compare-table">
+                <tr><th>Función</th><th>MiTelsur</th><th>App</th></tr>
+                <tr><td>Cambiar Clave</td><td>✅</td><td>✅</td></tr>
+                <tr><td>Reiniciar</td><td>✅</td><td>✅</td></tr>
+                <tr><td>Speedtest</td><td>✅</td><td>✅</td></tr>
+                <tr><td>Red Invitados</td><td>❌</td><td>✅</td></tr>
+                <tr><td>Bloquear Disp.</td><td>❌</td><td>✅</td></tr>
+                <tr><td>Ver Clave</td><td>❌</td><td>✅</td></tr>
+            </table>
+            <button class="close-modal-btn eero-close-btn" onclick="closeModal('modalFunciones')">Entendido</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modalSwitch">
+        <div class="modal-content">
+            <button class="clear-search-btn" style="display:flex; position:absolute; top:15px; right:15px;" onclick="closeModal('modalSwitch')">✖</button>
+            <h3 class="eero-btn-title">Configuración Switch</h3>
+            <p style="font-size:0.85rem; font-weight:bold; margin-bottom:10px;">1. Configurar en OST/Puente ANTES.</p>
+            <div class="img-placeholder">[ Aquí va la imagen del Switch recortada del PDF ]</div>
+            <ul style="font-size:0.8rem; padding-left:20px; line-height:1.4; margin-top:10px; color:var(--text-main);">
+                <li><b>Puerto 1:</b> Hacia ONT (Internet).</li>
+                <li><b>Puerto 2 y 3:</b> Ambos al eero Maestro.</li>
+                <li><b>Puerto 4 al 8:</b> A extensores o STB.</li>
+            </ul>
+            <button class="close-modal-btn eero-close-btn" onclick="closeModal('modalSwitch')">Entendido</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modalTopologia">
+        <div class="modal-content">
+            <button class="clear-search-btn" style="display:flex; position:absolute; top:15px; right:15px;" onclick="closeModal('modalTopologia')">✖</button>
+            <h3 class="eero-btn-title">Cantidad Máx. de APs</h3>
+            <p style="font-size:0.85rem; font-weight:bold; margin-bottom:10px;">Máximo <b>6 APs</b> (1 Maestro + 5 Extensores).</p>
+            <div class="img-placeholder" style="height: 250px;">[ Aquí va la tabla de APs recortada del PDF ]</div>
+            <button class="close-modal-btn eero-close-btn" onclick="closeModal('modalTopologia')">Entendido</button>
+        </div>
+    </div>
     <!-- ========================================== -->
     <!-- FIN MÓDULO BLINDADO: MODALES               -->
     <!-- ========================================== -->
@@ -960,6 +1127,7 @@
         var SHEET_TOPOLOGIAS_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSKUPJST2SVhD74W0cYfcb7RpBpuWgT5SLqHn7YSJasQcPNE971C5x_mBCDHPKJift7EFrOoYs4VHoq/pub?gid=1245245166&single=true&output=csv'; 
         var SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSKUPJST2SVhD74W0cYfcb7RpBpuWgT5SLqHn7YSJasQcPNE971C5x_mBCDHPKJift7EFrOoYs4VHoq/pub?gid=1395209502&single=true&output=csv';
         var SHEET_CODIGOS_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSKUPJST2SVhD74W0cYfcb7RpBpuWgT5SLqHn7YSJasQcPNE971C5x_mBCDHPKJift7EFrOoYs4VHoq/pub?gid=47179035&single=true&output=csv'; 
+        var SHEET_EERO_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSKUPJST2SVhD74W0cYfcb7RpBpuWgT5SLqHn7YSJasQcPNE971C5x_mBCDHPKJift7EFrOoYs4VHoq/pub?gid=469526274&single=true&output=csv'; // URL EERO ACTUALIZADA
 
         var globalData = [];
         var currentFilter = '';
@@ -969,6 +1137,8 @@
         var currentFilterCodigos = '';
 
         var globalTopologias = [];
+        
+        var globalEero = []; // NUEVO: Variable global EERO
 
         var resultsContainer = document.getElementById('resultsContainer');
         var searchInput = document.getElementById('searchInput');
@@ -990,6 +1160,14 @@
         var scrollTopBtnTopologias = document.getElementById('scrollTopBtnTopologias');
         var counterTopologias = document.getElementById('counterTopologias');
         var lastUpdatedTopologias = document.getElementById('lastUpdatedTopologias');
+
+        // NUEVO: DOM EERO
+        var resultsEeroContainer = document.getElementById('resultsEeroContainer');
+        var searchInputEero = document.getElementById('searchInputEero');
+        var clearSearchBtnEero = document.getElementById('clearSearchBtnEero');
+        var scrollTopBtnEero = document.getElementById('scrollTopBtnEero');
+        var counterEero = document.getElementById('counterEero');
+        var lastUpdatedEero = document.getElementById('lastUpdatedEero');
 
         var sidebar = document.getElementById('sidebar');
         var sidebarOverlay = document.getElementById('sidebarOverlay');
@@ -1035,11 +1213,13 @@
                 document.getElementById('view-armarios').style.display = 'flex';
                 document.getElementById('view-codigos').style.display = 'none';
                 document.getElementById('view-topologias').style.display = 'none';
+                document.getElementById('view-eero').style.display = 'none';
             } else if (viewName === 'codigos') {
                 document.getElementById('menu-codigos').classList.add('active');
                 document.getElementById('view-armarios').style.display = 'none';
                 document.getElementById('view-codigos').style.display = 'flex';
                 document.getElementById('view-topologias').style.display = 'none';
+                document.getElementById('view-eero').style.display = 'none';
                 
                 if (globalCodigos.length === 0) {
                     loadCodigos();
@@ -1049,9 +1229,20 @@
                 document.getElementById('view-armarios').style.display = 'none';
                 document.getElementById('view-codigos').style.display = 'none';
                 document.getElementById('view-topologias').style.display = 'flex';
+                document.getElementById('view-eero').style.display = 'none';
                 
                 if (globalTopologias.length === 0) {
                     loadTopologias();
+                }
+            } else if (viewName === 'eero') { // NUEVO: Switch a EERO
+                document.getElementById('menu-eero').classList.add('active');
+                document.getElementById('view-armarios').style.display = 'none';
+                document.getElementById('view-codigos').style.display = 'none';
+                document.getElementById('view-topologias').style.display = 'none';
+                document.getElementById('view-eero').style.display = 'flex';
+                
+                if (globalEero.length === 0) {
+                    loadEero();
                 }
             }
         }
@@ -1094,6 +1285,11 @@
         document.getElementById('infoModal').addEventListener('click', function(e) { if (e.target === this) closeModal('infoModal'); });
         document.getElementById('guideModal').addEventListener('click', function(e) { if (e.target === this) closeModal('guideModal'); });
         document.getElementById('topologiaModal').addEventListener('click', function(e) { if (e.target === this) closeModal('topologiaModal'); });
+        // NUEVO: Eventos para cerrar modales EERO
+        document.getElementById('modalLeds').addEventListener('click', function(e) { if (e.target === this) closeModal('modalLeds'); });
+        document.getElementById('modalFunciones').addEventListener('click', function(e) { if (e.target === this) closeModal('modalFunciones'); });
+        document.getElementById('modalSwitch').addEventListener('click', function(e) { if (e.target === this) closeModal('modalSwitch'); });
+        document.getElementById('modalTopologia').addEventListener('click', function(e) { if (e.target === this) closeModal('modalTopologia'); });
 
         function escapeHtml(str) {
             return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
@@ -1153,7 +1349,6 @@
         /* ========================================== */
         /* 🛑 INICIO MÓDULO BLINDADO: ARMARIOS LOGIC  */
         /* ========================================== */
-        // RESTAURADO: Regla HTML para Cuentas Rígidas
         var reglaHtml = 
             '<div class="card-header"><span class="tag">REGLA DE ORO</span></div>' +
             '<div class="card-title">⚠️ Comprueba que la cuenta NO SEA RÍGIDA</div>' +
@@ -1261,7 +1456,6 @@
             var isSectorSearch = /sec/i.test(searchTerm); 
             var frag = document.createDocumentFragment();
 
-            // BLINDAJE: Aquí se inyecta la Regla de Oro si no hay resultados
             if (isSectorSearch && dataArray.length > 0) {
                 var ruleCard = document.createElement('div');
                 ruleCard.className = 'card rule-card';
@@ -1568,6 +1762,136 @@
         resultsTopologiasContainer.addEventListener('scroll', function() { scrollTopBtnTopologias.style.display = resultsTopologiasContainer.scrollTop > 300 ? 'block' : 'none'; });
         function scrollToTopTopologias() { resultsTopologiasContainer.scrollTo({ top: 0, behavior: 'smooth' }); }
         /* FIN MÓDULO BLINDADO: TOPOLOGIAS LOGIC */
+
+        /* ========================================== */
+        /* 🛑 INICIO MÓDULO: EERO LOGIC               */
+        /* ========================================== */
+        function updateClearBtnVisibilityEero() { clearSearchBtnEero.style.display = searchInputEero.value.length > 0 ? 'flex' : 'none'; }
+        function clearSearchEero() { searchInputEero.value = ''; updateClearBtnVisibilityEero(); filterEero(); searchInputEero.focus(); }
+        searchInputEero.addEventListener('input', function() { updateClearBtnVisibilityEero(); filterEero(); });
+        function forceUpdateEero() { loadEero(); }
+
+        async function loadEero() {
+            resultsEeroContainer.innerHTML = '<div class="loading">Sincronizando EERO...</div>';
+            try {
+                var fetchUrl = SHEET_EERO_URL + '&nocache=' + new Date().getTime();
+                var response = await fetch(fetchUrl, { cache: 'no-store' });
+                if (!response.ok) throw new Error('HTTP ' + response.status);
+                var csvText = await response.text();
+                var rawRows = parseCSV(csvText);
+
+                globalEero = [];
+                for (var i = 1; i < rawRows.length; i++) {
+                    var r = rawRows[i];
+                    if (!r || r.length < 3) continue;
+                    var tipo = (r[0] || '').trim().toLowerCase();
+                    var titulo = (r[1] || '').trim();
+                    var palabras = (r[2] || '').trim();
+                    var contenido = (r[3] || '').trim();
+                    var descripcion = (r[4] || '').trim();
+
+                    if (titulo === '' && tipo !== 'banner') continue;
+                    globalEero.push({ tipo: tipo, titulo: titulo, palabras: palabras, contenido: contenido, descripcion: descripcion });
+                }
+
+                var now = new Date().toLocaleString('es-CL', { hour: '2-digit', minute:'2-digit' });
+                lastUpdatedEero.innerText = 'Act: ' + now;
+                filterEero(); 
+            } catch (error) {
+                resultsEeroContainer.innerHTML = '<div class="no-results" style="color: #d32f2f; font-family: monospace;"><b>Error al cargar EERO:</b><br><br>' + error.message + '</div>';
+            }
+        }
+
+        function filterEero() {
+            var term = searchInputEero.value.toLowerCase().trim();
+            var words = term.split(/\s+/).filter(function(w) { return w !== ''; });
+
+            var filtered = globalEero.filter(function(item) {
+                var searchable = (item.titulo + ' ' + item.palabras + ' ' + item.contenido + ' ' + item.descripcion).toLowerCase();
+                return words.every(function(w) { return searchable.indexOf(w) !== -1; });
+            });
+            renderEero(filtered, words);
+        }
+
+        function getEeroIcon(titulo) {
+            var t = titulo.toUpperCase();
+            if (t.includes('LED') || t.includes('LUZ')) return '<svg class="svg-icon c-teal" viewBox="0 0 24 24"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17h8v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7z"/></svg>';
+            if (t.includes('APP') || t.includes('FUNCIÓN')) return '<svg class="svg-icon c-blue" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>';
+            if (t.includes('SWITCH') || t.includes('CONFIGURACIÓN')) return '<svg class="svg-icon c-orange" viewBox="0 0 24 24"><rect x="2" y="8" width="20" height="8" rx="2"/><path d="M6 16v4 M10 16v4 M14 16v4 M18 16v4"/></svg>';
+            if (t.includes('MÁXIMO') || t.includes('CANTIDAD') || t.includes('TOPOLOGÍA')) return '<svg class="svg-icon c-grey" viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>';
+            return '<svg class="svg-icon c-teal" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>';
+        }
+
+        function renderEero(dataArray, words) {
+            resultsEeroContainer.innerHTML = '';
+            counterEero.innerText = dataArray.length + ' item' + (dataArray.length === 1 ? '' : 's');
+
+            if (dataArray.length === 0) {
+                resultsEeroContainer.innerHTML = '<div class="no-results">No se encontraron resultados.</div>';
+                return;
+            }
+
+            var frag = document.createDocumentFragment();
+            var gridContainer = document.createElement('div');
+            gridContainer.className = 'grid-container';
+            var hasGridItems = false;
+
+            for (var i = 0; i < dataArray.length; i++) {
+                var item = dataArray[i];
+                
+                if (item.tipo === 'hero') {
+                    var heroCard = document.createElement('div');
+                    heroCard.className = 'eero-hero-card';
+                    
+                    var imgHtml = item.contenido ? '<img src="' + item.contenido + '" class="eero-hero-img" onerror="this.style.display=\'none\'">' : '';
+                    var rowsHtml = '';
+                    if (item.descripcion) {
+                        var lines = item.descripcion.split('\n');
+                        for (var j = 0; j < lines.length; j++) {
+                            var line = lines[j].trim();
+                            if (!line) continue;
+                            var icon = '💡';
+                            if (line.toUpperCase().includes('NUNCA') || line.toUpperCase().includes('NO USAR')) { icon = '❌'; }
+                            else if (line.toUpperCase().includes('SWITCH')) { icon = '⚙️'; }
+                            else if (line.toUpperCase().includes('MÁXIMO') || line.toUpperCase().includes('MÁX')) { icon = '📶'; }
+                            
+                            var formattedText = highlightText(line, words);
+                            var parts = formattedText.split(':');
+                            if (parts.length > 1) { formattedText = '<b>' + parts[0] + ':</b>' + parts.slice(1).join(':'); }
+                            
+                            rowsHtml += '<div class="eero-hero-row"><div class="eero-hero-row-text" style="display:flex; gap:8px; align-items:start;"><span>' + icon + '</span><span>' + formattedText + '</span></div></div>';
+                        }
+                    }
+                    heroCard.innerHTML = '<div style="display:flex; align-items:flex-start; gap:15px; width:100%;">' + imgHtml + '<div style="flex:1;"><h3 class="eero-hero-title">' + highlightText(item.titulo, words) + '</h3>' + rowsHtml + '</div></div>';
+                    frag.appendChild(heroCard); continue;
+                }
+
+                if (item.tipo === 'banner') {
+                    var bannerCard = document.createElement('div');
+                    bannerCard.className = 'eero-warning-banner';
+                    var textBanner = item.contenido ? item.contenido.replace(/\n/g, '<br>') : '';
+                    bannerCard.innerHTML = '<div>⚠️</div><p style="margin:0;">' + highlightText(textBanner, words).replace(/&lt;br&gt;/g, '<br>') + '</p>';
+                    frag.appendChild(bannerCard); continue;
+                }
+
+                hasGridItems = true;
+                var gridCard = document.createElement('div');
+                gridCard.className = 'grid-card';
+                var iconSvg = getEeroIcon(item.titulo);
+                var modalId = item.contenido || ''; // Aquí viene el ID del modal (ej: modalLeds)
+                
+                gridCard.innerHTML = '<div class="grid-icon-box">' + iconSvg + '</div><div class="grid-title">' + highlightText(item.titulo, words) + '</div>';
+                gridCard.onclick = function(mid) { return function() { if(mid) openModal(mid); }; }(modalId);
+                gridContainer.appendChild(gridCard);
+            }
+
+            if (hasGridItems) { frag.appendChild(gridContainer); }
+            resultsEeroContainer.appendChild(frag);
+        }
+
+        resultsEeroContainer.addEventListener('scroll', function() { scrollTopBtnEero.style.display = resultsEeroContainer.scrollTop > 300 ? 'block' : 'none'; });
+        function scrollToTopEero() { resultsEeroContainer.scrollTo({ top: 0, behavior: 'smooth' }); }
+        /* FIN MÓDULO: EERO LOGIC */
 
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js').then(function(reg) { reg.update(); }).catch(function(err) { console.log("Error SW:", err); });
