@@ -9,608 +9,148 @@
     <link rel="icon" type="image/png" href="icon.png">
     <style>
         :root {
-            --primary: #2e7d32;
-            --primary-dark: #1b5e20;
-            --bg-color: #f0f2f5;
-            --card-bg: #ffffff;
-            --text-main: #1c1e21;
-            --text-muted: #65676b;
-            --accent: #1a73e8;
-            --highlight-bg: #ffeb3b;
-            --highlight-text: #000000;
-            --modal-bg: #ffffff;
-            --rule-bg: #fff3e0;
-            --rule-border: #f57c00;
-            --danger-bg: #ffebee;
-            --danger-color: #d32f2f;
-            --table-bg: #f8f9fa;
-            --sidebar-bg: #ffffff;
-            
-            --blue-primary: #1976d2;
-            --blue-dark: #0d47a1;
-            --purple-primary: #8e24aa;
-            --purple-dark: #4a148c;
-            
-            --teal-primary: #00897b;
-            --teal-dark: #00695c;
-            --warning-bg: #fff3cd;
-            --warning-border: #ffc107;
-            --warning-text: #856404;
-            
-            --btn-setup: #3a3a3a;
-            --btn-red: #d32f2f;
-            --btn-blue: #1976d2;
-            --btn-green: #2e7d32;
-            --btn-grey: #757575;
-            --btn-orange: #f57c00;
-            --btn-light-grey: #e0e0e0;
+            --primary: #2e7d32; --primary-dark: #1b5e20; --bg-color: #f0f2f5; --card-bg: #ffffff;
+            --text-main: #1c1e21; --text-muted: #65676b; --accent: #1a73e8; --highlight-bg: #ffeb3b;
+            --highlight-text: #000000; --modal-bg: #ffffff; --rule-bg: #fff3e0; --rule-border: #f57c00;
+            --danger-bg: #ffebee; --danger-color: #d32f2f; --table-bg: #f8f9fa; --sidebar-bg: #ffffff;
+            --blue-primary: #1976d2; --blue-dark: #0d47a1; --purple-primary: #8e24aa; --purple-dark: #4a148c;
+            --teal-primary: #00897b; --teal-dark: #00695c; --warning-bg: #fff3cd; --warning-border: #ffc107;
+            --warning-text: #856404; --btn-setup: #3a3a3a; --btn-red: #d32f2f; --btn-blue: #1976d2;
+            --btn-green: #2e7d32; --btn-grey: #757575; --btn-orange: #f57c00; --btn-light-grey: #e0e0e0;
         }
 
         body.dark-mode {
-            --bg-color: #121212;
-            --card-bg: #1e1e1e;
-            --text-main: #e4e6eb;
-            --text-muted: #b0b3b8;
-            --accent: #3b82f6;
-            --primary-dark: #81c784;
-            --highlight-bg: #ff9800;
-            --highlight-text: #000000;
-            --modal-bg: #2c2c2c;
-            --rule-bg: #3e2a1a;
-            --rule-border: #ffb74d;
-            --danger-bg: #3e1a1a;
-            --danger-color: #ef5350;
-            --table-bg: #2a2a2a;
-            --sidebar-bg: #1e1e1e;
-            
-            --blue-primary: #1e88e5;
-            --blue-dark: #1565c0;
-            --purple-primary: #ab47bc;
-            --purple-dark: #6a1b9a;
-            
-            --teal-primary: #26a69a;
-            --teal-dark: #00897b;
-            --warning-bg: #3e2a1a;
-            --warning-border: #ffb74d;
-            --warning-text: #ffb74d;
+            --bg-color: #121212; --card-bg: #1e1e1e; --text-main: #e4e6eb; --text-muted: #b0b3b8;
+            --accent: #3b82f6; --primary-dark: #81c784; --highlight-bg: #ff9800; --highlight-text: #000000;
+            --modal-bg: #2c2c2c; --rule-bg: #3e2a1a; --rule-border: #ffb74d; --danger-bg: #3e1a1a;
+            --danger-color: #ef5350; --table-bg: #2a2a2a; --sidebar-bg: #1e1e1e;
+            --blue-primary: #1e88e5; --blue-dark: #1565c0; --purple-primary: #ab47bc; --purple-dark: #6a1b9a;
+            --teal-primary: #26a69a; --teal-dark: #00897b; --warning-bg: #3e2a1a; --warning-border: #ffb74d; --warning-text: #ffb74d;
         }
 
-        html, body { 
-            margin: 0; 
-            padding: 0; 
-            height: 100%; 
-            overflow: hidden; 
-        }
-
+        html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            height: 100dvh;
-            transition: background-color 0.3s, color 0.3s;
+            background-color: var(--bg-color); color: var(--text-main); display: flex; flex-direction: column;
+            height: 100vh; height: 100dvh; transition: background-color 0.3s, color 0.3s;
         }
 
-        #view-armarios, #view-codigos, #view-topologias, #view-eero {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            overflow: hidden;
-        }
+        #view-armarios, #view-codigos, #view-topologias, #view-eero { display: flex; flex-direction: column; height: 100%; overflow: hidden; }
         #view-codigos, #view-topologias, #view-eero { display: none; }
 
         header {
-            background-color: var(--primary);
-            color: white;
-            padding: 15px 15px 10px 15px;
-            padding-top: max(15px, env(safe-area-inset-top));
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
-            transition: background-color 0.3s;
+            background-color: var(--primary); color: white; padding: 15px 15px 10px 15px;
+            padding-top: max(15px, env(safe-area-inset-top)); position: sticky; top: 0; z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15); transition: background-color 0.3s;
         }
-
         #view-codigos header { background-color: var(--blue-primary); }
         #view-topologias header { background-color: var(--purple-primary); }
         #view-eero header { background-color: var(--teal-primary); }
 
-        .header-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 12px;
-        }
-
+        .header-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
         .title-group { display: flex; align-items: center; gap: 12px; }
-
-        .menu-btn {
-            background: rgba(255,255,255,0.2);
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            padding: 0 8px;
-            border-radius: 8px;
-            cursor: pointer;
-            line-height: 1;
-            height: 36px;
-            display: flex;
-            align-items: center;
-        }
-
+        .menu-btn { background: rgba(255,255,255,0.2); border: none; color: white; font-size: 1.5rem; padding: 0 8px; border-radius: 8px; cursor: pointer; line-height: 1; height: 36px; display: flex; align-items: center; }
         .header-title { font-size: 1.15rem; font-weight: 700; margin: 0; display: flex; align-items: center; gap: 8px; }
         .subtitle { font-size: 0.7rem; opacity: 0.85; margin-top: 4px; line-height: 1.2; max-width: 90%; }
-
         .header-buttons { display: flex; gap: 8px; }
-
-        .icon-btn {
-            background: rgba(255,255,255,0.2);
-            border: none;
-            color: white;
-            font-size: 1.1rem;
-            padding: 5px 10px;
-            border-radius: 15px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 36px;
-            height: 36px;
-        }
-
+        .icon-btn { background: rgba(255,255,255,0.2); border: none; color: white; font-size: 1.1rem; padding: 5px 10px; border-radius: 15px; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; }
         .search-wrapper { position: relative; display: flex; align-items: center; }
-
-        .search-input {
-            width: 100%;
-            padding: 12px 40px 12px 40px;
-            border: none;
-            border-radius: 25px;
-            font-size: 15px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            outline: none;
-            background-color: var(--card-bg);
-            color: var(--text-main);
-        }
-
+        .search-input { width: 100%; padding: 12px 40px 12px 40px; border: none; border-radius: 25px; font-size: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); outline: none; background-color: var(--card-bg); color: var(--text-main); }
         .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 1.1rem; }
-
-        .clear-search-btn {
-            display: none;
-            position: absolute;
-            right: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: #e0e0e0;
-            color: #555;
-            border: none;
-            border-radius: 50%;
-            width: 22px;
-            height: 22px;
-            font-size: 12px;
-            font-weight: bold;
-            cursor: pointer;
-            align-items: center;
-            justify-content: center;
-            padding: 0;
-            line-height: 1;
-        }
+        .clear-search-btn { display: none; position: absolute; right: 14px; top: 50%; transform: translateY(-50%); background: #e0e0e0; color: #555; border: none; border-radius: 50%; width: 22px; height: 22px; font-size: 12px; font-weight: bold; cursor: pointer; align-items: center; justify-content: center; padding: 0; line-height: 1; }
         body.dark-mode .clear-search-btn { background: #444; color: #ccc; }
-
-        .info-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.75rem;
-            margin-top: 8px;
-            padding: 0 5px;
-            color: rgba(255,255,255,0.9);
-        }
-
-        .site-counter {
-            background: rgba(255,255,255,0.2);
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-weight: 600;
-        }
-
-        .update-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            cursor: pointer;
-            background: rgba(255,255,255,0.1);
-            padding: 4px 8px;
-            border-radius: 12px;
-        }
+        .info-bar { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; margin-top: 8px; padding: 0 5px; color: rgba(255,255,255,0.9); }
+        .site-counter { background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 10px; font-weight: 600; }
+        .update-wrapper { display: flex; align-items: center; gap: 5px; cursor: pointer; background: rgba(255,255,255,0.1); padding: 4px 8px; border-radius: 12px; }
         .update-wrapper:active { background: rgba(255,255,255,0.3); }
-        
         .rotating { animation: spin 1s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        .filters-container {
-            display: flex;
-            overflow-x: auto;
-            padding: 0 15px 12px 15px;
-            gap: 8px;
-            background: var(--primary);
-            scrollbar-width: none;
-        }
+        .filters-container { display: flex; overflow-x: auto; padding: 0 15px 12px 15px; gap: 8px; background: var(--primary); scrollbar-width: none; }
         #view-codigos .filters-container { background: var(--blue-primary); }
         #view-topologias .filters-container { background: var(--purple-primary); }
         .filters-container::-webkit-scrollbar { display: none; }
-
-        .chip {
-            background: var(--card-bg);
-            border: 1px solid transparent;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--text-main);
-            white-space: nowrap;
-            cursor: pointer;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            user-select: none;
-        }
+        .chip { background: var(--card-bg); border: 1px solid transparent; padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; color: var(--text-main); white-space: nowrap; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.1); user-select: none; }
         body.dark-mode .chip { border-color: #444; }
-        
         .chip.active { background: var(--primary-dark); color: white; }
         #view-codigos .chip.active { background: var(--blue-dark); color: white; }
         #view-topologias .chip.active { background: var(--purple-dark); color: white; }
 
-        .guide-btn-container {
-            background: var(--blue-primary);
-            padding: 0 15px 15px 15px;
-        }
-        .guide-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            background-color: rgba(255,255,255,0.15);
-            border: 1px solid rgba(255,255,255,0.3);
-            color: white;
-            padding: 12px;
-            border-radius: 10px;
-            font-weight: 700;
-            font-size: 0.95rem;
-            cursor: pointer;
-            gap: 8px;
-            text-transform: uppercase;
-        }
+        .guide-btn-container { background: var(--blue-primary); padding: 0 15px 15px 15px; }
+        .guide-btn { display: flex; align-items: center; justify-content: center; width: 100%; background-color: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 12px; border-radius: 10px; font-weight: 700; font-size: 0.95rem; cursor: pointer; gap: 8px; text-transform: uppercase; }
         .guide-btn:active { background-color: rgba(255,255,255,0.3); }
 
-        .results-container { 
-            flex: 1; 
-            overflow-y: auto; 
-            padding: 15px; 
-            padding-bottom: 50px;
-            -webkit-overflow-scrolling: touch; 
-            touch-action: pan-y;
-        }
+        .results-container { flex: 1; overflow-y: auto; padding: 15px; padding-bottom: 50px; -webkit-overflow-scrolling: touch; touch-action: pan-y; }
 
-        /* ========================================== */
-        /* 🛑 INICIO MÓDULO BLINDADO: ESTILOS ARMARIOS */
-        /* ========================================== */
-        .card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 12px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            overflow: hidden;
-            min-height: 140px; 
-        }
-
-        .card::before {
-            content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 5px;
-            background-color: var(--tag-color, var(--primary));
-        }
-
-        .rule-card {
-            border: 2px solid var(--danger-color);
-            background-color: var(--card-bg);
-            border-left: 6px solid var(--danger-color);
-            animation: slideDown 0.3s ease-out;
-        }
-        
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
+        /* ARMARIOS */
+        .card { background: var(--card-bg); border-radius: 12px; padding: 16px; margin-bottom: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: flex; flex-direction: column; position: relative; overflow: hidden; min-height: 140px; }
+        .card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background-color: var(--tag-color, var(--primary)); }
+        .rule-card { border: 2px solid var(--danger-color); background-color: var(--card-bg); border-left: 6px solid var(--danger-color); animation: slideDown 0.3s ease-out; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
         .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
-
-        .tag {
-            background-color: var(--tag-bg);
-            color: var(--tag-color);
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-
+        .tag { background-color: var(--tag-bg); color: var(--tag-color); padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
         .card-title { font-weight: 700; color: var(--text-main); font-size: 1.05rem; line-height: 1.3; margin-bottom: 8px; word-break: break-word; }
-
-        .cable-box, .obs-box {
-            background: rgba(0,0,0,0.03);
-            border: 1px dashed rgba(0,0,0,0.1);
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-family: monospace;
-            font-size: 0.95rem;
-            margin-bottom: 12px;
-            font-weight: 600;
-            word-break: break-word;
-        }
+        .cable-box, .obs-box { background: rgba(0,0,0,0.03); border: 1px dashed rgba(0,0,0,0.1); padding: 8px 12px; border-radius: 8px; font-family: monospace; font-size: 0.95rem; margin-bottom: 12px; font-weight: 600; word-break: break-word; }
         body.dark-mode .cable-box, body.dark-mode .obs-box { background: rgba(255,255,255,0.05); border-color: #444; }
-        
         .cable-box { color: var(--primary-dark); }
         .obs-box { font-family: inherit; color: var(--text-main); font-weight: normal; font-size: 0.85rem; }
-
-        .nav-btn {
-            background-color: var(--accent);
-            color: white;
-            text-decoration: none;
-            padding: 12px;
-            border-radius: 10px;
-            text-align: center;
-            font-weight: 600;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.95rem;
-            margin-top: auto; 
-        }
+        .nav-btn { background-color: var(--accent); color: white; text-decoration: none; padding: 12px; border-radius: 10px; text-align: center; font-weight: 600; display: flex; justify-content: center; align-items: center; gap: 8px; font-size: 0.95rem; margin-top: auto; }
         .nav-btn:active { opacity: 0.8; }
-        /* ========================================== */
-        /* FIN MÓDULO BLINDADO: ESTILOS ARMARIOS       */
-        /* ========================================== */
 
-        /* ========================================== */
-        /* 🛑 INICIO MÓDULO BLINDADO: ESTILOS TOPOLOGÍAS */
-        /* ========================================== */
-        .hero-card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 15px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            display: flex;
-            align-items: flex-start;
-            gap: 15px;
-            border-left: 6px solid var(--primary);
-            animation: slideDown 0.3s ease-out;
-        }
-        
-        .hero-img {
-            width: 100px;
-            height: 100px;
-            object-fit: contain;
-            border-radius: 8px;
-            background: #fff;
-            padding: 5px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            flex-shrink: 0;
-        }
-        
+        /* TOPOLOGIAS */
+        .hero-card { background: var(--card-bg); border-radius: 12px; padding: 16px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: flex; align-items: flex-start; gap: 15px; border-left: 6px solid var(--primary); animation: slideDown 0.3s ease-out; }
+        .hero-img { width: 100px; height: 100px; object-fit: contain; border-radius: 8px; background: #fff; padding: 5px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); flex-shrink: 0; }
         .hero-details { flex: 1; }
-        
-        .hero-title {
-            font-weight: 700;
-            font-size: 1.1rem;
-            color: var(--text-main);
-            margin: 0 0 10px 0;
-        }
-        
-        .hero-row {
-            display: grid;
-            grid-template-columns: 20px 1fr;
-            gap: 8px;
-            margin-bottom: 8px;
-            font-size: 0.85rem;
-            line-height: 1.4;
-            color: var(--text-main);
-            align-items: start;
-        }
+        .hero-title { font-weight: 700; font-size: 1.1rem; color: var(--text-main); margin: 0 0 10px 0; }
+        .hero-row { display: grid; grid-template-columns: 20px 1fr; gap: 8px; margin-bottom: 8px; font-size: 0.85rem; line-height: 1.4; color: var(--text-main); align-items: start; }
         .hero-row:last-child { margin-bottom: 0; }
-        
         .hero-row-icon { font-size: 1rem; line-height: 1.4; text-align: center; }
         .hero-row-text b { color: var(--danger-color); }
-
-        .warning-banner {
-            background: var(--warning-bg);
-            border-left: 6px solid var(--warning-border);
-            color: var(--warning-text);
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            display: flex;
-            gap: 12px;
-            align-items: flex-start;
-            animation: slideDown 0.3s ease-out;
-        }
-        
+        .warning-banner { background: var(--warning-bg); border-left: 6px solid var(--warning-border); color: var(--warning-text); padding: 15px; border-radius: 12px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: flex; gap: 12px; align-items: flex-start; animation: slideDown 0.3s ease-out; }
         .warning-icon { font-size: 1.5rem; line-height: 1; }
         .warning-text { font-size: 0.9rem; font-weight: 600; line-height: 1.4; margin: 0; }
-
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-        }
-        
-        .grid-card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            display: flex;
-            flex-direction: column;
-            cursor: pointer;
-            transition: transform 0.1s;
-        }
+        .grid-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .grid-card { background: var(--card-bg); border-radius: 12px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: flex; flex-direction: column; cursor: pointer; transition: transform 0.1s; }
         .grid-card:active { transform: scale(0.97); }
-        
-        .grid-icon-box {
-            height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--card-bg);
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-        }
+        .grid-icon-box { height: 80px; display: flex; align-items: center; justify-content: center; background: var(--card-bg); border-bottom: 1px solid rgba(0,0,0,0.05); }
         body.dark-mode .grid-icon-box { border-bottom-color: rgba(255,255,255,0.1); }
-        
-        .svg-icon {
-            width: 44px;
-            height: 44px;
-            stroke-width: 2;
-            fill: none;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-        
-        .c-blue { stroke: #1976d2; fill: rgba(25,118,210,0.1); }
-        .c-green { stroke: #2e7d32; fill: rgba(46,125,50,0.1); }
-        .c-red { stroke: #d32f2f; fill: rgba(211,47,47,0.1); }
-        .c-orange { stroke: #f57c00; fill: rgba(245,124,0,0.1); }
-        .c-grey { stroke: #757575; fill: rgba(117,117,117,0.1); }
-        .c-teal { stroke: var(--teal-primary); fill: rgba(0,137,123,0.1); }
+        .svg-icon { width: 44px; height: 44px; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+        .c-blue { stroke: #1976d2; fill: rgba(25,118,210,0.1); } .c-green { stroke: #2e7d32; fill: rgba(46,125,50,0.1); }
+        .c-red { stroke: #d32f2f; fill: rgba(211,47,47,0.1); } .c-orange { stroke: #f57c00; fill: rgba(245,124,0,0.1); }
+        .c-grey { stroke: #757575; fill: rgba(117,117,117,0.1); } .c-teal { stroke: var(--teal-primary); fill: rgba(0,137,123,0.1); }
+        .grid-title { padding: 12px 8px; text-align: center; font-weight: 700; font-size: 0.8rem; color: var(--text-main); line-height: 1.2; flex: 1; display: flex; align-items: center; justify-content: center; }
 
-        .grid-title {
-            padding: 12px 8px;
-            text-align: center;
-            font-weight: 700;
-            font-size: 0.8rem;
-            color: var(--text-main);
-            line-height: 1.2;
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        /* ========================================== */
-        /* FIN MÓDULO BLINDADO: ESTILOS TOPOLOGÍAS     */
-        /* ========================================== */
-
-        /* --- ESTILOS GENERALES (Compartidos) --- */
+        /* GENERALES */
         .loading, .no-results { text-align: center; padding: 20px; color: var(--text-muted); }
-        
-        .contact-footer {
-            text-align: center;
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            padding: 20px;
-            margin-top: 10px;
-            border-top: 1px solid rgba(0,0,0,0.1);
-            line-height: 1.4;
-        }
+        .contact-footer { text-align: center; font-size: 0.8rem; color: var(--text-muted); padding: 20px; margin-top: 10px; border-top: 1px solid rgba(0,0,0,0.1); line-height: 1.4; }
         body.dark-mode .contact-footer { border-top-color: rgba(255,255,255,0.1); }
         .contact-footer strong { color: var(--primary); }
+        mark { background-color: var(--highlight-bg); color: var(--highlight-text); padding: 0 2px; border-radius: 3px; font-weight: bold; }
+        
+        #scrollTopBtn, #scrollTopBtnCodigos, #scrollTopBtnTopologias, #scrollTopBtnEero { display: none; position: fixed; bottom: 20px; right: 20px; z-index: 99; background-color: var(--primary); color: white; border: none; cursor: pointer; padding: 15px; border-radius: 50%; font-size: 1.2rem; box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: opacity 0.3s; }
+        #scrollTopBtnCodigos { background-color: var(--blue-primary); } #scrollTopBtnTopologias { background-color: var(--purple-primary); } #scrollTopBtnEero { background-color: var(--teal-primary); }
 
-        mark {
-            background-color: var(--highlight-bg);
-            color: var(--highlight-text);
-            padding: 0 2px;
-            border-radius: 3px;
-            font-weight: bold;
-        }
-
-        #scrollTopBtn, #scrollTopBtnCodigos, #scrollTopBtnTopologias, #scrollTopBtnEero {
-            display: none;
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 99;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            cursor: pointer;
-            padding: 15px;
-            border-radius: 50%;
-            font-size: 1.2rem;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            transition: opacity 0.3s;
-        }
-        #scrollTopBtnCodigos { background-color: var(--blue-primary); }
-        #scrollTopBtnTopologias { background-color: var(--purple-primary); }
-        #scrollTopBtnEero { background-color: var(--teal-primary); }
-
-        .sidebar-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
+        .sidebar-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; opacity: 0; transition: opacity 0.3s; }
         .sidebar-overlay.active { display: block; opacity: 1; }
-
-        .sidebar {
-            position: fixed;
-            top: 0;
-            left: -80%;
-            width: 80%;
-            max-width: 320px;
-            height: 100%;
-            background-color: var(--sidebar-bg);
-            z-index: 1001;
-            box-shadow: 2px 0 10px rgba(0,0,0,0.2);
-            transition: left 0.3s ease-in-out;
-            display: flex;
-            flex-direction: column;
-        }
+        .sidebar { position: fixed; top: 0; left: -80%; width: 80%; max-width: 320px; height: 100%; background-color: var(--sidebar-bg); z-index: 1001; box-shadow: 2px 0 10px rgba(0,0,0,0.2); transition: left 0.3s ease-in-out; display: flex; flex-direction: column; }
         .sidebar.active { left: 0; }
-
         .sidebar-header { padding: 20px; background-color: var(--primary); color: white; }
         .sidebar-header h2 { margin: 0; font-size: 1.2rem; }
         .sidebar-header p { margin: 5px 0 0 0; font-size: 0.8rem; opacity: 0.8; }
-
         .sidebar-menu { list-style: none; padding: 0; margin: 0; flex: 1; overflow-y: auto; }
-
-        .sidebar-item {
-            padding: 16px 20px;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            font-weight: 600;
-            color: var(--text-main);
-            transition: background 0.2s;
-        }
+        .sidebar-item { padding: 16px 20px; border-bottom: 1px solid rgba(0,0,0,0.05); cursor: pointer; display: flex; align-items: center; gap: 15px; font-weight: 600; color: var(--text-main); transition: background 0.2s; }
         body.dark-mode .sidebar-item { border-bottom-color: rgba(255,255,255,0.05); }
         .sidebar-item:hover { background-color: rgba(0,0,0,0.05); }
         body.dark-mode .sidebar-item:hover { background-color: rgba(255,255,255,0.1); }
         .sidebar-item.active { background-color: rgba(46, 125, 50, 0.1); color: var(--primary); border-left: 4px solid var(--primary); }
         .sidebar-item span.icon { font-size: 1.3rem; }
 
-        .oracle-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.75rem;
-            margin: 10px 0;
-            background-color: var(--table-bg);
-            border-radius: 6px;
-            overflow: hidden;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
+        .oracle-table { width: 100%; border-collapse: collapse; font-size: 0.75rem; margin: 10px 0; background-color: var(--table-bg); border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
         .oracle-table th { background-color: #0d3b66; color: white; padding: 8px 6px; text-align: center; font-weight: bold; }
         .oracle-table td { border: 1px solid rgba(0,0,0,0.1); padding: 8px 6px; text-align: center; color: var(--text-main); line-height: 1.3; }
         body.dark-mode .oracle-table td { border-color: #444; }
-        
         .highlight-sector { background-color: #fff59d; color: #000; font-weight: bold; padding: 2px 4px; border-radius: 3px; }
         .highlight-red-box { border: 2px solid #d32f2f !important; background-color: #ffebee; color: #b71c1c !important; font-weight: bold; }
         body.dark-mode .highlight-red-box { background-color: #3e1a1a; color: #ef5350 !important; }
@@ -622,9 +162,7 @@
         .modal-content .note-box { background: var(--rule-bg); border-left: 4px solid var(--rule-border); padding: 10px; border-radius: 4px; font-size: 0.85rem; margin-bottom: 15px; }
         .close-modal-btn { background: var(--primary); color: white; border: none; padding: 12px 15px; border-radius: 8px; width: 100%; font-weight: bold; font-size: 1rem; cursor: pointer; margin-top: 10px; }
 
-        /* ========================================== */
-        /* 🛑 INICIO MÓDULO BLINDADO: ESTILOS TV-DECO */
-        /* ========================================== */
+        /* TV DECO */
         .guide-modal-title { color: #1976d2 !important; }
         .guide-card { background: rgba(0,0,0,0.02); border: 1px solid rgba(0,0,0,0.1); border-radius: 10px; padding: 15px; margin-bottom: 15px; display: flex; flex-direction: column; }
         body.dark-mode .guide-card { background: rgba(255,255,255,0.05); border-color: #444; }
@@ -640,86 +178,43 @@
         .control-name { font-weight: 700; font-size: 0.95rem; margin-bottom: 4px; display: flex; align-items: center; gap: 5px; }
         .control-instructions { font-size: 0.85rem; line-height: 1.6; color: var(--text-main); }
         .btn-badge { display: inline-flex; align-items: center; justify-content: center; padding: 3px 8px; border-radius: 5px; font-family: monospace; font-weight: 700; color: white; font-size: 0.8rem; box-shadow: inset 0 -2px 0 rgba(0,0,0,0.3), 0 1px 3px rgba(0,0,0,0.2); margin: 0 2px; text-shadow: 1px 1px 1px rgba(0,0,0,0.5); vertical-align: middle; }
-        .btn-setup { background-color: var(--btn-setup); }
-        .btn-red { background-color: var(--btn-red); }
-        .btn-blue { background-color: var(--btn-blue); }
-        .btn-green { background-color: var(--btn-green); }
-        .btn-grey { background-color: var(--btn-grey); }
-        .btn-orange { background-color: var(--btn-orange); }
+        .btn-setup { background-color: var(--btn-setup); } .btn-red { background-color: var(--btn-red); } .btn-blue { background-color: var(--btn-blue); } .btn-green { background-color: var(--btn-green); } .btn-grey { background-color: var(--btn-grey); } .btn-orange { background-color: var(--btn-orange); }
         .btn-light-grey { background-color: var(--btn-light-grey); color: #000; text-shadow: none; box-shadow: inset 0 -2px 0 rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.2); }
         .icon-shape { font-size: 0.9rem; margin-right: 4px; }
         .topologia-modal-content { background: var(--card-bg); color: var(--text-main); padding: 20px; border-radius: 12px; max-width: 800px; width: 100%; max-height: 95vh; overflow-y: auto; box-shadow: 0 4px 15px rgba(0,0,0,0.3); position: relative; }
         .topologia-modal-title { font-size: 1.2rem; font-weight: 700; margin-top: 0; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid var(--border-color, #ddd); }
         .topologia-modal-img { width: 100%; height: auto; border-radius: 8px; margin-bottom: 15px; background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         .topologia-modal-text { font-size: 0.95rem; line-height: 1.6; color: var(--text-main); white-space: pre-wrap; }
-        /* ========================================== */
-        /* FIN MÓDULO BLINDADO: ESTILOS TV-DECO        */
-        /* ========================================== */
 
-        /* ========================================== */
-        /* 🛑 INICIO MÓDULO BLINDADO: ESTILOS EERO     */
-        /* ========================================== */
-        .eero-hero-card {
-            background: var(--card-bg); border-radius: 12px; padding: 16px;
-            display: flex; align-items: flex-start; gap: 15px;
-            border-left: 6px solid var(--teal-primary); box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            margin-bottom: 15px; animation: slideDown 0.3s ease-out;
-        }
-        
-        /* Quitamos el fondo blanco para que se vea el error de imagen si falla */
+        /* EERO */
+        .eero-hero-card { background: var(--card-bg); border-radius: 12px; padding: 16px; display: flex; align-items: flex-start; gap: 15px; border-left: 6px solid var(--teal-primary); box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 15px; animation: slideDown 0.3s ease-out; }
         .eero-hero-img { width: 80px; height: 80px; object-fit: contain; border-radius: 8px; padding: 5px; flex-shrink: 0; border: 1px solid rgba(0,0,0,0.1); }
-        
         .eero-hero-details { flex: 1; min-width: 0; }
-        
         .eero-hero-title { font-weight: 800; font-size: 1.1rem; margin: 0 0 8px 0; color: var(--text-main); }
         .eero-hero-row { display: grid; grid-template-columns: 20px 1fr; gap: 8px; margin-bottom: 8px; font-size: 0.85rem; line-height: 1.3; color: var(--text-main); align-items: start; }
         .eero-hero-row:last-child { margin-bottom: 0; }
         .eero-hero-row-text b { color: #d32f2f; }
-        .eero-hero-row-text span { color: var(--teal-primary); font-weight: bold; }
-
-        .eero-warning-banner {
-            background: var(--warning-bg); border-left: 6px solid var(--warning-border);
-            color: var(--warning-text); padding: 12px; border-radius: 12px;
-            margin-bottom: 15px; display: flex; gap: 10px; align-items: flex-start;
-            font-size: 0.85rem; font-weight: 600; line-height: 1.4; animation: slideDown 0.3s ease-out;
-        }
-
+        .eero-warning-banner { background: var(--warning-bg); border-left: 6px solid var(--warning-border); color: var(--warning-text); padding: 12px; border-radius: 12px; margin-bottom: 15px; display: flex; gap: 10px; align-items: flex-start; font-size: 0.85rem; font-weight: 600; line-height: 1.4; animation: slideDown 0.3s ease-out; }
         .led-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; margin-top: 10px; }
         .led-table th { background: var(--teal-primary); color: white; padding: 10px; text-align: left; }
         .led-table td { padding: 10px; border-bottom: 1px solid #eee; vertical-align: middle; color: var(--text-main); }
         body.dark-mode .led-table td { border-bottom-color: #444; }
         .led-dot { display: inline-block; width: 14px; height: 14px; border-radius: 50%; margin-right: 8px; vertical-align: middle; border: 1px solid #ccc; }
-        .led-grey { background: #d3d3d3; border-color: #999; }
-        .led-white { background: #ffffff; }
-        .led-blue { background: #2196f3; border-color: #1976d2; }
-        .led-green { background: #4caf50; border-color: #388e3c; }
-        .led-yellow { background: #ffeb3b; border-color: #fbc02d; }
-        .led-red { background: #f44336; border-color: #d32f2f; }
-        
+        .led-grey { background: #d3d3d3; border-color: #999; } .led-white { background: #ffffff; } .led-blue { background: #2196f3; border-color: #1976d2; } .led-green { background: #4caf50; border-color: #388e3c; } .led-yellow { background: #ffeb3b; border-color: #fbc02d; } .led-red { background: #f44336; border-color: #d32f2f; }
         .eero-compare-table { width:100%; border-collapse:collapse; font-size:0.75rem; margin-top:10px; }
         .eero-compare-table th { background:var(--teal-primary); color:white; padding:8px; }
         .eero-compare-table td { padding:8px; border-bottom:1px solid #ddd; color: var(--text-main); text-align: center;}
         body.dark-mode .eero-compare-table td { border-bottom-color: #444; }
-        
-        .img-placeholder {
-            width: 100%; height: 200px; background: rgba(0,0,0,0.05); border: 2px dashed rgba(0,0,0,0.2);
-            border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center;
-            color: var(--text-muted); font-weight: bold; font-size: 0.9rem; margin-top: 10px; text-align: center; padding: 10px;
-        }
+        .img-placeholder { width: 100%; height: 200px; background: rgba(0,0,0,0.05); border: 2px dashed rgba(0,0,0,0.2); border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-muted); font-weight: bold; font-size: 0.9rem; margin-top: 10px; text-align: center; padding: 10px; }
         body.dark-mode .img-placeholder { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.2); }
         .eero-btn-title { color: var(--teal-primary) !important; }
         .eero-close-btn { background: var(--teal-primary) !important; }
         .eero-modal-img { width: 100%; border-radius: 8px; margin-top: 10px; border: 1px solid rgba(0,0,0,0.1); }
-        /* ========================================== */
-        /* FIN MÓDULO BLINDADO: ESTILOS EERO           */
-        /* ========================================== */
     </style>
 </head>
 <body>
 
-    <!-- ========================================== -->
-    <!-- 🛑 INICIO MÓDULO BLINDADO: MENÚ LATERAL    -->
-    <!-- ========================================== -->
+    <!-- MENÚ LATERAL -->
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleMenu()"></div>
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
@@ -727,102 +222,61 @@
             <p>App de Terreno - C.Saez</p>
         </div>
         <ul class="sidebar-menu">
-            <li class="sidebar-item active" id="menu-armarios" onclick="switchView('armarios')">
-                <span class="icon">📦</span> Armarios y Centrales
-            </li>
-            <li class="sidebar-item" id="menu-codigos" onclick="switchView('codigos')">
-                <span class="icon">📺</span> Control TV-Deco
-            </li>
-            <li class="sidebar-item" id="menu-topologias" onclick="switchView('topologias')">
-                <span class="icon">🗺️</span> HUAWEI Topología y Alertas
-            </li>
-            <li class="sidebar-item" id="menu-eero" onclick="switchView('eero')">
-                <span class="icon">📡</span> EERO Topología y Alertas
-            </li>
+            <li class="sidebar-item active" id="menu-armarios" onclick="switchView('armarios')"><span class="icon">📦</span> Armarios y Centrales</li>
+            <li class="sidebar-item" id="menu-codigos" onclick="switchView('codigos')"><span class="icon">📺</span> Control TV-Deco</li>
+            <li class="sidebar-item" id="menu-topologias" onclick="switchView('topologias')"><span class="icon">🗺️</span> HUAWEI Topología y Alertas</li>
+            <li class="sidebar-item" id="menu-eero" onclick="switchView('eero')"><span class="icon">📡</span> EERO Topología y Alertas</li>
         </ul>
     </div>
-    <!-- ========================================== -->
-    <!-- FIN MÓDULO BLINDADO: MENÚ LATERAL          -->
-    <!-- ========================================== -->
 
-    <!-- ========================================== -->
-    <!-- 🛑 INICIO MÓDULO BLINDADO: VISTA ARMARIOS  -->
-    <!-- ========================================== -->
+    <!-- VISTA ARMARIOS -->
     <div id="view-armarios">
         <header>
             <div class="header-top">
                 <div class="title-group">
                     <button class="menu-btn" onclick="toggleMenu()">☰</button>
-                    <div>
-                        <div class="header-title">📊 Armarios y Centrales</div>
-                        <div class="subtitle">Búsqueda eficiente en terreno.</div>
-                    </div>
+                    <div><div class="header-title">📊 Armarios y Centrales</div><div class="subtitle">Búsqueda eficiente en terreno.</div></div>
                 </div>
                 <div class="header-buttons">
                     <button class="icon-btn" onclick="openModal('infoModal')" title="Información importante">ℹ️</button>
                     <button class="icon-btn" id="themeToggle" onclick="toggleTheme()">🌙</button>
                 </div>
             </div>
-
             <div class="search-wrapper">
                 <span class="search-icon">🔍</span>
                 <input type="text" id="searchInput" class="search-input" placeholder="Buscar armario, cable o coordenada...">
                 <button id="clearSearchBtn" class="clear-search-btn" onclick="clearSearch()">✖</button>
             </div>
-            
             <div class="info-bar">
                 <span id="siteCounter" class="site-counter">0 sitios</span>
-                <div class="update-wrapper" onclick="forceUpdate()" title="Buscar nuevos datos">
-                    <span id="lastUpdated">Sincronizando...</span>
-                    <span id="refreshIcon">🔄</span>
-                </div>
+                <div class="update-wrapper" onclick="forceUpdate()" title="Buscar nuevos datos"><span id="lastUpdated">Sincronizando...</span><span id="refreshIcon">🔄</span></div>
             </div>
-            
             <div class="filters-container">
                 <div class="chip active" onclick="applyFilter('', this)">Todos</div>
                 <div class="chip" onclick="applyFilter('CENTRAL', this)">Centrales</div>
                 <div class="chip" onclick="applyFilter('ARMA', this)">Armarios</div>
             </div>
         </header>
-
-        <div class="results-container" id="resultsContainer">
-            <div class="loading">Cargando datos...</div>
-        </div>
+        <div class="results-container" id="resultsContainer"><div class="loading">Cargando datos...</div></div>
         <button id="scrollTopBtn" onclick="scrollToTopArmarios()">⬆️</button>
     </div>
-    <!-- ========================================== -->
-    <!-- FIN MÓDULO BLINDADO: VISTA ARMARIOS        -->
-    <!-- ========================================== -->
 
-    <!-- ========================================== -->
-    <!-- 🛑 INICIO MÓDULO BLINDADO: VISTA CODIGOS   -->
-    <!-- ========================================== -->
+    <!-- VISTA CODIGOS -->
     <div id="view-codigos">
         <header>
             <div class="header-top">
                 <div class="title-group">
                     <button class="menu-btn" onclick="toggleMenu()">☰</button>
-                    <div>
-                        <div class="header-title">📺 Control TV-Deco</div>
-                        <div class="subtitle">Códigos y guía de configuración.</div>
-                    </div>
+                    <div><div class="header-title">📺 Control TV-Deco</div><div class="subtitle">Códigos y guía de configuración.</div></div>
                 </div>
-                <div class="header-buttons">
-                    <button class="icon-btn" onclick="forceUpdateCodigos()" title="Actualizar">🔄</button>
-                </div>
+                <div class="header-buttons"><button class="icon-btn" onclick="forceUpdateCodigos()" title="Actualizar">🔄</button></div>
             </div>
-
             <div class="search-wrapper">
                 <span class="search-icon">🔍</span>
                 <input type="text" id="searchInputCodigos" class="search-input" placeholder="Ej: Aiko, 0092, LG...">
                 <button id="clearSearchBtnCodigos" class="clear-search-btn" onclick="clearSearchCodigos()">✖</button>
             </div>
-            
-            <div class="info-bar">
-                <span id="counterCodigos" class="site-counter">0 marcas</span>
-                <span id="lastUpdatedCodigos">Sincronizando...</span>
-            </div>
-
+            <div class="info-bar"><span id="counterCodigos" class="site-counter">0 marcas</span><span id="lastUpdatedCodigos">Sincronizando...</span></div>
             <div class="filters-container">
                 <div class="chip active" onclick="applyFilterCodigos('', this)">Todos</div>
                 <div class="chip" onclick="applyFilterCodigos('Samsung', this)">Samsung</div>
@@ -833,111 +287,61 @@
                 <div class="chip" onclick="applyFilterCodigos('Philips', this)">Philips</div>
                 <div class="chip" onclick="applyFilterCodigos('RCA', this)">RCA</div>
             </div>
-
-            <div class="guide-btn-container">
-                <button class="guide-btn" onclick="openModal('guideModal')">⚙️ Guía: Asociar Control a Deco</button>
-            </div>
+            <div class="guide-btn-container"><button class="guide-btn" onclick="openModal('guideModal')">⚙️ Guía: Asociar Control a Deco</button></div>
         </header>
-
-        <div class="results-container" id="resultsCodigosContainer">
-            <div class="loading">Cargando códigos...</div>
-        </div>
+        <div class="results-container" id="resultsCodigosContainer"><div class="loading">Cargando códigos...</div></div>
         <button id="scrollTopBtnCodigos" onclick="scrollToTopCodigos()">⬆️</button>
     </div>
-    <!-- ========================================== -->
-    <!-- FIN MÓDULO BLINDADO: VISTA CODIGOS         -->
-    <!-- ========================================== -->
 
-    <!-- ========================================== -->
-    <!-- 🛑 INICIO MÓDULO BLINDADO: VISTA TOPOLOGIAS-->
-    <!-- ========================================== -->
+    <!-- VISTA TOPOLOGIAS -->
     <div id="view-topologias">
         <header>
             <div class="header-top">
                 <div class="title-group">
                     <button class="menu-btn" onclick="toggleMenu()">☰</button>
-                    <div>
-                        <div class="header-title">🗺️ HUAWEI Topología y Alertas</div>
-                        <div class="subtitle">Información clave en terreno.</div>
-                    </div>
+                    <div><div class="header-title">🗺️ HUAWEI Topología y Alertas</div><div class="subtitle">Información clave en terreno.</div></div>
                 </div>
-                <div class="header-buttons">
-                    <button class="icon-btn" onclick="forceUpdateTopologias()" title="Actualizar">🔄</button>
-                </div>
+                <div class="header-buttons"><button class="icon-btn" onclick="forceUpdateTopologias()" title="Actualizar">🔄</button></div>
             </div>
-
             <div class="search-wrapper">
                 <span class="search-icon">🔍</span>
                 <input type="text" id="searchInputTopologias" class="search-input" placeholder="Buscar topología, alerta o nodo...">
                 <button id="clearSearchBtnTopologias" class="clear-search-btn" onclick="clearSearchTopologias()">✖</button>
             </div>
-            
-            <div class="info-bar">
-                <span id="counterTopologias" class="site-counter">0 items</span>
-                <span id="lastUpdatedTopologias">Sincronizando...</span>
-            </div>
+            <div class="info-bar"><span id="counterTopologias" class="site-counter">0 items</span><span id="lastUpdatedTopologias">Sincronizando...</span></div>
         </header>
-
-        <div class="results-container" id="resultsTopologiasContainer">
-            <div class="loading">Cargando topologías...</div>
-        </div>
+        <div class="results-container" id="resultsTopologiasContainer"><div class="loading">Cargando topologías...</div></div>
         <button id="scrollTopBtnTopologias" onclick="scrollToTopTopologias()">⬆️</button>
     </div>
-    <!-- ========================================== -->
-    <!-- FIN MÓDULO BLINDADO: VISTA TOPOLOGIAS      -->
-    <!-- ========================================== -->
 
-    <!-- ========================================== -->
-    <!-- 🛑 INICIO MÓDULO: VISTA EERO               -->
-    <!-- ========================================== -->
+    <!-- VISTA EERO -->
     <div id="view-eero">
         <header>
             <div class="header-top">
                 <div class="title-group">
                     <button class="menu-btn" onclick="toggleMenu()">☰</button>
-                    <div>
-                        <div class="header-title">📡 EERO Topología y Alertas</div>
-                        <div class="subtitle">Guía de instalación y estado.</div>
-                    </div>
+                    <div><div class="header-title">📡 EERO Topología y Alertas</div><div class="subtitle">Guía de instalación y estado.</div></div>
                 </div>
-                <div class="header-buttons">
-                    <button class="icon-btn" onclick="forceUpdateEero()" title="Actualizar">🔄</button>
-                </div>
+                <div class="header-buttons"><button class="icon-btn" onclick="forceUpdateEero()" title="Actualizar">🔄</button></div>
             </div>
-
             <div class="search-wrapper">
                 <span class="search-icon">🔍</span>
                 <input type="text" id="searchInputEero" class="search-input" placeholder="Buscar en EERO...">
                 <button id="clearSearchBtnEero" class="clear-search-btn" onclick="clearSearchEero()">✖</button>
             </div>
-            
-            <div class="info-bar">
-                <span id="counterEero" class="site-counter">0 items</span>
-                <span id="lastUpdatedEero">Sincronizando...</span>
-            </div>
+            <div class="info-bar"><span id="counterEero" class="site-counter">0 items</span><span id="lastUpdatedEero">Sincronizando...</span></div>
         </header>
-
-        <div class="results-container" id="resultsEeroContainer">
-            <div class="loading">Cargando EERO...</div>
-        </div>
+        <div class="results-container" id="resultsEeroContainer"><div class="loading">Cargando EERO...</div></div>
         <button id="scrollTopBtnEero" onclick="scrollToTopEero()">⬆️</button>
     </div>
-    <!-- ========================================== -->
-    <!-- FIN MÓDULO: VISTA EERO                     -->
-    <!-- ========================================== -->
 
-    <!-- ========================================== -->
-    <!-- 🛑 INICIO MÓDULO BLINDADO: MODALES         -->
-    <!-- ========================================== -->
+    <!-- MODALES ARMARIOS Y OTROS -->
     <div class="modal-overlay" id="infoModal">
         <div class="modal-content">
             <h3>⚠️ COMPRUEBA QUE LA CUENTA NO SEA RÍGIDA</h3>
             <p>Si no encuentras un sitio, revisa estos pasos en tu orden:</p>
-            
-            <p><b>1. Nomenclatura:</b> Si el contenedor indica <b>"SECTOR"</b> y un número (como <i>CONT-PRIM-VLDV-VILLA ALBORADA SECTOR 3</i> o <i>Sector X al Sector Y</i>), <u>no existen armarios con esos nombres</u>. Asumimos que es RÍGIDA.</p>
-            
+            <p><b>1. Nomenclatura:</b> Si el contenedor indica <b>"SECTOR"</b> y un número, <u>no existen armarios con esos nombres</u>. Asumimos que es RÍGIDA.</p>
             <p><b>2. Otra forma de saberlo:</b> Solo las cuentas rígidas tienen <b>Filamento splitter primario</b> y <b>Filamento splitter secundario</b>:</p>
-            
             <table class="oracle-table">
                 <thead><tr><th>TIPO ELEMENTO</th><th>CÓDIGO ELEMENTO</th></tr></thead>
                 <tbody>
@@ -946,13 +350,7 @@
                     <tr><td class="highlight-red-box">ALTA:Filamento<br>Splitter S. (Secundario)</td><td class="highlight-red-box">14</td></tr>
                 </tbody>
             </table>
-
-            <div class="note-box">
-                <strong>Conclusión:</strong><br>
-                ✅ Si tiene <b>AMBOS</b> filamentos (recuadro rojo): Es <b>RÍGIDA</b>. No debe buscarla aquí.<br><br>
-                ❌ Por lógica, las que tienen <b>solo Filamento splitter primario</b> son <b>FLEXIBLES</b>. Si tu cuenta es flexible y no está en la app, contacta a Supervisión.
-            </div>
-            
+            <div class="note-box">✅ Si tiene <b>AMBOS</b> (recuadro rojo): Es <b>RÍGIDA</b>.<br>❌ Si tiene <b>solo primario</b>: Es <b>FLEXIBLE</b>. Contacta a Supervisión.</div>
             <button class="close-modal-btn" onclick="closeModal('infoModal')">Entendido</button>
         </div>
     </div>
@@ -960,96 +358,39 @@
     <div class="modal-overlay" id="guideModal">
         <div class="modal-content">
             <h3 class="guide-modal-title">⚙️ Asociar Control a Decos</h3>
-            
             <div class="guide-card" style="border: 2px solid var(--btn-orange);">
-                <div class="guide-card-header" style="border-bottom: none; margin-bottom: 5px; padding-bottom: 0;">
-                    <h4 class="guide-card-title" style="color: var(--btn-orange);">📺 Asociar Control a la TV</h4>
-                </div>
+                <div class="guide-card-header" style="border-bottom: none; margin-bottom: 5px; padding-bottom: 0;"><h4 class="guide-card-title" style="color: var(--btn-orange);">📺 Asociar Control a la TV</h4></div>
                 <p style="font-size: 0.85rem; margin-bottom: 10px; font-style: italic;">Detección Automática</p>
-                
                 <div class="control-row">
                     <img src="control-champion.png" alt="Control Champion" class="control-img" onerror="this.style.display='none'">
-                    <div class="control-details">
-                        <div class="control-name"><span style="color:var(--btn-red)">🔴</span> Control Champion:</div>
-                        <div class="control-instructions">Presiona <span class="btn-badge btn-setup">SETUP</span> hasta que parpadee 2 veces, luego presiona <span class="btn-badge btn-green">📺 TV</span> y mantén presionado <span class="btn-badge btn-light-grey">OK</span> hasta que el TV se apague.</div>
-                    </div>
+                    <div class="control-details"><div class="control-name"><span style="color:var(--btn-red)">🔴</span> Control Champion:</div><div class="control-instructions">Presiona <span class="btn-badge btn-setup">SETUP</span> hasta que parpadee 2 veces, luego presiona <span class="btn-badge btn-green">📺 TV</span> y mantén presionado <span class="btn-badge btn-light-grey">OK</span> hasta que el TV se apague.</div></div>
                 </div>
-                
                 <div class="control-row">
                     <img src="control-curve.png" alt="Control Curve" class="control-img" onerror="this.style.display='none'">
-                    <div class="control-details">
-                        <div class="control-name"><span style="color:var(--btn-green)">🟢</span> Control Curve:</div>
-                        <div class="control-instructions">Presiona <span class="btn-badge btn-setup">SETUP</span> hasta que el botón <span class="btn-badge btn-green">⏻ TV (power)</span> quede encendido, luego mantén presionado <span class="btn-badge btn-green">⏻ TV (power)</span> hasta que el TV se apague.</div>
-                    </div>
+                    <div class="control-details"><div class="control-name"><span style="color:var(--btn-green)">🟢</span> Control Curve:</div><div class="control-instructions">Presiona <span class="btn-badge btn-setup">SETUP</span> hasta que el botón <span class="btn-badge btn-green">⏻ TV (power)</span> quede encendido, luego mantén presionado <span class="btn-badge btn-green">⏻ TV (power)</span> hasta que el TV se apague.</div></div>
                 </div>
             </div>
-
             <p style="text-align: center; margin: 20px 0 15px 0; font-weight: 700; color: var(--text-muted);">Asociar Control al STB (Deco)</p>
-
             <div class="guide-card">
-                <div class="guide-card-header">
-                    <img src="deco-amino.png" alt="Deco Amino" class="guide-img" onerror="this.style.display='none'">
-                    <h4 class="guide-card-title">STB Modelo Amino</h4>
-                </div>
-                <div class="control-row">
-                    <div class="control-details">
-                        <div class="control-name"><span style="color:var(--btn-red)">🔴</span> Control Champion:</div>
-                        <div class="control-instructions">Presiona <span class="btn-badge btn-setup">SETUP</span> + <span class="btn-badge btn-red"><span class="icon-shape">▲</span> ROJO</span> al mismo tiempo.</div>
-                    </div>
-                </div>
-                <div class="control-row">
-                    <div class="control-details">
-                        <div class="control-name"><span style="color:var(--btn-green)">🟢</span> Control Curve:</div>
-                        <div class="control-instructions">Presiona <span class="btn-badge btn-setup">SETUP</span> + <span class="btn-badge btn-green">FAVORITOS</span> hasta que el botón TV quede fijo, luego ingresa el número <b>1</b>.</div>
-                    </div>
-                </div>
+                <div class="guide-card-header"><img src="deco-amino.png" alt="Deco Amino" class="guide-img" onerror="this.style.display='none'"><h4 class="guide-card-title">STB Modelo Amino</h4></div>
+                <div class="control-row"><div class="control-details"><div class="control-name"><span style="color:var(--btn-red)">🔴</span> Control Champion:</div><div class="control-instructions">Presiona <span class="btn-badge btn-setup">SETUP</span> + <span class="btn-badge btn-red"><span class="icon-shape">▲</span> ROJO</span> al mismo tiempo.</div></div></div>
+                <div class="control-row"><div class="control-details"><div class="control-name"><span style="color:var(--btn-green)">🟢</span> Control Curve:</div><div class="control-instructions">Presiona <span class="btn-badge btn-setup">SETUP</span> + <span class="btn-badge btn-green">FAVORITOS</span> hasta que el botón TV quede fijo, luego ingresa el número <b>1</b>.</div></div></div>
             </div>
-
             <div class="guide-card">
-                <div class="guide-card-header">
-                    <img src="deco-entone.png" alt="Deco Entone" class="guide-img" onerror="this.style.display='none'">
-                    <h4 class="guide-card-title">STB Modelo Entone</h4>
-                </div>
-                <div class="control-row">
-                    <div class="control-details">
-                        <div class="control-name"><span style="color:var(--btn-red)">🔴</span> Control Champion:</div>
-                        <div class="control-instructions">Presiona <span class="btn-badge btn-setup">SETUP</span> + <span class="btn-badge btn-blue"><span class="icon-shape">◆</span> AZUL</span> al mismo tiempo.</div>
-                    </div>
-                </div>
-                <div class="control-row">
-                    <div class="control-details">
-                        <div class="control-name"><span style="color:var(--btn-green)">🟢</span> Control Curve:</div>
-                        <div class="control-instructions">Presiona <span class="btn-badge btn-setup">SETUP</span> + <span class="btn-badge btn-green">FAVORITOS</span> hasta que el botón TV quede fijo, luego ingresa el número <b>2</b>.</div>
-                    </div>
-                </div>
+                <div class="guide-card-header"><img src="deco-entone.png" alt="Deco Entone" class="guide-img" onerror="this.style.display='none'"><h4 class="guide-card-title">STB Modelo Entone</h4></div>
+                <div class="control-row"><div class="control-details"><div class="control-name"><span style="color:var(--btn-red)">🔴</span> Control Champion:</div><div class="control-instructions">Presiona <span class="btn-badge btn-setup">SETUP</span> + <span class="btn-badge btn-blue"><span class="icon-shape">◆</span> AZUL</span> al mismo tiempo.</div></div></div>
+                <div class="control-row"><div class="control-details"><div class="control-name"><span style="color:var(--btn-green)">🟢</span> Control Curve:</div><div class="control-instructions">Presiona <span class="btn-badge btn-setup">SETUP</span> + <span class="btn-badge btn-green">FAVORITOS</span> hasta que el botón TV quede fijo, luego ingresa el número <b>2</b>.</div></div></div>
             </div>
-
             <div class="guide-card">
-                <div class="guide-card-header">
-                    <img src="deco-adb.png" alt="Deco Adb" class="guide-img" onerror="this.style.display='none'">
-                    <h4 class="guide-card-title">STB Modelo Adb</h4>
-                </div>
-                <div class="control-row">
-                    <div class="control-details">
-                        <div class="control-name"><span style="color:var(--btn-red)">🔴</span> Control Champion:</div>
-                        <div class="control-instructions">Presiona <span class="btn-badge btn-setup">SETUP</span> + <span class="btn-badge btn-grey">MENÚ</span> al mismo tiempo.</div>
-                    </div>
-                </div>
-                <div class="control-row">
-                    <div class="control-details">
-                        <div class="control-name"><span style="color:var(--btn-green)">🟢</span> Control Curve:</div>
-                        <div class="control-instructions">Presiona <span class="btn-badge btn-setup">SETUP</span> + <span class="btn-badge btn-green">FAVORITOS</span> hasta que el botón TV quede fijo, luego ingresa el número <b>5</b>.</div>
-                    </div>
-                </div>
+                <div class="guide-card-header"><img src="deco-adb.png" alt="Deco Adb" class="guide-img" onerror="this.style.display='none'"><h4 class="guide-card-title">STB Modelo Adb</h4></div>
+                <div class="control-row"><div class="control-details"><div class="control-name"><span style="color:var(--btn-red)">🔴</span> Control Champion:</div><div class="control-instructions">Presiona <span class="btn-badge btn-setup">SETUP</span> + <span class="btn-badge btn-grey">MENÚ</span> al mismo tiempo.</div></div></div>
+                <div class="control-row"><div class="control-details"><div class="control-name"><span style="color:var(--btn-green)">🟢</span> Control Curve:</div><div class="control-instructions">Presiona <span class="btn-badge btn-setup">SETUP</span> + <span class="btn-badge btn-green">FAVORITOS</span> hasta que el botón TV quede fijo, luego ingresa el número <b>5</b>.</div></div></div>
             </div>
-
             <button class="close-modal-btn" onclick="closeModal('guideModal')">Entendido</button>
         </div>
     </div>
 
-    <div class="modal-overlay" id="topologiaModal">
-        <div class="topologia-modal-content" id="topologiaModalContent"></div>
-    </div>
+    <div class="modal-overlay" id="topologiaModal"><div class="topologia-modal-content" id="topologiaModalContent"></div></div>
 
     <!-- MODALES EERO -->
     <div class="modal-overlay" id="modalLeds">
@@ -1092,13 +433,8 @@
         <div class="modal-content">
             <button class="clear-search-btn" style="display:flex; position:absolute; top:15px; right:15px;" onclick="closeModal('modalSwitch')">✖</button>
             <h3 class="eero-btn-title">Configuración Switch</h3>
-            
-            <!-- NUEVO TEXTO AGREGADO AQUÍ -->
             <p style="font-size:0.9rem; font-weight:bold; color:var(--danger-color); margin-bottom:15px;">Al utilizar SWITCH este se debe configurar para EERO en APP PUENTE</p>
-            
-            <!-- IMAGEN DEL SWITCH -->
             <img src="https://raw.githubusercontent.com/CarlCarlsonn/dashboard-armarios/main/eero-imagen/eero.png" class="eero-modal-img" alt="Configuración Switch">
-            
             <ul style="font-size:0.8rem; padding-left:20px; line-height:1.4; margin-top:10px; color:var(--text-main);">
                 <li><b>Puerto 1:</b> Hacia ONT (Internet).</li>
                 <li><b>Puerto 2 y 3:</b> Ambos al eero Maestro.</li>
@@ -1113,21 +449,12 @@
             <button class="clear-search-btn" style="display:flex; position:absolute; top:15px; right:15px;" onclick="closeModal('modalTopologia')">✖</button>
             <h3 class="eero-btn-title">Cantidad Máx. de APs</h3>
             <p style="font-size:0.85rem; font-weight:bold; margin-bottom:10px;">Máximo <b>6 APs</b> (1 Maestro + 5 Extensores).</p>
-            
-            <!-- IMAGEN DE MAX APs AGREGADA AQUÍ -->
             <img src="https://raw.githubusercontent.com/CarlCarlsonn/dashboard-armarios/main/eero-imagen/cant-aps.png" class="eero-modal-img" alt="Cantidad Máx APs">
-            
             <button class="close-modal-btn eero-close-btn" onclick="closeModal('modalTopologia')">Entendido</button>
         </div>
     </div>
-    <!-- ========================================== -->
-    <!-- FIN MÓDULO BLINDADO: MODALES               -->
-    <!-- ========================================== -->
 
     <script>
-        /* ========================================== */
-        /* 🛑 INICIO MÓDULO BLINDADO: SEGURIDAD       */
-        /* ========================================== */
         var safeStorage = {
             get: function(key) { try { return localStorage.getItem(key); } catch(e) { return null; } },
             set: function(key, val) { try { localStorage.setItem(key, val); } catch(e) {} },
@@ -1141,25 +468,15 @@
             document.body.appendChild(errorDiv);
             return false;
         };
-        /* FIN MÓDULO BLINDADO: SEGURIDAD */
 
-        /* ========================================== */
-        /* 🛑 INICIO MÓDULO BLINDADO: CONFIGURACIÓN   */
-        /* ========================================== */
         var SHEET_TOPOLOGIAS_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSKUPJST2SVhD74W0cYfcb7RpBpuWgT5SLqHn7YSJasQcPNE971C5x_mBCDHPKJift7EFrOoYs4VHoq/pub?gid=1245245166&single=true&output=csv'; 
         var SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSKUPJST2SVhD74W0cYfcb7RpBpuWgT5SLqHn7YSJasQcPNE971C5x_mBCDHPKJift7EFrOoYs4VHoq/pub?gid=1395209502&single=true&output=csv';
         var SHEET_CODIGOS_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSKUPJST2SVhD74W0cYfcb7RpBpuWgT5SLqHn7YSJasQcPNE971C5x_mBCDHPKJift7EFrOoYs4VHoq/pub?gid=47179035&single=true&output=csv'; 
         var SHEET_EERO_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSKUPJST2SVhD74W0cYfcb7RpBpuWgT5SLqHn7YSJasQcPNE971C5x_mBCDHPKJift7EFrOoYs4VHoq/pub?gid=469526274&single=true&output=csv';
 
-        var globalData = [];
-        var currentFilter = '';
-        var currentSearchWords = [];
-        
-        var globalCodigos = [];
-        var currentFilterCodigos = '';
-
-        var globalTopologias = [];
-        var globalEero = [];
+        var globalData = [], currentFilter = '', currentSearchWords = [];
+        var globalCodigos = [], currentFilterCodigos = '';
+        var globalTopologias = [], globalEero = [];
 
         var resultsContainer = document.getElementById('resultsContainer');
         var searchInput = document.getElementById('searchInput');
@@ -1191,14 +508,8 @@
 
         var sidebar = document.getElementById('sidebar');
         var sidebarOverlay = document.getElementById('sidebarOverlay');
+        var currentView = 'armarios', activeModal = null;
 
-        var currentView = 'armarios';
-        var activeModal = null;
-        /* FIN MÓDULO BLINDADO: CONFIGURACIÓN */
-
-        /* ========================================== */
-        /* 🛑 INICIO MÓDULO BLINDADO: LÓGICA GENERAL  */
-        /* ========================================== */
         if (safeStorage.get('theme') === 'dark') {
             document.body.classList.add('dark-mode');
             document.getElementById('themeToggle').innerText = '☀️';
@@ -1211,21 +522,14 @@
             document.getElementById('themeToggle').innerText = isDark ? '☀️' : '🌙';
         }
 
-        function toggleMenu() {
-            sidebar.classList.toggle('active');
-            sidebarOverlay.classList.toggle('active');
-        }
+        function toggleMenu() { sidebar.classList.toggle('active'); sidebarOverlay.classList.toggle('active'); }
 
         function switchView(viewName, addToHistory = true) {
             if (sidebar.classList.contains('active')) toggleMenu();
-
-            if (addToHistory) {
-                history.pushState({ view: viewName, modal: null }, '', '#' + viewName);
-            }
+            if (addToHistory) history.pushState({ view: viewName, modal: null }, '', '#' + viewName);
             
             currentView = viewName;
             safeStorage.set('currentTab', viewName);
-
             document.querySelectorAll('.sidebar-item').forEach(item => item.classList.remove('active'));
             
             if (viewName === 'armarios') {
@@ -1240,39 +544,27 @@
                 document.getElementById('view-codigos').style.display = 'flex';
                 document.getElementById('view-topologias').style.display = 'none';
                 document.getElementById('view-eero').style.display = 'none';
-                
-                if (globalCodigos.length === 0) {
-                    loadCodigos();
-                }
+                if (globalCodigos.length === 0) loadCodigos();
             } else if (viewName === 'topologias') {
                 document.getElementById('menu-topologias').classList.add('active');
                 document.getElementById('view-armarios').style.display = 'none';
                 document.getElementById('view-codigos').style.display = 'none';
                 document.getElementById('view-topologias').style.display = 'flex';
                 document.getElementById('view-eero').style.display = 'none';
-                
-                if (globalTopologias.length === 0) {
-                    loadTopologias();
-                }
+                if (globalTopologias.length === 0) loadTopologias();
             } else if (viewName === 'eero') {
                 document.getElementById('menu-eero').classList.add('active');
                 document.getElementById('view-armarios').style.display = 'none';
                 document.getElementById('view-codigos').style.display = 'none';
                 document.getElementById('view-topologias').style.display = 'none';
                 document.getElementById('view-eero').style.display = 'flex';
-                
-                if (globalEero.length === 0) {
-                    loadEero();
-                }
+                if (globalEero.length === 0) loadEero();
             }
         }
 
         function openModal(modalId) {
             var el = document.getElementById(modalId);
-            if (!el) {
-                console.warn("Modal no encontrado:", modalId);
-                return; 
-            }
+            if (!el) return; 
             if (activeModal === modalId) return;
             activeModal = modalId;
             el.style.display = 'flex';
@@ -1291,15 +583,9 @@
 
         window.addEventListener('popstate', function(event) {
             var state = event.state;
-            if (activeModal && (!state || !state.modal)) {
-                closeModal(activeModal, false);
-                return;
-            }
-            if (state && state.view) {
-                switchView(state.view, false);
-            } else {
-                switchView('armarios', false);
-            }
+            if (activeModal && (!state || !state.modal)) { closeModal(activeModal, false); return; }
+            if (state && state.view) switchView(state.view, false);
+            else switchView('armarios', false);
         });
 
         window.addEventListener('load', function() {
@@ -1316,19 +602,8 @@
         document.getElementById('modalSwitch').addEventListener('click', function(e) { if (e.target === this) closeModal('modalSwitch'); });
         document.getElementById('modalTopologia').addEventListener('click', function(e) { if (e.target === this) closeModal('modalTopologia'); });
 
-        function escapeHtml(str) {
-            return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-        }
-
-        function safeUrl(raw) {
-            if (!raw) return '';
-            try {
-                var u = new URL(String(raw).trim());
-                if (u.protocol === 'http:' || u.protocol === 'https:') return u.href;
-            } catch (_) { }
-            return '';
-        }
-
+        function escapeHtml(str) { return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;'); }
+        function safeUrl(raw) { if (!raw) return ''; try { var u = new URL(String(raw).trim()); if (u.protocol === 'http:' || u.protocol === 'https:') return u.href; } catch (_) { } return ''; }
         function highlightText(text, words) {
             var escaped = escapeHtml(text);
             if (!words || words.length === 0) return escaped;
@@ -1338,15 +613,11 @@
         }
 
         function parseCSV(text) {
-            var rows = []; 
-            var row = [], field = '', inQuotes = false, i = 0;
+            var rows = []; var row = [], field = '', inQuotes = false, i = 0;
             while (i < text.length) {
                 var ch = text[i];
                 if (inQuotes) {
-                    if (ch === '"') {
-                        if (text[i + 1] === '"') { field += '"'; i += 2; continue; }
-                        inQuotes = false; i++; continue;
-                    }
+                    if (ch === '"') { if (text[i + 1] === '"') { field += '"'; i += 2; continue; } inQuotes = false; i++; continue; }
                     field += ch; i++; continue;
                 }
                 if (ch === '"') { inQuotes = true; i++; continue; }
@@ -1363,17 +634,9 @@
             return rows;
         }
 
-        function findDataStart(rows) {
-            for (var i = 0; i < Math.min(rows.length, 30); i++) {
-                if (/^https?:\/\//i.test((rows[i][2] || '').trim())) return i;
-            }
-            return 0;
-        }
-        /* FIN MÓDULO BLINDADO: LÓGICA GENERAL */
+        function findDataStart(rows) { for (var i = 0; i < Math.min(rows.length, 30); i++) { if (/^https?:\/\//i.test((rows[i][2] || '').trim())) return i; } return 0; }
 
-        /* ========================================== */
-        /* 🛑 INICIO MÓDULO BLINDADO: ARMARIOS LOGIC  */
-        /* ========================================== */
+        /* ARMARIOS */
         var reglaHtml = 
             '<div class="card-header"><span class="tag">REGLA DE ORO</span></div>' +
             '<div class="card-title">⚠️ Comprueba que la cuenta NO SEA RÍGIDA</div>' +
@@ -1559,11 +822,8 @@
 
         resultsContainer.addEventListener('scroll', function() { scrollTopBtn.style.display = resultsContainer.scrollTop > 300 ? 'block' : 'none'; });
         function scrollToTopArmarios() { resultsContainer.scrollTo({ top: 0, behavior: 'smooth' }); }
-        /* FIN MÓDULO BLINDADO: ARMARIOS LOGIC */
 
-        /* ========================================== */
-        /* 🛑 INICIO MÓDULO BLINDADO: CODIGOS LOGIC   */
-        /* ========================================== */
+        /* CODIGOS */
         function updateClearBtnVisibilityCodigos() { clearSearchBtnCodigos.style.display = searchInputCodigos.value.length > 0 ? 'flex' : 'none'; }
         function clearSearchCodigos() { searchInputCodigos.value = ''; updateClearBtnVisibilityCodigos(); filterCodigos(); searchInputCodigos.focus(); }
         searchInputCodigos.addEventListener('input', function() { updateClearBtnVisibilityCodigos(); filterCodigos(); });
@@ -1639,11 +899,8 @@
 
         resultsCodigosContainer.addEventListener('scroll', function() { scrollTopBtnCodigos.style.display = resultsCodigosContainer.scrollTop > 300 ? 'block' : 'none'; });
         function scrollToTopCodigos() { resultsCodigosContainer.scrollTo({ top: 0, behavior: 'smooth' }); }
-        /* FIN MÓDULO BLINDADO: CODIGOS LOGIC */
 
-        /* ========================================== */
-        /* 🛑 INICIO MÓDULO BLINDADO: TOPOLOGIAS LOGIC*/
-        /* ========================================== */
+        /* TOPOLOGIAS */
         function updateClearBtnVisibilityTopologias() { clearSearchBtnTopologias.style.display = searchInputTopologias.value.length > 0 ? 'flex' : 'none'; }
         function clearSearchTopologias() { searchInputTopologias.value = ''; updateClearBtnVisibilityTopologias(); filterTopologias(); searchInputTopologias.focus(); }
         searchInputTopologias.addEventListener('input', function() { updateClearBtnVisibilityTopologias(); filterTopologias(); });
@@ -1786,11 +1043,8 @@
 
         resultsTopologiasContainer.addEventListener('scroll', function() { scrollTopBtnTopologias.style.display = resultsTopologiasContainer.scrollTop > 300 ? 'block' : 'none'; });
         function scrollToTopTopologias() { resultsTopologiasContainer.scrollTo({ top: 0, behavior: 'smooth' }); }
-        /* FIN MÓDULO BLINDADO: TOPOLOGIAS LOGIC */
 
-        /* ========================================== */
-        /* 🛑 INICIO MÓDULO: EERO LOGIC               */
-        /* ========================================== */
+        /* EERO */
         function updateClearBtnVisibilityEero() { clearSearchBtnEero.style.display = searchInputEero.value.length > 0 ? 'flex' : 'none'; }
         function clearSearchEero() { searchInputEero.value = ''; updateClearBtnVisibilityEero(); filterEero(); searchInputEero.focus(); }
         searchInputEero.addEventListener('input', function() { updateClearBtnVisibilityEero(); filterEero(); });
@@ -1868,9 +1122,11 @@
                     var heroCard = document.createElement('div');
                     heroCard.className = 'eero-hero-card';
                     
-                    // --- AJUSTE DE RESPALDO POR SI FALLA EL LINK DEL EXCEL ---
-                    var imgSrc = item.contenido ? item.contenido.trim() : 'https://raw.githubusercontent.com/CarlCarlsonn/dashboard-armarios/main/eero-imagen/principal.png';
-                    var imgHtml = '<img src="' + imgSrc + '" class="eero-hero-img" onerror="this.src=\'https://raw.githubusercontent.com/CarlCarlsonn/dashboard-armarios/main/eero-imagen/principal.png\'">';
+                    // ** FORZAMOS EL LINK AQUI PARA QUE NO DEPENDA DEL EXCEL, CON RESPALDO POR SI FALLA **
+                    var imgSrc = 'https://raw.githubusercontent.com/CarlCarlsonn/dashboard-armarios/main/eero-imagen/principal.png';
+                    var fallbackImg = 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Amazon_eero_logo.svg/1200px-Amazon_eero_logo.svg.png';
+                    
+                    var imgHtml = '<img src="' + imgSrc + '" class="eero-hero-img" onerror="this.src=\'' + fallbackImg + '\'">';
                     
                     var rowsHtml = '';
                     if (item.descripcion) {
@@ -1919,7 +1175,6 @@
 
         resultsEeroContainer.addEventListener('scroll', function() { scrollTopBtnEero.style.display = resultsEeroContainer.scrollTop > 300 ? 'block' : 'none'; });
         function scrollToTopEero() { resultsEeroContainer.scrollTo({ top: 0, behavior: 'smooth' }); }
-        /* FIN MÓDULO: EERO LOGIC */
 
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js').then(function(reg) { reg.update(); }).catch(function(err) { console.log("Error SW:", err); });
