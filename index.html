@@ -196,6 +196,19 @@
         body.dark-mode .tips-box ul { color: #bbb; }
         .tips-box li { margin-bottom: 6px; }
 
+        /* ESTILOS PORT FORWARDING */
+        .pf-step { display: flex; gap: 10px; margin-bottom: 12px; font-size: 0.85rem; line-height: 1.4; }
+        .pf-step-num { background: var(--pyme-primary); color: white; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; font-size: 0.75rem; }
+        .pf-form-box { background: #f8f9fa; border: 1px solid #ddd; border-radius: 8px; padding: 12px; margin-bottom: 15px; }
+        body.dark-mode .pf-form-box { background: #2a2a2a; border-color: #444; }
+        .pf-form-box table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+        .pf-form-box th { background: #e9ecef; padding: 6px; text-align: left; border-bottom: 1px solid #ddd; color: #333; }
+        body.dark-mode .pf-form-box th { background: #333; border-color: #444; color: #eee; }
+        .pf-form-box td { padding: 6px; border-bottom: 1px solid #ddd; color: #555; }
+        body.dark-mode .pf-form-box td { border-color: #444; color: #ccc; }
+        .pf-data-box { background: #e3f2fd; border-left: 4px solid #1976d2; padding: 12px; border-radius: 4px; font-size: 0.85rem; margin-bottom: 15px; color: #0d47a1; }
+        body.dark-mode .pf-data-box { background: #1a237e; border-color: #3b82f6; color: #e3f2fd; }
+
         /* TV DECO */
         .guide-modal-title { color: #1976d2 !important; }
         .guide-card { background: rgba(0,0,0,0.02); border: 1px solid rgba(0,0,0,0.1); border-radius: 10px; padding: 15px; margin-bottom: 15px; display: flex; flex-direction: column; }
@@ -445,7 +458,7 @@
             <div class="guide-card">
                 <div class="guide-card-header"><img src="deco-adb.png" alt="Deco Adb" class="guide-img" onerror="this.style.display='none'"><h4 class="guide-card-title">STB Modelo Adb</h4></div>
                 <div class="control-row"><div class="control-details"><div class="control-name"><span style="color:var(--btn-red)">🔴</span> Control Champion:</div><div class="control-instructions">Presiona <span class="btn-badge btn-setup">SETUP</span> + <span class="btn-badge btn-grey">MENÚ</span> al mismo tiempo.</div></div></div>
-                <div class="control-row"><div class="control-details"><div class="control-name"><span style="color:var(--btn-green)">🟢</span> Control Curve:</div><div class="control-instructions">Presiona <span class="btn-badge btn-setup">SETUP</span> + <span class="btn-badge btn-grey">MENÚ</span> al mismo tiempo.</div></div></div>
+                <div class="control-row"><div class="control-details"><div class="control-name"><span style="color:var(--btn-green)">🟢</span> Control Curve:</div><div class="control-instructions">Presiona <span class="btn-badge btn-setup">SETUP</span> + <span class="btn-badge btn-green">FAVORITOS</span> hasta que el botón TV quede fijo, luego ingresa el número <b>5</b>.</div></div></div>
             </div>
             <button class="close-modal-btn" onclick="closeModal('guideModal')">Entendido</button>
         </div>
@@ -644,6 +657,80 @@
         </div>
     </div>
 
+    <!-- MODAL PORT FORWARDING -->
+    <div class="modal-overlay" id="modalPortForwarding">
+        <div class="modal-content">
+            <button class="clear-search-btn" style="display:flex; position:absolute; top:15px; right:15px;" onclick="closeModal('modalPortForwarding')">✖</button>
+            <h3 class="pyme-btn-title">PORT FORWARDING (Redirección de Puertos)</h3>
+            <p style="font-size:0.85rem; color:var(--text-muted); text-align:center; margin-bottom:15px;">Permite redirigir puertos de una IP pública a una IP privada (LAN) en la ONT.</p>
+
+            <div class="warning-banner" style="margin-bottom:15px; padding:10px;">
+                <div>⚠️</div>
+                <p style="margin:0; font-size:0.85rem; color:var(--text-main);">
+                    <b>LÍMITES:</b> Zhone (Máx 8 reglas) / Fiberhome (Máx 5 reglas).
+                </p>
+            </div>
+
+            <h4 style="margin: 15px 0 10px 0; font-size: 0.95rem;">📝 PASO A PASO EN OST</h4>
+            <div class="pf-step">
+                <div class="pf-step-num">1</div>
+                <div>Seleccionar ONT -> Ir a <b>Acciones</b> -> Clic en <b>[Port Forwarding]</b>.</div>
+            </div>
+            <div class="pf-step">
+                <div class="pf-step-num">2</div>
+                <div>Presionar en la flecha de <b>[Agregar]</b> para desplegar el formulario.</div>
+            </div>
+            <div class="pf-step">
+                <div class="pf-step-num">3</div>
+                <div>Completar los campos (ver detalle abajo).</div>
+            </div>
+            <div class="pf-step">
+                <div class="pf-step-num">4</div>
+                <div>Hacer clic en <b>[Agregar Temporalmente]</b>. Repetir si hay más reglas.</div>
+            </div>
+            <div class="pf-step">
+                <div class="pf-step-num">5</div>
+                <div>Al finalizar, presionar <b>[Agregar]</b> (Guardar) y confirmar con <b>OK</b> en el mensaje de advertencia.</div>
+            </div>
+
+            <h4 style="margin: 15px 0 10px 0; font-size: 0.95rem;">📋 CAMPOS DEL FORMULARIO</h4>
+            <div class="pf-form-box">
+                <table>
+                    <tr><th>Name</th><td>Nombre de la regla (ej: camara1).</td></tr>
+                    <tr><th>Source Port Start/End</th><td>Rango público (1 al 65535). Si es 1 solo puerto, repetir el número en ambos.</td></tr>
+                    <tr><th>Destination IP Address</th><td>Asignar desde <b>192.168.1.220</b> hasta <b>192.168.1.227</b>.</td></tr>
+                    <tr><th>Destination Port Start/End</th><td>Rango privado. Se recomienda usar el mismo puerto que el Source.</td></tr>
+                </table>
+            </div>
+
+            <div class="pf-data-box">
+                <b>💻 DATOS PARA EL CLIENTE</b><br>
+                El cliente DEBE configurar su equipo con:<br>
+                • Puerta de enlace: <b>192.168.1.254</b><br>
+                • Máscara de subred: <b>255.255.255.0</b><br>
+                • IP asignada: (La definida en el paso anterior).
+            </div>
+
+            <h4 style="margin: 15px 0 10px 0; font-size: 0.95rem;">📌 EJEMPLOS</h4>
+            <div style="font-size: 0.85rem; line-height: 1.4; margin-bottom: 15px;">
+                <p><b>1 Puerto (Cámara 5000):</b><br>
+                Source Start: <code>5000</code> / Source End: <code>5000</code><br>
+                Dest Start: <code>5000</code> / Dest End: <code>5000</code></p>
+                <p><b>Rango (5000 al 5020):</b><br>
+                Source Start: <code>5000</code> / Source End: <code>5020</code><br>
+                <i>*El cliente debe configurar el mismo rango en su equipo.</i></p>
+            </div>
+
+            <h4 style="margin: 15px 0 10px 0; font-size: 0.95rem;">🔄 OTRAS ACCIONES</h4>
+            <ul style="font-size: 0.85rem; color: var(--text-main); padding-left: 20px; margin-bottom: 20px;">
+                <li><b>Aplicar Reglas por Defecto:</b> Clic en `[Aplicar Reglas Por Defecto]` -> `[Aplicar]` -> Confirmar con `OK`.</li>
+                <li><b>Eliminar una regla:</b> Marcar la casilla de la regla -> `[Eliminar]` -> Confirmar con `Continuar`.</li>
+            </ul>
+
+            <button class="close-modal-btn pyme-close-btn" onclick="closeModal('modalPortForwarding')">Entendido</button>
+        </div>
+    </div>
+
     <script>
         var safeStorage = {
             get: function(key) { try { return localStorage.getItem(key); } catch(e) { return null; } },
@@ -802,6 +889,7 @@
         document.getElementById('modalPymeDetail').addEventListener('click', function(e) { if (e.target === this) closeModal('modalPymeDetail'); });
         document.getElementById('modalOstMikrotik').addEventListener('click', function(e) { if (e.target === this) closeModal('modalOstMikrotik'); });
         document.getElementById('modalCmdGuide').addEventListener('click', function(e) { if (e.target === this) closeModal('modalCmdGuide'); });
+        document.getElementById('modalPortForwarding').addEventListener('click', function(e) { if (e.target === this) closeModal('modalPortForwarding'); });
 
         function escapeHtml(str) { return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;'); }
         function safeUrl(raw) { if (!raw) return ''; try { var u = new URL(String(raw).trim()); if (u.protocol === 'http:' || u.protocol === 'https:') return u.href; } catch (_) { } return ''; }
@@ -837,9 +925,7 @@
 
         function findDataStart(rows) { for (var i = 0; i < Math.min(rows.length, 30); i++) { if (/^https?:\/\//i.test((rows[i][2] || '').trim())) return i; } return 0; }
 
-        /* ---------------------------------------------------- */
-        /* LÓGICA ARMARIOS (BLINDADO)                           */
-        /* ---------------------------------------------------- */
+        /* LÓGICA ARMARIOS */
         var reglaHtml = 
             '<div class="card-header"><span class="tag">REGLA DE ORO</span></div>' +
             '<div class="card-title">⚠️ Comprueba que la cuenta NO SEA RÍGIDA</div>' +
@@ -1026,9 +1112,7 @@
         resultsContainer.addEventListener('scroll', function() { scrollTopBtn.style.display = resultsContainer.scrollTop > 300 ? 'block' : 'none'; });
         function scrollToTopArmarios() { resultsContainer.scrollTo({ top: 0, behavior: 'smooth' }); }
 
-        /* ---------------------------------------------------- */
-        /* LÓGICA CÓDIGOS (BLINDADO)                            */
-        /* ---------------------------------------------------- */
+        /* LÓGICA CÓDIGOS */
         function updateClearBtnVisibilityCodigos() { clearSearchBtnCodigos.style.display = searchInputCodigos.value.length > 0 ? 'flex' : 'none'; }
         function clearSearchCodigos() { searchInputCodigos.value = ''; updateClearBtnVisibilityCodigos(); filterCodigos(); searchInputCodigos.focus(); }
         searchInputCodigos.addEventListener('input', function() { updateClearBtnVisibilityCodigos(); filterCodigos(); });
@@ -1105,9 +1189,7 @@
         resultsCodigosContainer.addEventListener('scroll', function() { scrollTopBtnCodigos.style.display = resultsCodigosContainer.scrollTop > 300 ? 'block' : 'none'; });
         function scrollToTopCodigos() { resultsCodigosContainer.scrollTo({ top: 0, behavior: 'smooth' }); }
 
-        /* ---------------------------------------------------- */
-        /* LÓGICA TOPOLOGIAS (BLINDADO)                         */
-        /* ---------------------------------------------------- */
+        /* LÓGICA TOPOLOGIAS */
         function updateClearBtnVisibilityTopologias() { clearSearchBtnTopologias.style.display = searchInputTopologias.value.length > 0 ? 'flex' : 'none'; }
         function clearSearchTopologias() { searchInputTopologias.value = ''; updateClearBtnVisibilityTopologias(); filterTopologias(); searchInputTopologias.focus(); }
         searchInputTopologias.addEventListener('input', function() { updateClearBtnVisibilityTopologias(); filterTopologias(); });
@@ -1251,9 +1333,7 @@
         resultsTopologiasContainer.addEventListener('scroll', function() { scrollTopBtnTopologias.style.display = resultsTopologiasContainer.scrollTop > 300 ? 'block' : 'none'; });
         function scrollToTopTopologias() { resultsTopologiasContainer.scrollTo({ top: 0, behavior: 'smooth' }); }
 
-        /* ---------------------------------------------------- */
-        /* LÓGICA EERO (BLINDADO)                               */
-        /* ---------------------------------------------------- */
+        /* LÓGICA EERO */
         function updateClearBtnVisibilityEero() { clearSearchBtnEero.style.display = searchInputEero.value.length > 0 ? 'flex' : 'none'; }
         function clearSearchEero() { searchInputEero.value = ''; updateClearBtnVisibilityEero(); filterEero(); searchInputEero.focus(); }
         searchInputEero.addEventListener('input', function() { updateClearBtnVisibilityEero(); filterEero(); });
@@ -1369,185 +1449,4 @@
                 var gridCard = document.createElement('div');
                 gridCard.className = 'grid-card';
                 var iconSvg = getEeroIcon(item.titulo);
-                var modalId = item.contenido || ''; 
-                
-                gridCard.innerHTML = '<div class="grid-icon-box">' + iconSvg + '</div><div class="grid-title">' + highlightText(item.titulo, words) + '</div>';
-                gridCard.onclick = function(mid) { return function() { if(mid) openModal(mid); }; }(modalId);
-                gridContainer.appendChild(gridCard);
-            }
-
-            if (hasGridItems) { frag.appendChild(gridContainer); }
-            resultsEeroContainer.appendChild(frag);
-        }
-
-        resultsEeroContainer.addEventListener('scroll', function() { scrollTopBtnEero.style.display = resultsEeroContainer.scrollTop > 300 ? 'block' : 'none'; });
-        function scrollToTopEero() { resultsEeroContainer.scrollTo({ top: 0, behavior: 'smooth' }); }
-
-        /* ---------------------------------------------------- */
-        /* LÓGICA PYME (DINÁMICO)                               */
-        /* ---------------------------------------------------- */
-        function updateClearBtnVisibilityPyme() { clearSearchBtnPyme.style.display = searchInputPyme.value.length > 0 ? 'flex' : 'none'; }
-        function clearSearchPyme() { searchInputPyme.value = ''; updateClearBtnVisibilityPyme(); filterPyme(); searchInputPyme.focus(); }
-        searchInputPyme.addEventListener('input', function() { updateClearBtnVisibilityPyme(); filterPyme(); });
-        function forceUpdatePyme() { loadPyme(); }
-
-        async function loadPyme() {
-            resultsPymeContainer.innerHTML = '<div class="loading">Sincronizando PYME...</div>';
-            try {
-                var fetchUrl = SHEET_PYME_URL + '&nocache=' + new Date().getTime();
-                var response = await fetch(fetchUrl, { cache: 'no-store' });
-                if (!response.ok) throw new Error('HTTP ' + response.status);
-                var csvText = await response.text();
-                var rawRows = parseCSV(csvText);
-
-                globalPyme = [];
-                for (var i = 1; i < rawRows.length; i++) {
-                    var r = rawRows[i];
-                    if (!r || r.length < 3) continue;
-                    var tipo = (r[0] || '').trim().toLowerCase();
-                    var titulo = (r[1] || '').trim();
-                    var palabras = (r[2] || '').trim();
-                    var contenido = (r[3] || '').trim();
-                    var descripcion = (r[4] || '').trim();
-
-                    if (titulo === '' && tipo !== 'banner') continue;
-                    globalPyme.push({ tipo: tipo, titulo: titulo, palabras: palabras, contenido: contenido, descripcion: descripcion });
-                }
-
-                var now = new Date().toLocaleString('es-CL', { hour: '2-digit', minute:'2-digit' });
-                lastUpdatedPyme.innerText = 'Act: ' + now;
-                filterPyme(); 
-            } catch (error) {
-                resultsPymeContainer.innerHTML = '<div class="no-results" style="color: #d32f2f; font-family: monospace;"><b>Error al cargar PYME:</b><br><br>' + error.message + '</div>';
-            }
-        }
-
-        function filterPyme() {
-            var term = searchInputPyme.value.toLowerCase().trim();
-            var words = term.split(/\s+/).filter(function(w) { return w !== ''; });
-
-            var filtered = globalPyme.filter(function(item) {
-                var searchable = (item.titulo + ' ' + item.palabras + ' ' + item.contenido + ' ' + item.descripcion).toLowerCase();
-                return words.every(function(w) { return searchable.indexOf(w) !== -1; });
-            });
-            renderPyme(filtered, words);
-        }
-
-        function getPymeIcon(titulo) {
-            var t = titulo.toUpperCase();
-            if (t.includes('PTO') || t.includes('DMZ') || t.includes('PUERTO')) return '<svg class="svg-icon c-pyme" viewBox="0 0 24 24"><rect x="2" y="8" width="20" height="8" rx="2"/><path d="M6 16v4 M10 16v4 M14 16v4 M18 16v4"/></svg>';
-            if (t.includes('YEALINK') || t.includes('TELEFONO') || t.includes('SIP')) return '<svg class="svg-icon c-pyme" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>';
-            if (t.includes('CMD') || t.includes('COMANDO')) return '<svg class="svg-icon c-pyme" viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>';
-            if (t.includes('OST') || t.includes('BOTONES')) return '<svg class="svg-icon c-pyme" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>';
-            return '<svg class="svg-icon c-pyme" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>';
-        }
-
-        function renderPyme(dataArray, words) {
-            resultsPymeContainer.innerHTML = '';
-            counterPyme.innerText = dataArray.length + ' item' + (dataArray.length === 1 ? '' : 's');
-
-            if (dataArray.length === 0) {
-                resultsPymeContainer.innerHTML = '<div class="no-results">No se encontraron resultados.</div>';
-                return;
-            }
-
-            var frag = document.createDocumentFragment();
-            var gridContainer = document.createElement('div');
-            gridContainer.className = 'grid-container';
-            var hasGridItems = false;
-
-            for (var i = 0; i < dataArray.length; i++) {
-                var item = dataArray[i];
-                
-                if (item.tipo === 'hero') {
-                    var heroCard = document.createElement('div');
-                    heroCard.className = 'eero-hero-card';
-                    heroCard.style.borderLeftColor = 'var(--pyme-primary)';
-                    
-                    var imgSrc = item.contenido || 'https://raw.githubusercontent.com/CarlCarlsonn/dashboard-armarios/main/pyme/L009.png';
-                    var imgHtml = '<img src="' + imgSrc + '" class="eero-hero-img" onerror="this.style.display=\'none\'">';
-                    
-                    var rowsHtml = '';
-                    if (item.descripcion) {
-                        var lines = item.descripcion.split('\n');
-                        for (var j = 0; j < lines.length; j++) {
-                            var line = lines[j].trim();
-                            if (!line) continue;
-                            var icon = '💡';
-                            if (line.toUpperCase().includes('NO COMPATIBLES') || line.toUpperCase().includes('❌')) { icon = '❌'; }
-                            else if (line.toUpperCase().includes('L009') || line.toUpperCase().includes('2011')) { icon = '📌'; }
-                            var formattedText = highlightText(line, words);
-                            var parts = formattedText.split(':');
-                            if (parts.length > 1) { formattedText = '<b>' + parts[0] + ':</b>' + parts.slice(1).join(':'); }
-                            rowsHtml += '<div style="display:flex; gap:8px; margin-bottom:8px; font-size:0.85rem; line-height:1.3; color:var(--text-main); align-items:flex-start;"><div style="flex-shrink:0;">' + icon + '</div><div style="flex:1;">' + formattedText + '</div></div>';
-                        }
-                    }
-                    heroCard.innerHTML = '<div style="display:flex; align-items:flex-start; gap:15px; width:100%;">' + imgHtml + '<div style="flex:1; min-width:0;"><h3 class="eero-hero-title" style="color:var(--pyme-primary)">' + highlightText(item.titulo, words) + '</h3>' + rowsHtml + '</div></div>';
-                    frag.appendChild(heroCard); continue;
-                }
-
-                if (item.tipo === 'banner') {
-                    var bannerCard = document.createElement('div');
-                    bannerCard.className = 'eero-warning-banner';
-                    var textBanner = item.contenido ? item.contenido.replace(/\n/g, '<br>') : '';
-                    bannerCard.innerHTML = '<div>⚠️</div><p style="margin:0;">' + highlightText(textBanner, words).replace(/&lt;br&gt;/g, '<br>') + '</p>';
-                    frag.appendChild(bannerCard); continue;
-                }
-
-                hasGridItems = true;
-                var gridCard = document.createElement('div');
-                gridCard.className = 'grid-card';
-                var iconSvg = getPymeIcon(item.titulo);
-                var modalId = item.contenido || ''; 
-                
-                gridCard.innerHTML = '<div class="grid-icon-box">' + iconSvg + '</div><div class="grid-title">' + highlightText(item.titulo, words) + '</div>';
-                
-                // AQUÍ ESTÁ LA MAGIA: Si tiene modalId, abre estático, si no, abre dinámico.
-                if (modalId && modalId !== '(Déjalo vacío)' && !modalId.startsWith('http')) {
-                    gridCard.onclick = function(mid) { return function() { openModal(mid); }; }(modalId);
-                } else {
-                    gridCard.onclick = (function(index) { return function() { openPymeDetail(index); }; })(i);
-                }
-                
-                gridContainer.appendChild(gridCard);
-            }
-
-            if (hasGridItems) { frag.appendChild(gridContainer); }
-            resultsPymeContainer.appendChild(frag);
-        }
-
-        // Modal Dinámico (Lee el texto de la Columna E)
-        window.openPymeDetail = function(index) {
-            var item = globalPyme[index];
-            if (!item) return;
-            
-            document.getElementById('modalPymeTitle').innerText = item.titulo;
-            
-            var textContent = item.descripcion ? item.descripcion : 'Sin información detallada.';
-            
-            // Formateo de texto: convierte **texto** a <b>texto</b> y saltos de línea a <br>
-            textContent = textContent.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
-            textContent = textContent.replace(/\n/g, '<br>');
-            
-            var modalContent = document.getElementById('modalPymeContent');
-            
-            if (textContent.startsWith('http') && (textContent.endsWith('.png') || textContent.endsWith('.jpg') || textContent.endsWith('.jpeg'))) {
-                modalContent.innerHTML = '<img src="' + textContent + '" class="pyme-modal-img" alt="Imagen PYME">';
-            } else {
-                modalContent.innerHTML = textContent;
-            }
-            
-            openModal('modalPymeDetail');
-        };
-
-        resultsPymeContainer.addEventListener('scroll', function() { scrollTopBtnPyme.style.display = resultsPymeContainer.scrollTop > 300 ? 'block' : 'none'; });
-        function scrollToTopPyme() { resultsPymeContainer.scrollTo({ top: 0, behavior: 'smooth' }); }
-
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js').then(function(reg) { reg.update(); }).catch(function(err) { console.log("Error SW:", err); });
-        }
-
-        loadData();
-    </script>
-</body>
-</html>
+                var modalId = item.contenido || '';
