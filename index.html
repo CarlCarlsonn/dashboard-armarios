@@ -206,7 +206,7 @@
         body.dark-mode .info-box { background: #1a237e; color: #e3f2fd; border-color: #3b82f6; }
 
         /* ESTILOS ENERGIA */
-        .energy-title { color: var(--energy-primary) !important; }
+        .energy-title { color: var(--energy-primary) !important; font-size: 1.1rem; margin-top: 0; margin-bottom: 5px; border-bottom: 2px solid var(--energy-primary); padding-bottom: 10px; padding-right: 20px;}
         .energy-btn { background: var(--energy-primary) !important; }
         
         .meter-visual { display: flex; gap: 15px; margin-bottom: 15px; background: #f8f9fa; padding: 12px; border-radius: 8px; border: 1px solid #ddd; }
@@ -809,14 +809,15 @@
     </div>
 
     <!-- MODALES ENERGIA -->
-    <!-- 1. MEDICIONES -->
+    <!-- 1. MEDICIONES CON LA IMAGEN ACTUALIZADA -->
     <div class="modal-overlay" id="modalEnergiaMediciones">
         <div class="modal-content">
             <button class="clear-search-btn" style="display:flex; position:absolute; top:15px; right:15px;" onclick="closeModal('modalEnergiaMediciones')">✖</button>
             <h3 class="energy-title">Mediciones Críticas</h3>
             <h4 class="modal-section-title" style="color:var(--text-main); margin-top:15px;">🛠️ CONFIGURAR MULTÍMETRO</h4>
             <div class="meter-visual">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/UNI-T_UT33B%2B_Digital_Multimeter.jpg/400px-UNI-T_UT33B%2B_Digital_Multimeter.jpg" class="meter-img" alt="Multímetro">
+                <!-- IMAGEN ACTUALIZADA AQUI CON TU NOMBRE DE ARCHIVO -->
+                <img src="https://carlcarlsonn.github.io/dashboard-armarios/multimeterwhite.jpeg" class="meter-img" alt="Multímetro">
                 <div class="meter-instructions" style="font-size:0.85rem; line-height:1.4;">
                     <b>1. Cables:</b> <span class="cable-red">Rojo</span> en VΩmA y <span class="cable-black">Negro</span> en COM.<br><br>
                     <b>2. Perilla:</b> Girar a <b>V~</b> con un valor <span class="dial-indicator">≥ 220</span>.
@@ -1006,10 +1007,7 @@
 
         function openModal(modalId) {
             var el = document.getElementById(modalId);
-            if (!el) {
-                alert("Error: No se encontró la ventana (" + modalId + "). Revisa el Excel.");
-                return; 
-            }
+            if (!el) { alert("Error: No se encontró la ventana (" + modalId + "). Revisa el Excel."); return; }
             if (activeModal === modalId) return;
             activeModal = modalId;
             el.style.display = 'flex';
@@ -1912,7 +1910,8 @@
                     heroCard.className = 'eero-hero-card';
                     heroCard.style.borderLeftColor = 'var(--energy-primary)';
                     
-                    var imgSrc = item.contenido || 'https://raw.githubusercontent.com/CarlCarlsonn/dashboard-armarios/main/energia/default.png';
+                    // La imagen viene del Excel (D2)
+                    var imgSrc = item.contenido; 
                     var imgHtml = '<img src="' + imgSrc + '" class="eero-hero-img" onerror="this.style.display=\'none\'">';
                     
                     var rowsHtml = '';
@@ -1926,10 +1925,7 @@
                             else if (line.toUpperCase().includes('PELIGRO') || line.toUpperCase().includes('⚠️')) { icon = '⚠️'; }
                             else if (line.toUpperCase().includes('REGLA') || line.toUpperCase().includes('🛠️')) { icon = '🛠️'; }
                             
-                            var formattedText = highlightText(line, words);
-                            var parts = formattedText.split(':');
-                            if (parts.length > 1) { formattedText = '<b>' + parts[0] + ':</b>' + parts.slice(1).join(':'); }
-                            rowsHtml += '<div style="display:flex; gap:8px; margin-bottom:8px; font-size:0.85rem; line-height:1.3; color:var(--text-main); align-items:flex-start;"><div style="flex-shrink:0;">' + icon + '</div><div style="flex:1;">' + formattedText + '</div></div>';
+                            rowsHtml += '<div style="display:flex; gap:8px; margin-bottom:8px; font-size:0.85rem; line-height:1.3; color:var(--text-main); align-items:flex-start;"><div style="flex-shrink:0;">' + icon + '</div><div style="flex:1;">' + highlightText(line, words) + '</div></div>';
                         }
                     }
                     heroCard.innerHTML = '<div style="display:flex; align-items:flex-start; gap:15px; width:100%;">' + imgHtml + '<div style="flex:1; min-width:0;"><h3 class="eero-hero-title" style="color:var(--energy-primary)">' + highlightText(item.titulo, words) + '</h3>' + rowsHtml + '</div></div>';
