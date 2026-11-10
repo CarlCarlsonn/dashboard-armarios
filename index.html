@@ -445,7 +445,7 @@
             <div class="guide-card">
                 <div class="guide-card-header"><img src="deco-adb.png" alt="Deco Adb" class="guide-img" onerror="this.style.display='none'"><h4 class="guide-card-title">STB Modelo Adb</h4></div>
                 <div class="control-row"><div class="control-details"><div class="control-name"><span style="color:var(--btn-red)">🔴</span> Control Champion:</div><div class="control-instructions">Presiona <span class="btn-badge btn-setup">SETUP</span> + <span class="btn-badge btn-grey">MENÚ</span> al mismo tiempo.</div></div></div>
-                <div class="control-row"><div class="control-details"><div class="control-name"><span style="color:var(--btn-green)">🟢</span> Control Curve:</div><div class="control-instructions">Presiona <span class="btn-badge btn-setup">SETUP</span> + <span class="btn-badge btn-green">FAVORITOS</span> hasta que el botón TV quede fijo, luego ingresa el número <b>5</b>.</div></div></div>
+                <div class="control-row"><div class="control-details"><div class="control-name"><span style="color:var(--btn-green)">🟢</span> Control Curve:</div><div class="control-instructions">Presiona <span class="btn-badge btn-setup">SETUP</span> + <span class="btn-badge btn-grey">MENÚ</span> al mismo tiempo.</div></div></div>
             </div>
             <button class="close-modal-btn" onclick="closeModal('guideModal')">Entendido</button>
         </div>
@@ -1384,7 +1384,7 @@
         function scrollToTopEero() { resultsEeroContainer.scrollTo({ top: 0, behavior: 'smooth' }); }
 
         /* ---------------------------------------------------- */
-        /* LÓGICA PYME (NUEVO MÓDULO DINÁMICO)                  */
+        /* LÓGICA PYME (DINÁMICO)                               */
         /* ---------------------------------------------------- */
         function updateClearBtnVisibilityPyme() { clearSearchBtnPyme.style.display = searchInputPyme.value.length > 0 ? 'flex' : 'none'; }
         function clearSearchPyme() { searchInputPyme.value = ''; updateClearBtnVisibilityPyme(); filterPyme(); searchInputPyme.focus(); }
@@ -1501,13 +1501,44 @@
                 var modalId = item.contenido || ''; 
                 
                 gridCard.innerHTML = '<div class="grid-icon-box">' + iconSvg + '</div><div class="grid-title">' + highlightText(item.titulo, words) + '</div>';
-                gridCard.onclick = function(mid) { return function() { if(mid) openModal(mid); }; }(modalId);
+                
+                // AQUÍ ESTÁ LA MAGIA: Si tiene modalId, abre estático, si no, abre dinámico.
+                if (modalId && modalId !== '(Déjalo vacío)' && !modalId.startsWith('http')) {
+                    gridCard.onclick = function(mid) { return function() { openModal(mid); }; }(modalId);
+                } else {
+                    gridCard.onclick = (function(index) { return function() { openPymeDetail(index); }; })(i);
+                }
+                
                 gridContainer.appendChild(gridCard);
             }
 
             if (hasGridItems) { frag.appendChild(gridContainer); }
             resultsPymeContainer.appendChild(frag);
         }
+
+        // Modal Dinámico (Lee el texto de la Columna E)
+        window.openPymeDetail = function(index) {
+            var item = globalPyme[index];
+            if (!item) return;
+            
+            document.getElementById('modalPymeTitle').innerText = item.titulo;
+            
+            var textContent = item.descripcion ? item.descripcion : 'Sin información detallada.';
+            
+            // Formateo de texto: convierte **texto** a <b>texto</b> y saltos de línea a <br>
+            textContent = textContent.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
+            textContent = textContent.replace(/\n/g, '<br>');
+            
+            var modalContent = document.getElementById('modalPymeContent');
+            
+            if (textContent.startsWith('http') && (textContent.endsWith('.png') || textContent.endsWith('.jpg') || textContent.endsWith('.jpeg'))) {
+                modalContent.innerHTML = '<img src="' + textContent + '" class="pyme-modal-img" alt="Imagen PYME">';
+            } else {
+                modalContent.innerHTML = textContent;
+            }
+            
+            openModal('modalPymeDetail');
+        };
 
         resultsPymeContainer.addEventListener('scroll', function() { scrollTopBtnPyme.style.display = resultsPymeContainer.scrollTop > 300 ? 'block' : 'none'; });
         function scrollToTopPyme() { resultsPymeContainer.scrollTo({ top: 0, behavior: 'smooth' }); }
