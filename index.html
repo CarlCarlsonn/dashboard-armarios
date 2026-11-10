@@ -17,7 +17,7 @@
             --purple-primary: #8e24aa; --purple-dark: #4a148c;
             --teal-primary: #00897b; --teal-dark: #00695c; 
             --pyme-primary: #3f51b5; --pyme-dark: #283593;
-            --energy-primary: #f57c00; --energy-dark: #e65100;
+            --orange-primary: #f57c00; --orange-dark: #e65100; /* NUEVO ENERGIA */
             --warning-bg: #fff3cd; --warning-border: #ffc107;
             --warning-text: #856404; --btn-setup: #3a3a3a; --btn-red: #d32f2f; --btn-blue: #1976d2;
             --btn-green: #2e7d32; --btn-grey: #757575; --btn-orange: #f57c00; --btn-light-grey: #e0e0e0;
@@ -32,7 +32,7 @@
             --purple-primary: #ab47bc; --purple-dark: #6a1b9a;
             --teal-primary: #26a69a; --teal-dark: #00897b; 
             --pyme-primary: #5c6bc0; --pyme-dark: #3949ab;
-            --energy-primary: #ff9800; --energy-dark: #f57c00;
+            --orange-primary: #fb8c00; --orange-dark: #ef6c00;
             --warning-bg: #3e2a1a; --warning-border: #ffb74d; --warning-text: #ffb74d;
         }
 
@@ -57,7 +57,7 @@
         #view-topologias header { background-color: var(--purple-primary); }
         #view-eero header { background-color: var(--teal-primary); }
         #view-pyme header { background-color: var(--pyme-primary); }
-        #view-energia header { background-color: var(--energy-primary); }
+        #view-energia header { background-color: var(--orange-primary); }
 
         .header-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
         .title-group { display: flex; align-items: center; gap: 12px; }
@@ -109,7 +109,7 @@
         .nav-btn { background-color: var(--accent); color: white; text-decoration: none; padding: 12px; border-radius: 10px; text-align: center; font-weight: 600; display: flex; justify-content: center; align-items: center; gap: 8px; font-size: 0.95rem; margin-top: auto; }
         .nav-btn:active { opacity: 0.8; }
 
-        /* TOPOLOGIAS & EERO & PYME */
+        /* TOPOLOGIAS & EERO & PYME & ENERGIA */
         .hero-card { background: var(--card-bg); border-radius: 12px; padding: 16px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: flex; align-items: flex-start; gap: 15px; border-left: 6px solid var(--primary); animation: slideDown 0.3s ease-out; }
         .hero-img { width: 100px; height: 100px; object-fit: contain; border-radius: 8px; background: #fff; padding: 5px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); flex-shrink: 0; }
         .hero-details { flex: 1; }
@@ -132,7 +132,7 @@
         .c-red { stroke: #d32f2f; fill: rgba(211,47,47,0.1); } .c-orange { stroke: #f57c00; fill: rgba(245,124,0,0.1); }
         .c-grey { stroke: #757575; fill: rgba(117,117,117,0.1); } .c-teal { stroke: var(--teal-primary); fill: rgba(0,137,123,0.1); }
         .c-pyme { stroke: var(--pyme-primary); fill: rgba(63,81,181,0.1); }
-        .c-energy { stroke: var(--energy-primary); fill: rgba(245,124,0,0.1); }
+        .c-orange { stroke: var(--orange-primary); fill: rgba(245,124,0,0.1); }
         .grid-title { padding: 12px 8px; text-align: center; font-weight: 700; font-size: 0.8rem; color: var(--text-main); line-height: 1.2; flex: 1; display: flex; align-items: center; justify-content: center; }
 
         /* GENERALES */
@@ -143,7 +143,7 @@
         mark { background-color: var(--highlight-bg); color: var(--highlight-text); padding: 0 2px; border-radius: 3px; font-weight: bold; }
         
         #scrollTopBtn, #scrollTopBtnCodigos, #scrollTopBtnTopologias, #scrollTopBtnEero, #scrollTopBtnPyme, #scrollTopBtnEnergia { display: none; position: fixed; bottom: 20px; right: 20px; z-index: 99; background-color: var(--primary); color: white; border: none; cursor: pointer; padding: 15px; border-radius: 50%; font-size: 1.2rem; box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: opacity 0.3s; }
-        #scrollTopBtnCodigos { background-color: var(--blue-primary); } #scrollTopBtnTopologias { background-color: var(--purple-primary); } #scrollTopBtnEero { background-color: var(--teal-primary); } #scrollTopBtnPyme { background-color: var(--pyme-primary); } #scrollTopBtnEnergia { background-color: var(--energy-primary); }
+        #scrollTopBtnCodigos { background-color: var(--blue-primary); } #scrollTopBtnTopologias { background-color: var(--purple-primary); } #scrollTopBtnEero { background-color: var(--teal-primary); } #scrollTopBtnPyme { background-color: var(--pyme-primary); } #scrollTopBtnEnergia { background-color: var(--orange-primary); }
 
         .sidebar-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; opacity: 0; transition: opacity 0.3s; }
         .sidebar-overlay.active { display: block; opacity: 1; }
@@ -156,6 +156,7 @@
         .sidebar-item { padding: 16px 20px; border-bottom: 1px solid rgba(0,0,0,0.05); cursor: pointer; display: flex; align-items: center; gap: 15px; font-weight: 600; color: var(--text-main); transition: background 0.2s; }
         body.dark-mode .sidebar-item { border-bottom-color: rgba(255,255,255,0.05); }
         .sidebar-item:hover { background-color: rgba(0,0,0,0.05); }
+        body.dark-mode .sidebar-item:hover { background-color: rgba(255,255,255,0.1); }
         .sidebar-item.active { background-color: rgba(46, 125, 50, 0.1); color: var(--primary); border-left: 4px solid var(--primary); }
         .sidebar-item span.icon { font-size: 1.3rem; }
 
@@ -205,36 +206,7 @@
         .info-box { background: #e3f2fd; border-left: 4px solid #1976d2; padding: 12px; border-radius: 4px; font-size: 0.85rem; color: #0d47a1; margin-bottom: 15px; line-height: 1.4; }
         body.dark-mode .info-box { background: #1a237e; color: #e3f2fd; border-color: #3b82f6; }
 
-        /* ESTILOS ENERGIA */
-        .energy-title { color: var(--energy-primary) !important; font-size: 1.1rem; margin-top: 0; margin-bottom: 5px; border-bottom: 2px solid var(--energy-primary); padding-bottom: 10px; padding-right: 20px;}
-        .energy-btn { background: var(--energy-primary) !important; }
-        
-        .meter-visual { display: flex; gap: 15px; margin-bottom: 15px; background: #f8f9fa; padding: 12px; border-radius: 8px; border: 1px solid #ddd; }
-        body.dark-mode .meter-visual { background: #2a2a2a; border-color: #444; }
-        .meter-img { width: 90px; height: auto; object-fit: contain; border-radius: 6px; border: 1px solid #ccc; }
-        .dial-indicator { display: inline-block; background: #000; color: #fff; padding: 2px 6px; border-radius: 4px; font-family: monospace; font-weight: bold; font-size: 0.8rem; margin: 0 2px; }
-        .cable-red { color: #d32f2f; font-weight: bold; }
-        .cable-black { color: #000; font-weight: bold; }
-        
-        .measurement-card { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 12px; margin-bottom: 12px; display: flex; align-items: center; gap: 15px; }
-        body.dark-mode .measurement-card { background: #2a2a2a; border-color: #444; }
-        .socket-graphic { width: 70px; height: 70px; border-radius: 50%; background: #e0e0e0; border: 2px solid #999; position: relative; flex-shrink: 0; display: flex; justify-content: center; align-items: center; }
-        .hole { position: absolute; width: 10px; height: 10px; background: #222; border-radius: 50%; }
-        .hole-l { right: 15px; top: 30px; } .hole-n { left: 15px; top: 30px; } .hole-g { top: 15px; left: 28px; }
-        .probe { position: absolute; width: 5px; height: 30px; border-radius: 2px; }
-        .probe-red { background: #d32f2f; } .probe-black { background: #222; }
-        .p-red-l { right: 18px; top: 28px; transform: rotate(45deg); } .p-black-n { left: 18px; top: 28px; transform: rotate(-45deg); } .p-black-g { top: 15px; left: 31px; transform: rotate(0deg); }
-        
-        .measurement-text { flex: 1; font-size: 0.8rem; line-height: 1.3; color: #333; }
-        body.dark-mode .measurement-text { color: #ccc; }
-        .measurement-text b { font-size: 0.85rem; color: var(--text-main); }
-        .result-badge { display: inline-block; padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 0.75rem; margin-top: 4px; }
-        .bg-green { background: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; }
-        body.dark-mode .bg-green { background: #1b5e20; color: #a5d6a7; border-color: #2e7d32; }
-        .bg-red { background: #ffebee; color: #c62828; border: 1px solid #ffcdd2; }
-        body.dark-mode .bg-red { background: #b71c1c; color: #ef9a9a; border-color: #d32f2f; }
-
-        /* ESTILOS CMD GUIDE Y PORT FORWARDING */
+        /* ESTILOS CMD GUIDE */
         .cmd-list { list-style: none; padding: 0; margin: 0; }
         .cmd-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid #eee; }
         body.dark-mode .cmd-item { border-bottom-color: #444; }
@@ -250,6 +222,7 @@
         .tips-box ul { margin: 0; padding-left: 20px; font-size: 0.8rem; color: var(--text-main); line-height: 1.4; }
         .tips-box li { margin-bottom: 6px; }
 
+        /* ESTILOS PORT FORWARDING */
         .pf-step { display: flex; gap: 10px; margin-bottom: 12px; font-size: 0.85rem; line-height: 1.4; }
         .pf-step-num { background: var(--pyme-primary); color: white; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; font-size: 0.75rem; }
         .pf-form-box { background: var(--table-bg); border: 1px solid #ddd; border-radius: 8px; padding: 12px; margin-bottom: 15px; }
@@ -315,6 +288,36 @@
         .ost-list { padding-left: 20px; font-size: 0.85rem; line-height: 1.5; color: var(--text-main); }
         .ost-list li { margin-bottom: 12px; }
         .ost-list b { color: var(--pyme-primary); }
+
+        /* --- NUEVOS ESTILOS ENERGIA --- */
+        .energia-step-block { margin-bottom: 20px; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; background: #fff; }
+        body.dark-mode .energia-step-block { border-color: #444; background: #1e1e1e; }
+        .energia-step-header { background: #f1f3f5; padding: 10px; font-weight: bold; font-size: 0.9rem; color: #333; border-bottom: 1px solid #ddd; }
+        body.dark-mode .energia-step-header { background: #2a2a2a; border-color: #444; color: #eee; }
+        
+        .socket-container { display: flex; justify-content: center; padding: 15px 0; }
+        .chilean-socket { width: 100px; height: 100px; border-radius: 50%; background: #e0e0e0; border: 3px solid #999; position: relative; display: flex; justify-content: center; align-items: center; box-shadow: inset 0 2px 5px rgba(0,0,0,0.2); }
+        .chilean-hole { position: absolute; width: 14px; height: 14px; background: #222; border-radius: 50%; box-shadow: inset 0 2px 4px #000; }
+        .hole-l { right: 20px; top: 45px; } .hole-n { left: 20px; top: 45px; } .hole-g { top: 20px; left: 43px; }
+        
+        .probe { position: absolute; width: 6px; height: 40px; border-radius: 3px; box-shadow: 2px 2px 5px rgba(0,0,0,0.3); }
+        .probe-red { background: #d32f2f; } .probe-black { background: #222; }
+        .p-red-l { right: 24px; top: 42px; transform: rotate(45deg); } 
+        .p-black-n { left: 24px; top: 42px; transform: rotate(-45deg); } 
+        .p-black-g { top: 24px; left: 47px; transform: rotate(0deg); }
+
+        .energia-result-box { padding: 10px; font-size: 0.85rem; border-top: 1px solid #ddd; text-align: center; }
+        .result-ok { background: #e8f5e9; color: #2e7d32; font-weight: bold; }
+        body.dark-mode .result-ok { background: #1b5e20; color: #a5d6a7; }
+        .result-fail { background: #ffebee; color: #b71c1c; text-align: left; }
+        body.dark-mode .result-fail { background: #3e1a1a; color: #ef9a9a; }
+        .result-fail b { display: block; margin-bottom: 4px; }
+        
+        .meter-visual { display: flex; gap: 15px; margin-bottom: 20px; background: var(--table-bg); padding: 10px; border-radius: 8px; border: 1px solid #eee; }
+        body.dark-mode .meter-visual { border-color: #444; }
+        .meter-img { width: 100px; height: auto; object-fit: contain; border-radius: 6px; background: #fff; }
+        .meter-instructions { flex: 1; font-size: 0.8rem; line-height: 1.4; color: var(--text-main); }
+        .dial-indicator { display: inline-block; background: #000; color: #fff; padding: 2px 6px; border-radius: 4px; font-family: monospace; font-weight: bold; font-size: 0.75rem; margin-top: 4px; }
     </style>
 </head>
 <body>
@@ -336,7 +339,7 @@
         </ul>
     </div>
 
-    <!-- VISTA ARMARIOS (BLINDADA) -->
+    <!-- VISTA ARMARIOS -->
     <div id="view-armarios">
         <header>
             <div class="header-top">
@@ -368,7 +371,7 @@
         <button id="scrollTopBtn" onclick="scrollToTopArmarios()">⬆️</button>
     </div>
 
-    <!-- VISTA CODIGOS (BLINDADA) -->
+    <!-- VISTA CODIGOS -->
     <div id="view-codigos">
         <header>
             <div class="header-top">
@@ -400,7 +403,7 @@
         <button id="scrollTopBtnCodigos" onclick="scrollToTopCodigos()">⬆️</button>
     </div>
 
-    <!-- VISTA TOPOLOGIAS (BLINDADA) -->
+    <!-- VISTA TOPOLOGIAS -->
     <div id="view-topologias">
         <header>
             <div class="header-top">
@@ -421,7 +424,7 @@
         <button id="scrollTopBtnTopologias" onclick="scrollToTopTopologias()">⬆️</button>
     </div>
 
-    <!-- VISTA EERO (BLINDADA) -->
+    <!-- VISTA EERO -->
     <div id="view-eero">
         <header>
             <div class="header-top">
@@ -442,7 +445,7 @@
         <button id="scrollTopBtnEero" onclick="scrollToTopEero()">⬆️</button>
     </div>
 
-    <!-- VISTA PYME (BLINDADA) -->
+    <!-- VISTA PYME -->
     <div id="view-pyme">
         <header>
             <div class="header-top">
@@ -463,7 +466,7 @@
         <button id="scrollTopBtnPyme" onclick="scrollToTopPyme()">⬆️</button>
     </div>
 
-    <!-- VISTA ENERGIA (NUEVA) -->
+    <!-- VISTA ENERGIA -->
     <div id="view-energia">
         <header>
             <div class="header-top">
@@ -484,22 +487,22 @@
         <button id="scrollTopBtnEnergia" onclick="scrollToTopEnergia()">⬆️</button>
     </div>
 
-    <!-- MODALES ARMARIOS Y OTROS -->
+    <!-- MODALES FIJOS (ARMARIOS / DECOS / EERO / PYME) -->
     <div class="modal-overlay" id="infoModal">
         <div class="modal-content">
-            <h3 style="color:var(--danger-color); text-align:center;">⚠️ COMPRUEBA QUE LA CUENTA NO SEA RÍGIDA</h3>
+            <h3>⚠️ COMPRUEBA QUE LA CUENTA NO SEA RÍGIDA</h3>
             <p>Si no encuentras un sitio, revisa estos pasos en tu orden:</p>
             <p><b>1. Nomenclatura:</b> Si el contenedor indica <b>"SECTOR"</b> y un número, <u>no existen armarios con esos nombres</u>. Asumimos que es RÍGIDA.</p>
             <p><b>2. Otra forma de saberlo:</b> Solo las cuentas rígidas tienen <b>Filamento splitter primario</b> y <b>Filamento splitter secundario</b>:</p>
-            <table class="oracle-table" style="width:100%; border-collapse:collapse; font-size:0.75rem; margin:10px 0; background:var(--table-bg); border-radius:6px; overflow:hidden; box-shadow:0 1px 3px rgba(0,0,0,0.1);">
-                <thead><tr><th style="background-color:#0d3b66; color:white; padding:8px 6px; text-align:center; font-weight:bold;">TIPO ELEMENTO</th><th style="background-color:#0d3b66; color:white; padding:8px 6px; text-align:center; font-weight:bold;">CÓDIGO ELEMENTO</th></tr></thead>
+            <table class="oracle-table">
+                <thead><tr><th>TIPO ELEMENTO</th><th>CÓDIGO ELEMENTO</th></tr></thead>
                 <tbody>
-                    <tr><td style="border: 1px solid rgba(0,0,0,0.1); padding:8px; text-align:center; color:var(--text-main);">ALTA:Contenedor</td><td style="border: 1px solid rgba(0,0,0,0.1); padding:8px; text-align:center; color:var(--text-main);">... VILLA ALBORADA<br><span style="background:#fff59d; color:#000; font-weight:bold; padding:2px 4px; border-radius:3px;">SECTOR 3</span></td></tr>
-                    <tr><td style="border: 2px solid #d32f2f; background-color: #ffebee; color: #b71c1c; font-weight:bold; padding:8px; text-align:center;">ALTA:Filamento<br>Splitter P. (Primario)</td><td style="border: 2px solid #d32f2f; background-color: #ffebee; color: #b71c1c; font-weight:bold; padding:8px; text-align:center;">1</td></tr>
-                    <tr><td style="border: 2px solid #d32f2f; background-color: #ffebee; color: #b71c1c; font-weight:bold; padding:8px; text-align:center;">ALTA:Filamento<br>Splitter S. (Secundario)</td><td style="border: 2px solid #d32f2f; background-color: #ffebee; color: #b71c1c; font-weight:bold; padding:8px; text-align:center;">14</td></tr>
+                    <tr><td>ALTA:Contenedor</td><td>... VILLA ALBORADA<br><span class="highlight-sector">SECTOR 3</span></td></tr>
+                    <tr><td class="highlight-red-box">ALTA:Filamento<br>Splitter P. (Primario)</td><td class="highlight-red-box">1</td></tr>
+                    <tr><td class="highlight-red-box">ALTA:Filamento<br>Splitter S. (Secundario)</td><td class="highlight-red-box">14</td></tr>
                 </tbody>
             </table>
-            <div style="background:var(--rule-bg); border-left:4px solid var(--rule-border); padding:10px; border-radius:4px; font-size:0.85rem; margin-bottom:15px;">✅ Si tiene <b>AMBOS</b> (recuadro rojo): Es <b>RÍGIDA</b>.<br>❌ Si tiene <b>solo primario</b>: Es <b>FLEXIBLE</b>. Contacta a Supervisión.</div>
+            <div class="note-box">✅ Si tiene <b>AMBOS</b> (recuadro rojo): Es <b>RÍGIDA</b>.<br>❌ Si tiene <b>solo primario</b>: Es <b>FLEXIBLE</b>. Contacta a Supervisión.</div>
             <button class="close-modal-btn" onclick="closeModal('infoModal')">Entendido</button>
         </div>
     </div>
@@ -539,7 +542,6 @@
         </div>
     </div>
 
-    <!-- MODAL DINÁMICO HUAWEI -->
     <div class="modal-overlay" id="topologiaModal">
         <div class="topologia-modal-content">
             <button class="clear-search-btn" style="display:flex; position:absolute; top:15px; right:15px;" onclick="closeModal('topologiaModal')">✖</button>
@@ -551,7 +553,6 @@
         </div>
     </div>
 
-    <!-- MODALES EERO -->
     <div class="modal-overlay" id="modalLeds">
         <div class="modal-content">
             <button class="clear-search-btn" style="display:flex; position:absolute; top:15px; right:15px;" onclick="closeModal('modalLeds')">✖</button>
@@ -613,7 +614,7 @@
         </div>
     </div>
 
-    <!-- MODAL DINÁMICO PYME -->
+    <!-- MODALES PYME -->
     <div class="modal-overlay" id="modalPymeDetail">
         <div class="modal-content">
             <button class="clear-search-btn" style="display:flex; position:absolute; top:15px; right:15px;" onclick="closeModal('modalPymeDetail')">✖</button>
@@ -623,7 +624,6 @@
         </div>
     </div>
 
-    <!-- MODALES FIJOS PYME (OST, CMD, PORT FORWARDING) -->
     <div class="modal-overlay" id="modalOstMikrotik">
         <div class="modal-content">
             <button class="clear-search-btn" style="display:flex; position:absolute; top:15px; right:15px;" onclick="closeModal('modalOstMikrotik')">✖</button>
@@ -809,100 +809,158 @@
     </div>
 
     <!-- MODALES ENERGIA -->
-    <!-- 1. MEDICIONES CON LA IMAGEN ACTUALIZADA -->
     <div class="modal-overlay" id="modalEnergiaMediciones">
         <div class="modal-content">
             <button class="clear-search-btn" style="display:flex; position:absolute; top:15px; right:15px;" onclick="closeModal('modalEnergiaMediciones')">✖</button>
-            <h3 class="energy-title">Mediciones Críticas</h3>
-            <h4 class="modal-section-title" style="color:var(--text-main); margin-top:15px;">🛠️ CONFIGURAR MULTÍMETRO</h4>
+            <h3 style="color: var(--orange-primary); border-bottom: 2px solid var(--orange-primary); padding-bottom: 10px;">Mediciones Críticas</h3>
+            
             <div class="meter-visual">
-                <!-- IMAGEN ACTUALIZADA AQUI CON TU NOMBRE DE ARCHIVO -->
-                <img src="https://carlcarlsonn.github.io/dashboard-armarios/multimeterwhite.jpeg" class="meter-img" alt="Multímetro">
-                <div class="meter-instructions" style="font-size:0.85rem; line-height:1.4;">
-                    <b>1. Cables:</b> <span class="cable-red">Rojo</span> en VΩmA y <span class="cable-black">Negro</span> en COM.<br><br>
-                    <b>2. Perilla:</b> Girar a <b>V~</b> con un valor <span class="dial-indicator">≥ 220</span>.
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/UNI-T_UT33B%2B_Digital_Multimeter.jpg/400px-UNI-T_UT33B%2B_Digital_Multimeter.jpg" class="meter-img" alt="Multímetro">
+                <div class="meter-instructions">
+                    <b>Perilla:</b> Girar a <span class="dial-indicator">V~ 600</span>.<br>
+                    <b>Cables:</b><br>
+                    • <span class="cable-red" style="color:#d32f2f;font-weight:bold;">Rojo</span> en puerto <b>VΩmA</b>.<br>
+                    • <span class="cable-black" style="font-weight:bold;">Negro</span> en puerto <b>COM</b>.
                 </div>
             </div>
-            <h4 class="modal-section-title" style="color:var(--text-main); margin-top:15px;">🔌 MEDICIONES EN EL ENCHUFE</h4>
-            <div class="measurement-card">
-                <div class="socket-graphic"><div class="hole hole-l"></div><div class="hole hole-n"></div><div class="hole hole-g"></div><div class="probe probe-red p-red-l"></div><div class="probe probe-black p-black-n"></div></div>
-                <div class="measurement-text"><b>1. Fase y Neutro</b><br><span class="cable-red">Roja (Fase)</span> + <span class="cable-black">Negra (Neutro)</span><br><span class="result-badge bg-green" style="display:block; margin-bottom:4px;">Debe marcar ~220V (±10%)</span></div>
+
+            <!-- PASO 1: FASE - TIERRA -->
+            <div class="energia-step-block">
+                <div class="energia-step-header">1. Fase y Tierra (Rojo y Negro)</div>
+                <div class="socket-container">
+                    <div class="chilean-socket">
+                        <div class="chilean-hole hole-l"></div><div class="chilean-hole hole-n"></div><div class="chilean-hole hole-g"></div>
+                        <div class="probe probe-red p-red-l"></div><div class="probe probe-black p-black-g"></div>
+                    </div>
+                </div>
+                <div class="energia-result-box result-ok">
+                    ✅ Valor Esperado: ~220V
+                </div>
+                <div class="energia-result-box result-fail">
+                    <b>⚠️ Si marca 0V (Falla):</b> NO hay tierra física. Esto causará <b>Ruido en Datos (EMI)</b> generando lentitud, y la estática acumulada buscará tierra por el cable LAN, quemando los <b>puertos de red (ESD)</b>.
+                </div>
             </div>
-            <div class="measurement-card">
-                <div class="socket-graphic"><div class="hole hole-l"></div><div class="hole hole-n"></div><div class="hole hole-g"></div><div class="probe probe-red p-red-l"></div><div class="probe probe-black p-black-g"></div></div>
-                <div class="measurement-text"><b>2. Fase y Tierra</b><br><span class="cable-red">Roja (Fase)</span> + <span class="cable-black">Negra (Tierra)</span><br><span class="result-badge bg-green" style="display:block; margin-bottom:4px;">Debe marcar ~220V (±10%)</span><span class="result-badge bg-red" style="display:block;">Si marca 0V = ¡NO HAY TIERRA!</span></div>
+
+            <!-- PASO 2: NEUTRO - TIERRA -->
+            <div class="energia-step-block">
+                <div class="energia-step-header">2. Neutro y Tierra (Rojo y Negro)</div>
+                <div class="socket-container">
+                    <div class="chilean-socket">
+                        <div class="chilean-hole hole-l"></div><div class="chilean-hole hole-n"></div><div class="chilean-hole hole-g"></div>
+                        <div class="probe probe-black p-black-n"></div><div class="probe probe-red p-black-g"></div>
+                    </div>
+                </div>
+                <div class="energia-result-box result-ok">
+                    ✅ Valor Esperado: < 2V
+                </div>
+                <div class="energia-result-box result-fail">
+                    <b>⚠️ Si marca > 5V (Falla):</b> Ruido severo inyectándose en los datos. El equipo sufrirá <b>bloqueos de software, congelamientos o reinicios aleatorios</b>.
+                </div>
             </div>
-            <div class="measurement-card">
-                <div class="socket-graphic"><div class="hole hole-l"></div><div class="hole hole-n"></div><div class="hole hole-g"></div><div class="probe probe-black p-black-n"></div><div class="probe probe-red p-black-g" style="border-bottom: 15px solid #d32f2f; border-top: none;"></div></div>
-                <div class="measurement-text"><b>3. Neutro y Tierra</b><br><span class="cable-black">Negra (Neutro)</span> + <span class="cable-red">Roja (Tierra)</span><br><span class="result-badge bg-green" style="display:block; margin-bottom:4px;">Ideal < 2V</span><span class="result-badge bg-red" style="display:block;">Si > 5V: Ruido severo</span></div>
+
+            <!-- PASO 3: FASE - NEUTRO -->
+            <div class="energia-step-block">
+                <div class="energia-step-header">3. Fase y Neutro (Rojo y Negro)</div>
+                <div class="socket-container">
+                    <div class="chilean-socket">
+                        <div class="chilean-hole hole-l"></div><div class="chilean-hole hole-n"></div><div class="chilean-hole hole-g"></div>
+                        <div class="probe probe-red p-red-l"></div><div class="probe probe-black p-black-n"></div>
+                    </div>
+                </div>
+                <div class="energia-result-box result-ok">
+                    ✅ Valor Esperado: ~220V (±10%)
+                </div>
+                <div class="energia-result-box result-fail">
+                    <b>⚠️ Si está fuera de rango:</b> Voltajes muy bajos (<200V) causan <b>Fatiga Térmica</b>. La fuente de poder trabaja al máximo, se calienta y reduce drásticamente la vida útil del equipo.
+                </div>
             </div>
-            <button class="close-modal-btn energy-btn" onclick="closeModal('modalEnergiaMediciones')">Entendido</button>
+
+            <button class="close-modal-btn" style="background: var(--orange-primary);" onclick="closeModal('modalEnergiaMediciones')">Entendido</button>
         </div>
     </div>
 
-    <!-- 2. NORMATIVA -->
     <div class="modal-overlay" id="modalEnergiaNormativa">
         <div class="modal-content">
             <button class="clear-search-btn" style="display:flex; position:absolute; top:15px; right:15px;" onclick="closeModal('modalEnergiaNormativa')">✖</button>
-            <h3 class="energy-title">Normativa SEC</h3>
-            <div style="background:#f8f9fa; padding:12px; border-radius:8px; margin-bottom:10px; border:1px solid #ddd;">
-                <h4 style="margin:0 0 5px 0; font-size:0.9rem; color:#1a237e;">RIC N°06: Tierra</h4>
-                <p style="margin:0; font-size:0.85rem; color:#555;">Obligatoriedad legal de la tierra de protección. Su ausencia anula las protecciones diferenciales.</p>
+            <h3 style="color: var(--orange-primary); border-bottom: 2px solid var(--orange-primary); padding-bottom: 10px;">Normativa Chilena (SEC)</h3>
+            
+            <div class="norm-box" style="background: var(--table-bg); border-left: 4px solid #1976d2; padding: 12px; margin-bottom: 12px; border-radius: 4px;">
+                <h4 style="margin: 0 0 5px 0; color: #0d47a1;">RIC N°06: Tierra</h4>
+                <p style="margin: 0; font-size: 0.85rem;">Obligatoriedad legal de la tierra de protección. Su ausencia anula las protecciones diferenciales.</p>
             </div>
-            <div style="background:#f8f9fa; padding:12px; border-radius:8px; margin-bottom:10px; border:1px solid #ddd;">
-                <h4 style="margin:0 0 5px 0; font-size:0.9rem; color:#1a237e;">RIC N°02: Voltaje</h4>
-                <p style="margin:0; font-size:0.85rem; color:#555;">Parámetros de estabilidad. Voltaje nominal exigido: 220V (±10%) para evitar fatiga térmica.</p>
+            
+            <div class="norm-box" style="background: var(--table-bg); border-left: 4px solid #1976d2; padding: 12px; margin-bottom: 12px; border-radius: 4px;">
+                <h4 style="margin: 0 0 5px 0; color: #0d47a1;">RIC N°02: Voltaje</h4>
+                <p style="margin: 0; font-size: 0.85rem;">Parámetros de estabilidad. Voltaje nominal exigido: 220V (±10%) para evitar fatiga térmica.</p>
             </div>
-            <button class="close-modal-btn energy-btn" onclick="closeModal('modalEnergiaNormativa')">Entendido</button>
+
+            <div class="norm-box" style="background: #e3f2fd; border-left: 4px solid #1976d2; padding: 12px; border-radius: 4px;">
+                <h4 style="margin: 0 0 5px 0; color: #0d47a1;">Estándares Internacionales</h4>
+                <p style="margin: 0; font-size: 0.85rem; color: #0d47a1;"><b>IEEE 1100:</b> Exige potencial cero para evitar voltaje de modo común.<br>
+                <b>IEC 61000-4-5:</b> Sin tierra, los protectores internos no derivan energía.</p>
+            </div>
+
+            <button class="close-modal-btn" style="background: var(--orange-primary);" onclick="closeModal('modalEnergiaNormativa')">Entendido</button>
         </div>
     </div>
 
-    <!-- 3. RIESGOS -->
-    <div class="modal-overlay" id="modalEnergiaRiesgos">
-        <div class="modal-content">
-            <button class="clear-search-btn" style="display:flex; position:absolute; top:15px; right:15px;" onclick="closeModal('modalEnergiaRiesgos')">✖</button>
-            <h3 class="energy-title">Riesgos Técnicos</h3>
-            <div style="background:#ffebee; padding:12px; border-radius:4px; margin-bottom:10px; border-left:4px solid #d32f2f;">
-                <h4 style="margin:0 0 5px 0; font-size:0.9rem; color:#b71c1c;">Ruido en Datos (EMI)</h4>
-                <p style="margin:0; font-size:0.85rem; color:#b71c1c;">La falta de tierra genera latencia y lentitud percibida por el cliente.</p>
-            </div>
-            <div style="background:#ffebee; padding:12px; border-radius:4px; margin-bottom:10px; border-left:4px solid #d32f2f;">
-                <h4 style="margin:0 0 5px 0; font-size:0.9rem; color:#b71c1c;">Daño Físico (ESD)</h4>
-                <p style="margin:0; font-size:0.85rem; color:#b71c1c;">La estática daña permanentemente los procesadores de las ONTs y puertos LAN.</p>
-            </div>
-            <button class="close-modal-btn energy-btn" onclick="closeModal('modalEnergiaRiesgos')">Entendido</button>
-        </div>
-    </div>
-
-    <!-- 4. PROTOCOLO -->
     <div class="modal-overlay" id="modalEnergiaProtocolo">
         <div class="modal-content">
             <button class="clear-search-btn" style="display:flex; position:absolute; top:15px; right:15px;" onclick="closeModal('modalEnergiaProtocolo')">✖</button>
-            <h3 class="energy-title">Protocolo de Terreno</h3>
-            <table style="width:100%; border-collapse:collapse; font-size:0.8rem; margin-top:15px; box-shadow:0 1px 3px rgba(0,0,0,0.1); border-radius:6px; overflow:hidden;">
-                <thead><tr style="background:#1a237e; color:white;"><th style="padding:10px; text-align:left;">Punto</th><th style="padding:10px; text-align:left;">Valor OK</th><th style="padding:10px; text-align:left;">Falla</th></tr></thead>
-                <tbody style="background:var(--card-bg);">
-                    <tr><td style="padding:10px; border-bottom:1px solid #ddd;"><b>Fase - Neutro</b></td><td style="padding:10px; border-bottom:1px solid #ddd;">~220V</td><td style="padding:10px; border-bottom:1px solid #ddd; color:#d32f2f; font-weight:bold;">Fuera de rango</td></tr>
-                    <tr><td style="padding:10px; border-bottom:1px solid #ddd;"><b>Fase - Tierra</b></td><td style="padding:10px; border-bottom:1px solid #ddd;">~220V</td><td style="padding:10px; border-bottom:1px solid #ddd; color:#d32f2f; font-weight:bold;">0V = Sin tierra física</td></tr>
-                    <tr><td style="padding:10px; border-bottom:1px solid #ddd;"><b>Neutro - Tierra</b></td><td style="padding:10px; border-bottom:1px solid #ddd;">< 2V</td><td style="padding:10px; border-bottom:1px solid #ddd; color:#d32f2f; font-weight:bold;">> 5V = Ruido severo</td></tr>
+            <h3 style="color: var(--orange-primary); border-bottom: 2px solid var(--orange-primary); padding-bottom: 10px;">Protocolo de Validación</h3>
+            
+            <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:10px;">Tabla de referencia rápida para diagnóstico en terreno:</p>
+            
+            <table class="protocol-table" style="width:100%; border-collapse: collapse; font-size:0.8rem; margin-top:10px; border-radius:6px; overflow:hidden;">
+                <thead>
+                    <tr style="background-color: #1a237e; color: white;">
+                        <th style="padding: 10px; text-align: left;">Punto</th>
+                        <th style="padding: 10px; text-align: left;">Valor OK</th>
+                        <th style="padding: 10px; text-align: left;">Falla</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding:10px; border-bottom:1px solid #ddd;"><b>Fase - Neutro</b></td>
+                        <td style="padding:10px; border-bottom:1px solid #ddd;">~220V</td>
+                        <td style="padding:10px; border-bottom:1px solid #ddd; color:#d32f2f; font-weight:bold;">Fuera de rango = Fatiga</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:10px; border-bottom:1px solid #ddd;"><b>Fase - Tierra</b></td>
+                        <td style="padding:10px; border-bottom:1px solid #ddd;">~220V</td>
+                        <td style="padding:10px; border-bottom:1px solid #ddd; color:#d32f2f; font-weight:bold;">0V = Sin tierra física</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:10px; border-bottom:1px solid #ddd;"><b>Neutro - Tierra</b></td>
+                        <td style="padding:10px; border-bottom:1px solid #ddd;">< 2V</td>
+                        <td style="padding:10px; border-bottom:1px solid #ddd; color:#d32f2f; font-weight:bold;">> 5V = Ruido severo</td>
+                    </tr>
                 </tbody>
             </table>
-            <button class="close-modal-btn energy-btn" onclick="closeModal('modalEnergiaProtocolo')">Entendido</button>
+
+            <div style="background:var(--table-bg); padding:10px; border-radius:6px; margin-top:15px; font-size:0.8rem; border:1px solid #ddd;">
+                <b>Regla de Oro SEC:</b> La resistencia de puesta a tierra jamás debe superar los <b>20 Ohm</b>.
+            </div>
+
+            <button class="close-modal-btn" style="background: var(--orange-primary);" onclick="closeModal('modalEnergiaProtocolo')">Entendido</button>
         </div>
     </div>
 
-    <!-- 5. GUION ASESOR -->
     <div class="modal-overlay" id="modalEnergiaGuion">
         <div class="modal-content">
             <button class="clear-search-btn" style="display:flex; position:absolute; top:15px; right:15px;" onclick="closeModal('modalEnergiaGuion')">✖</button>
-            <h3 class="energy-title">Guion Asesor</h3>
-            <p style="font-size:0.9rem; line-height:1.5; color:var(--text-main); margin-top:15px; font-style:italic;">
+            <h3 style="color: var(--orange-primary); border-bottom: 2px solid var(--orange-primary); padding-bottom: 10px;">Guion Asesor</h3>
+            <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:15px;">Utiliza este guion exacto para proteger la calidad del servicio:</p>
+            
+            <div style="background: #f8f9fa; border-left: 4px solid #f57c00; padding: 15px; border-radius: 4px; font-size: 0.9rem; line-height: 1.5; font-style: italic;">
                 "Para asegurar que su fibra de Telsur funcione a la máxima velocidad, he certificado su red eléctrica y detectado que sus enchufes no cuentan con tierra de protección. Esto causa lentitud en su internet y reinicios en los equipos. Le sugiero regularizar esta situación con un eléctrico certificado."
-            </p>
-            <div style="background:#e3f2fd; padding:10px; border-radius:4px; font-size:0.85rem; color:#0d47a1; margin-top:15px; border-left:4px solid #1976d2;">
-                <b>Recuerda:</b> El problema de la fibra no es la fibra, es la falta de tierra física.
             </div>
-            <button class="close-modal-btn energy-btn" onclick="closeModal('modalEnergiaGuion')">Entendido</button>
+            
+            <div style="background: var(--warning-bg); border-left: 4px solid var(--warning-border); padding: 10px; border-radius: 4px; margin-top: 15px; font-size: 0.8rem;">
+                <b>Nota:</b> Todo hallazgo debe ser reportado al supervisor. La calidad de la fibra exige calidad en la energía.
+            </div>
+
+            <button class="close-modal-btn" style="background: var(--orange-primary);" onclick="closeModal('modalEnergiaGuion')">Entendido</button>
         </div>
     </div>
 
@@ -917,20 +975,24 @@
             var errorDiv = document.createElement('div');
             errorDiv.style.cssText = "background: #ffebee; color: #b71c1c; padding: 20px; border-radius: 8px; font-family: monospace; font-size: 14px; margin: 15px; z-index:9999; position:relative;";
             errorDiv.innerHTML = "<b>⚠️ ERROR EN EL CÓDIGO:</b><br><br>" + message + "<br><br><b>Línea:</b> " + lineno;
-            document.body.appendChild(errorDiv); return false;
+            document.body.appendChild(errorDiv);
+            return false;
         };
 
-        /* URLs DE GOOGLE SHEETS */
         var SHEET_TOPOLOGIAS_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSKUPJST2SVhD74W0cYfcb7RpBpuWgT5SLqHn7YSJasQcPNE971C5x_mBCDHPKJift7EFrOoYs4VHoq/pub?gid=1245245166&single=true&output=csv'; 
         var SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSKUPJST2SVhD74W0cYfcb7RpBpuWgT5SLqHn7YSJasQcPNE971C5x_mBCDHPKJift7EFrOoYs4VHoq/pub?gid=1395209502&single=true&output=csv';
         var SHEET_CODIGOS_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSKUPJST2SVhD74W0cYfcb7RpBpuWgT5SLqHn7YSJasQcPNE971C5x_mBCDHPKJift7EFrOoYs4VHoq/pub?gid=47179035&single=true&output=csv'; 
         var SHEET_EERO_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSKUPJST2SVhD74W0cYfcb7RpBpuWgT5SLqHn7YSJasQcPNE971C5x_mBCDHPKJift7EFrOoYs4VHoq/pub?gid=469526274&single=true&output=csv';
         var SHEET_PYME_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSKUPJST2SVhD74W0cYfcb7RpBpuWgT5SLqHn7YSJasQcPNE971C5x_mBCDHPKJift7EFrOoYs4VHoq/pub?gid=979773834&single=true&output=csv'; 
-        var SHEET_ENERGIA_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSKUPJST2SVhD74W0cYfcb7RpBpuWgT5SLqHn7YSJasQcPNE971C5x_mBCDHPKJift7EFrOoYs4VHoq/pub?gid=752503564&single=true&output=csv'; 
+        // AQUI DEBES PEGAR EL NUEVO LINK CSV DE LA PESTAÑA ENERGIA
+        var SHEET_ENERGIA_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSKUPJST2SVhD74W0cYfcb7RpBpuWgT5SLqHn7YSJasQcPNE971C5x_mBCDHPKJift7EFrOoYs4VHoq/pub?gid=123456789&single=true&output=csv'; 
 
         var globalData = [], currentFilter = '', currentSearchWords = [];
         var globalCodigos = [], currentFilterCodigos = '';
-        var globalTopologias = [], globalEero = [], globalPyme = [], globalEnergia = []; 
+        var globalTopologias = [];
+        var globalEero = [];
+        var globalPyme = []; 
+        var globalEnergia = []; 
 
         var resultsContainer = document.getElementById('resultsContainer');
         var searchInput = document.getElementById('searchInput');
@@ -978,8 +1040,18 @@
         var sidebarOverlay = document.getElementById('sidebarOverlay');
         var currentView = 'armarios', activeModal = null;
 
-        if (safeStorage.get('theme') === 'dark') { document.body.classList.add('dark-mode'); document.getElementById('themeToggle').innerText = '☀️'; }
-        function toggleTheme() { document.body.classList.toggle('dark-mode'); var isDark = document.body.classList.contains('dark-mode'); safeStorage.set('theme', isDark ? 'dark' : 'light'); document.getElementById('themeToggle').innerText = isDark ? '☀️' : '🌙'; }
+        if (safeStorage.get('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            document.getElementById('themeToggle').innerText = '☀️';
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            var isDark = document.body.classList.contains('dark-mode');
+            safeStorage.set('theme', isDark ? 'dark' : 'light');
+            document.getElementById('themeToggle').innerText = isDark ? '☀️' : '🌙';
+        }
+
         function toggleMenu() { sidebar.classList.toggle('active'); sidebarOverlay.classList.toggle('active'); }
 
         function switchView(viewName, addToHistory = true) {
@@ -997,17 +1069,39 @@
             document.getElementById('view-pyme').style.display = 'none';
             document.getElementById('view-energia').style.display = 'none';
 
-            if (viewName === 'armarios') { document.getElementById('menu-armarios').classList.add('active'); document.getElementById('view-armarios').style.display = 'flex'; }
-            else if (viewName === 'codigos') { document.getElementById('menu-codigos').classList.add('active'); document.getElementById('view-codigos').style.display = 'flex'; if (globalCodigos.length === 0) loadCodigos(); }
-            else if (viewName === 'topologias') { document.getElementById('menu-topologias').classList.add('active'); document.getElementById('view-topologias').style.display = 'flex'; if (globalTopologias.length === 0) loadTopologias(); }
-            else if (viewName === 'eero') { document.getElementById('menu-eero').classList.add('active'); document.getElementById('view-eero').style.display = 'flex'; if (globalEero.length === 0) loadEero(); }
-            else if (viewName === 'pyme') { document.getElementById('menu-pyme').classList.add('active'); document.getElementById('view-pyme').style.display = 'flex'; if (globalPyme.length === 0) loadPyme(); }
-            else if (viewName === 'energia') { document.getElementById('menu-energia').classList.add('active'); document.getElementById('view-energia').style.display = 'flex'; if (globalEnergia.length === 0) loadEnergia(); }
+            if (viewName === 'armarios') {
+                document.getElementById('menu-armarios').classList.add('active');
+                document.getElementById('view-armarios').style.display = 'flex';
+            } else if (viewName === 'codigos') {
+                document.getElementById('menu-codigos').classList.add('active');
+                document.getElementById('view-codigos').style.display = 'flex';
+                if (globalCodigos.length === 0) loadCodigos();
+            } else if (viewName === 'topologias') {
+                document.getElementById('menu-topologias').classList.add('active');
+                document.getElementById('view-topologias').style.display = 'flex';
+                if (globalTopologias.length === 0) loadTopologias();
+            } else if (viewName === 'eero') {
+                document.getElementById('menu-eero').classList.add('active');
+                document.getElementById('view-eero').style.display = 'flex';
+                if (globalEero.length === 0) loadEero();
+            } else if (viewName === 'pyme') {
+                document.getElementById('menu-pyme').classList.add('active');
+                document.getElementById('view-pyme').style.display = 'flex';
+                if (globalPyme.length === 0) loadPyme();
+            } else if (viewName === 'energia') {
+                document.getElementById('menu-energia').classList.add('active');
+                document.getElementById('view-energia').style.display = 'flex';
+                if (globalEnergia.length === 0) loadEnergia();
+            }
         }
 
         function openModal(modalId) {
             var el = document.getElementById(modalId);
-            if (!el) { alert("Error: No se encontró la ventana (" + modalId + "). Revisa el Excel."); return; }
+            if (!el) {
+                console.warn("Modal no encontrado: " + modalId);
+                alert("Error: No se encontró la ventana para este botón. Revisa el Excel (Columna D).");
+                return; 
+            }
             if (activeModal === modalId) return;
             activeModal = modalId;
             el.style.display = 'flex';
@@ -1050,7 +1144,6 @@
         document.getElementById('modalPortForwarding').addEventListener('click', function(e) { if (e.target === this) closeModal('modalPortForwarding'); });
         document.getElementById('modalEnergiaMediciones').addEventListener('click', function(e) { if (e.target === this) closeModal('modalEnergiaMediciones'); });
         document.getElementById('modalEnergiaNormativa').addEventListener('click', function(e) { if (e.target === this) closeModal('modalEnergiaNormativa'); });
-        document.getElementById('modalEnergiaRiesgos').addEventListener('click', function(e) { if (e.target === this) closeModal('modalEnergiaRiesgos'); });
         document.getElementById('modalEnergiaProtocolo').addEventListener('click', function(e) { if (e.target === this) closeModal('modalEnergiaProtocolo'); });
         document.getElementById('modalEnergiaGuion').addEventListener('click', function(e) { if (e.target === this) closeModal('modalEnergiaGuion'); });
 
@@ -1088,65 +1181,7 @@
 
         function findDataStart(rows) { for (var i = 0; i < Math.min(rows.length, 30); i++) { if (/^https?:\/\//i.test((rows[i][2] || '').trim())) return i; } return 0; }
 
-        /* --- EL TRADUCTOR MÁGICO --- */
-        function formatRichText(rawText) {
-            if (!rawText) return '';
-            let safeText = rawText.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-            safeText = safeText.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
-            const lines = safeText.split('\n');
-            let html = ''; let stepCount = 1; let inStepList = false; let inBulletList = false;
-
-            for (let i = 0; i < lines.length; i++) {
-                let line = lines[i].trim();
-                if (!line) continue;
-
-                if (line.startsWith('[SECCION]')) {
-                    if (inStepList) { html += '</div>'; inStepList = false; stepCount = 1; }
-                    if (inBulletList) { html += '</ul>'; inBulletList = false; }
-                    html += `<h4 class="modal-section-title" style="color:var(--text-main);">${line.replace('[SECCION]', '').trim()}</h4>`;
-                } 
-                else if (line.startsWith('[PASO]')) {
-                    if (inBulletList) { html += '</ul>'; inBulletList = false; }
-                    if (!inStepList) { html += '<div class="step-list">'; inStepList = true; }
-                    html += `<div class="step-item"><div class="step-num">${stepCount++}</div><div class="step-text">${line.replace('[PASO]', '').trim()}</div></div>`;
-                }
-                else if (line.startsWith('[LISTA]')) {
-                    if (inStepList) { html += '</div>'; inStepList = false; stepCount = 1; }
-                    if (!inBulletList) { html += '<ul class="vertical-list">'; inBulletList = true; }
-                    html += `<li>${line.replace('[LISTA]', '').trim()}</li>`;
-                }
-                else if (line.startsWith('[ALERTA]')) {
-                    if (inStepList) { html += '</div>'; inStepList = false; stepCount = 1; }
-                    if (inBulletList) { html += '</ul>'; inBulletList = false; }
-                    html += `<div class="modal-alert"><div>⚠️</div><div>${line.replace('[ALERTA]', '').trim()}</div></div>`;
-                }
-                else if (line.startsWith('[PELIGRO]')) {
-                    if (inStepList) { html += '</div>'; inStepList = false; stepCount = 1; }
-                    if (inBulletList) { html += '</ul>'; inBulletList = false; }
-                    html += `<div class="danger-box">${line.replace('[PELIGRO]', '').trim()}</div>`;
-                }
-                else if (line.startsWith('[INFO]')) {
-                    if (inStepList) { html += '</div>'; inStepList = false; stepCount = 1; }
-                    if (inBulletList) { html += '</ul>'; inBulletList = false; }
-                    html += `<div class="info-box">${line.replace('[INFO]', '').trim()}</div>`;
-                }
-                else if (line.startsWith('[LINK]')) {
-                    if (inStepList) { html += '</div>'; inStepList = false; stepCount = 1; }
-                    if (inBulletList) { html += '</ul>'; inBulletList = false; }
-                    html += `<div style="margin-bottom:10px;"><code style="word-break: break-all; background: #e9ecef; padding: 2px 4px; border-radius: 4px; color: #d32f2f;">${line.replace('[LINK]', '').trim()}</code></div>`;
-                }
-                else {
-                    if (inStepList) { html += `<div class="step-item"><div style="width:22px; flex-shrink:0;"></div><div class="step-text">${line}</div></div>`; } 
-                    else if (inBulletList) { html += `<li>${line}</li>`; } 
-                    else { html += `<p style="font-size:0.85rem; line-height:1.4; margin-bottom:10px;">${line}</p>`; }
-                }
-            }
-            if (inStepList) html += '</div>';
-            if (inBulletList) html += '</ul>';
-            return html;
-        }
-
-        /* --- LOGICA ARMARIOS --- */
+        /* LÓGICA ARMARIOS */
         var reglaHtml = 
             '<div class="card-header"><span class="tag">REGLA DE ORO</span></div>' +
             '<div class="card-title">⚠️ Comprueba que la cuenta NO SEA RÍGIDA</div>' +
@@ -1333,7 +1368,7 @@
         resultsContainer.addEventListener('scroll', function() { scrollTopBtn.style.display = resultsContainer.scrollTop > 300 ? 'block' : 'none'; });
         function scrollToTopArmarios() { resultsContainer.scrollTo({ top: 0, behavior: 'smooth' }); }
 
-        /* --- LOGICA CODIGOS --- */
+        /* LÓGICA CÓDIGOS */
         function updateClearBtnVisibilityCodigos() { clearSearchBtnCodigos.style.display = searchInputCodigos.value.length > 0 ? 'flex' : 'none'; }
         function clearSearchCodigos() { searchInputCodigos.value = ''; updateClearBtnVisibilityCodigos(); filterCodigos(); searchInputCodigos.focus(); }
         searchInputCodigos.addEventListener('input', function() { updateClearBtnVisibilityCodigos(); filterCodigos(); });
@@ -1410,7 +1445,7 @@
         resultsCodigosContainer.addEventListener('scroll', function() { scrollTopBtnCodigos.style.display = resultsCodigosContainer.scrollTop > 300 ? 'block' : 'none'; });
         function scrollToTopCodigos() { resultsCodigosContainer.scrollTo({ top: 0, behavior: 'smooth' }); }
 
-        /* --- LOGICA TOPOLOGIAS (HUAWEI) --- */
+        /* LÓGICA TOPOLOGIAS (HUAWEI) */
         function updateClearBtnVisibilityTopologias() { clearSearchBtnTopologias.style.display = searchInputTopologias.value.length > 0 ? 'flex' : 'none'; }
         function clearSearchTopologias() { searchInputTopologias.value = ''; updateClearBtnVisibilityTopologias(); filterTopologias(); searchInputTopologias.focus(); }
         searchInputTopologias.addEventListener('input', function() { updateClearBtnVisibilityTopologias(); filterTopologias(); });
@@ -1556,7 +1591,7 @@
         resultsTopologiasContainer.addEventListener('scroll', function() { scrollTopBtnTopologias.style.display = resultsTopologiasContainer.scrollTop > 300 ? 'block' : 'none'; });
         function scrollToTopTopologias() { resultsTopologiasContainer.scrollTo({ top: 0, behavior: 'smooth' }); }
 
-        /* --- LOGICA EERO --- */
+        /* LÓGICA EERO */
         function updateClearBtnVisibilityEero() { clearSearchBtnEero.style.display = searchInputEero.value.length > 0 ? 'flex' : 'none'; }
         function clearSearchEero() { searchInputEero.value = ''; updateClearBtnVisibilityEero(); filterEero(); searchInputEero.focus(); }
         searchInputEero.addEventListener('input', function() { updateClearBtnVisibilityEero(); filterEero(); });
@@ -1686,7 +1721,7 @@
         resultsEeroContainer.addEventListener('scroll', function() { scrollTopBtnEero.style.display = resultsEeroContainer.scrollTop > 300 ? 'block' : 'none'; });
         function scrollToTopEero() { resultsEeroContainer.scrollTo({ top: 0, behavior: 'smooth' }); }
 
-        /* --- LOGICA PYME --- */
+        /* LÓGICA PYME */
         function updateClearBtnVisibilityPyme() { clearSearchBtnPyme.style.display = searchInputPyme.value.length > 0 ? 'flex' : 'none'; }
         function clearSearchPyme() { searchInputPyme.value = ''; updateClearBtnVisibilityPyme(); filterPyme(); searchInputPyme.focus(); }
         searchInputPyme.addEventListener('input', function() { updateClearBtnVisibilityPyme(); filterPyme(); });
@@ -1830,7 +1865,7 @@
         resultsPymeContainer.addEventListener('scroll', function() { scrollTopBtnPyme.style.display = resultsPymeContainer.scrollTop > 300 ? 'block' : 'none'; });
         function scrollToTopPyme() { resultsPymeContainer.scrollTo({ top: 0, behavior: 'smooth' }); }
 
-        /* --- LOGICA ENERGIA (NUEVA) --- */
+        /* LÓGICA ENERGIA */
         function updateClearBtnVisibilityEnergia() { clearSearchBtnEnergia.style.display = searchInputEnergia.value.length > 0 ? 'flex' : 'none'; }
         function clearSearchEnergia() { searchInputEnergia.value = ''; updateClearBtnVisibilityEnergia(); filterEnergia(); searchInputEnergia.focus(); }
         searchInputEnergia.addEventListener('input', function() { updateClearBtnVisibilityEnergia(); filterEnergia(); });
@@ -1880,12 +1915,11 @@
 
         function getEnergiaIcon(titulo) {
             var t = titulo.toUpperCase();
-            if (t.includes('MEDICI') || t.includes('MULTIM')) return '<svg class="svg-icon c-energy" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>';
-            if (t.includes('NORMATIVA') || t.includes('SEC')) return '<svg class="svg-icon c-energy" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>';
-            if (t.includes('RIESGO') || t.includes('EMI')) return '<svg class="svg-icon c-energy" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>';
-            if (t.includes('PROTOCOLO') || t.includes('TERRENO')) return '<svg class="svg-icon c-energy" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="3" y1="15" x2="21" y2="15"></line><line x1="9" y1="3" x2="9" y2="21"></line><line x1="15" y1="3" x2="15" y2="21"></line></svg>';
-            if (t.includes('GUION') || t.includes('ASESOR')) return '<svg class="svg-icon c-energy" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>';
-            return '<svg class="svg-icon c-energy" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>';
+            if (t.includes('MEDICION') || t.includes('MULTIMETRO')) return '<svg class="svg-icon c-orange" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>';
+            if (t.includes('NORMATIVA') || t.includes('SEC')) return '<svg class="svg-icon c-orange" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>';
+            if (t.includes('PROTOCOLO') || t.includes('TERRENO')) return '<svg class="svg-icon c-orange" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="3" y1="15" x2="21" y2="15"></line><line x1="9" y1="3" x2="9" y2="21"></line><line x1="15" y1="3" x2="15" y2="21"></line></svg>';
+            if (t.includes('GUION') || t.includes('ASESOR')) return '<svg class="svg-icon c-orange" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>';
+            return '<svg class="svg-icon c-orange" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>';
         }
 
         function renderEnergia(dataArray, words) {
@@ -1908,10 +1942,9 @@
                 if (item.tipo === 'hero') {
                     var heroCard = document.createElement('div');
                     heroCard.className = 'eero-hero-card';
-                    heroCard.style.borderLeftColor = 'var(--energy-primary)';
+                    heroCard.style.borderLeftColor = 'var(--orange-primary)';
                     
-                    // La imagen viene del Excel (D2)
-                    var imgSrc = item.contenido; 
+                    var imgSrc = item.contenido || 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Multimeter_Front_Panel.jpg/400px-Multimeter_Front_Panel.jpg';
                     var imgHtml = '<img src="' + imgSrc + '" class="eero-hero-img" onerror="this.style.display=\'none\'">';
                     
                     var rowsHtml = '';
@@ -1924,11 +1957,13 @@
                             if (line.toUpperCase().includes('MITO') || line.toUpperCase().includes('❌')) { icon = '❌'; }
                             else if (line.toUpperCase().includes('PELIGRO') || line.toUpperCase().includes('⚠️')) { icon = '⚠️'; }
                             else if (line.toUpperCase().includes('REGLA') || line.toUpperCase().includes('🛠️')) { icon = '🛠️'; }
-                            
-                            rowsHtml += '<div style="display:flex; gap:8px; margin-bottom:8px; font-size:0.85rem; line-height:1.3; color:var(--text-main); align-items:flex-start;"><div style="flex-shrink:0;">' + icon + '</div><div style="flex:1;">' + highlightText(line, words) + '</div></div>';
+                            var formattedText = highlightText(line, words);
+                            var parts = formattedText.split(':');
+                            if (parts.length > 1) { formattedText = '<b>' + parts[0] + ':</b>' + parts.slice(1).join(':'); }
+                            rowsHtml += '<div style="display:flex; gap:8px; margin-bottom:8px; font-size:0.85rem; line-height:1.3; color:var(--text-main); align-items:flex-start;"><div style="flex-shrink:0;">' + icon + '</div><div style="flex:1;">' + formattedText + '</div></div>';
                         }
                     }
-                    heroCard.innerHTML = '<div style="display:flex; align-items:flex-start; gap:15px; width:100%;">' + imgHtml + '<div style="flex:1; min-width:0;"><h3 class="eero-hero-title" style="color:var(--energy-primary)">' + highlightText(item.titulo, words) + '</h3>' + rowsHtml + '</div></div>';
+                    heroCard.innerHTML = '<div style="display:flex; align-items:flex-start; gap:15px; width:100%;">' + imgHtml + '<div style="flex:1; min-width:0;"><h3 class="eero-hero-title" style="color:var(--orange-primary)">' + highlightText(item.titulo, words) + '</h3>' + rowsHtml + '</div></div>';
                     frag.appendChild(heroCard); continue;
                 }
 
@@ -1947,12 +1982,7 @@
                 var modalId = item.contenido || ''; 
                 
                 gridCard.innerHTML = '<div class="grid-icon-box">' + iconSvg + '</div><div class="grid-title">' + highlightText(item.titulo, words) + '</div>';
-                
-                if (modalId && modalId.startsWith('modal')) {
-                    gridCard.onclick = function(mid) { return function() { openModal(mid); }; }(modalId);
-                } else {
-                    gridCard.onclick = (function(index) { return function() { openEnergiaDetail(index); }; })(i);
-                }
+                gridCard.onclick = function(mid) { return function() { if(mid) openModal(mid); }; }(modalId);
                 gridContainer.appendChild(gridCard);
             }
 
@@ -1960,16 +1990,71 @@
             resultsEnergiaContainer.appendChild(frag);
         }
 
-        window.openEnergiaDetail = function(index) {
-            var item = globalEnergia[index];
-            if (!item) return;
-            document.getElementById('modalEnergiaTitle').innerText = item.titulo;
-            document.getElementById('modalEnergiaContent').innerHTML = formatRichText(item.descripcion);
-            openModal('modalEnergiaDetail');
-        };
-
         resultsEnergiaContainer.addEventListener('scroll', function() { scrollTopBtnEnergia.style.display = resultsEnergiaContainer.scrollTop > 300 ? 'block' : 'none'; });
         function scrollToTopEnergia() { resultsEnergiaContainer.scrollTo({ top: 0, behavior: 'smooth' }); }
+
+        /* --- EL TRADUCTOR MÁGICO (Para Huawei, Pyme y Energia) --- */
+        function formatRichText(rawText) {
+            if (!rawText) return '';
+            let safeText = rawText.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            safeText = safeText.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
+            const lines = safeText.split('\n');
+            let html = ''; let stepCount = 1; let inStepList = false; let inBulletList = false;
+
+            for (let i = 0; i < lines.length; i++) {
+                let line = lines[i].trim();
+                if (!line) continue;
+
+                if (line.startsWith('[SECCION]')) {
+                    if (inStepList) { html += '</div>'; inStepList = false; stepCount = 1; }
+                    if (inBulletList) { html += '</ul>'; inBulletList = false; }
+                    html += `<h4 class="modal-section-title">${line.replace('[SECCION]', '').trim()}</h4>`;
+                } 
+                else if (line.startsWith('[PASO]')) {
+                    if (inBulletList) { html += '</ul>'; inBulletList = false; }
+                    if (!inStepList) { html += '<div class="step-list">'; inStepList = true; }
+                    let numClass = currentView === 'pyme' ? 'step-num' : 'hw-step-num';
+                    html += `<div class="step-item"><div class="${numClass}">${stepCount++}</div><div class="step-text">${line.replace('[PASO]', '').trim()}</div></div>`;
+                }
+                else if (line.startsWith('[LISTA]')) {
+                    if (inStepList) { html += '</div>'; inStepList = false; stepCount = 1; }
+                    if (!inBulletList) { html += '<ul class="vertical-list">'; inBulletList = true; }
+                    html += `<li>${line.replace('[LISTA]', '').trim()}</li>`;
+                }
+                else if (line.startsWith('[ALERTA]')) {
+                    if (inStepList) { html += '</div>'; inStepList = false; stepCount = 1; }
+                    if (inBulletList) { html += '</ul>'; inBulletList = false; }
+                    html += `<div class="modal-alert"><div>⚠️</div><div>${line.replace('[ALERTA]', '').trim()}</div></div>`;
+                }
+                else if (line.startsWith('[PELIGRO]')) {
+                    if (inStepList) { html += '</div>'; inStepList = false; stepCount = 1; }
+                    if (inBulletList) { html += '</ul>'; inBulletList = false; }
+                    html += `<div class="danger-box">${line.replace('[PELIGRO]', '').trim()}</div>`;
+                }
+                else if (line.startsWith('[INFO]')) {
+                    if (inStepList) { html += '</div>'; inStepList = false; stepCount = 1; }
+                    if (inBulletList) { html += '</ul>'; inBulletList = false; }
+                    html += `<div class="info-box">${line.replace('[INFO]', '').trim()}</div>`;
+                }
+                else if (line.startsWith('[LINK]')) {
+                    if (inStepList) { html += '</div>'; inStepList = false; stepCount = 1; }
+                    if (inBulletList) { html += '</ul>'; inBulletList = false; }
+                    html += `<div style="margin-bottom:10px;"><code style="word-break: break-all; background: #e9ecef; padding: 2px 4px; border-radius: 4px; color: #d32f2f;">${line.replace('[LINK]', '').trim()}</code></div>`;
+                }
+                else {
+                    if (inStepList) {
+                        html += `<div class="step-item"><div style="width:22px; flex-shrink:0;"></div><div class="step-text">${line}</div></div>`;
+                    } else if (inBulletList) {
+                        html += `<li>${line}</li>`;
+                    } else {
+                        html += `<p style="font-size:0.85rem; line-height:1.4; margin-bottom:10px;">${line}</p>`;
+                    }
+                }
+            }
+            if (inStepList) html += '</div>';
+            if (inBulletList) html += '</ul>';
+            return html;
+        }
 
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js').then(function(reg) { reg.update(); }).catch(function(err) { console.log("Error SW:", err); });
