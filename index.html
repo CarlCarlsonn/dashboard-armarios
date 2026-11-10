@@ -17,7 +17,7 @@
             --purple-primary: #8e24aa; --purple-dark: #4a148c;
             --teal-primary: #00897b; --teal-dark: #00695c; 
             --pyme-primary: #3f51b5; --pyme-dark: #283593;
-            --orange-primary: #f57c00; --orange-dark: #e65100; /* NUEVO ENERGIA */
+            --orange-primary: #f57c00; --orange-dark: #e65100;
             --warning-bg: #fff3cd; --warning-border: #ffc107;
             --warning-text: #856404; --btn-setup: #3a3a3a; --btn-red: #d32f2f; --btn-blue: #1976d2;
             --btn-green: #2e7d32; --btn-grey: #757575; --btn-orange: #f57c00; --btn-light-grey: #e0e0e0;
@@ -904,6 +904,30 @@
         </div>
     </div>
 
+    <div class="modal-overlay" id="modalEnergiaRiesgos">
+        <div class="modal-content">
+            <button class="clear-search-btn" style="display:flex; position:absolute; top:15px; right:15px;" onclick="closeModal('modalEnergiaRiesgos')">✖</button>
+            <h3 style="color: var(--orange-primary); border-bottom: 2px solid var(--orange-primary); padding-bottom: 10px;">Riesgos Técnicos</h3>
+            
+            <div class="risk-box" style="background: #ffebee; border-left: 4px solid #d32f2f; padding: 12px; margin-bottom: 12px; border-radius: 4px;">
+                <h4 style="margin: 0 0 5px 0; color: #b71c1c;">Ruido en Datos (EMI)</h4>
+                <p style="margin: 0; font-size: 0.85rem; color: #b71c1c;">La falta de tierra genera latencia y lentitud de navegación percibida por el cliente.</p>
+            </div>
+            
+            <div class="risk-box" style="background: #ffebee; border-left: 4px solid #d32f2f; padding: 12px; margin-bottom: 12px; border-radius: 4px;">
+                <h4 style="margin: 0 0 5px 0; color: #b71c1c;">Daño Físico (ESD)</h4>
+                <p style="margin: 0; font-size: 0.85rem; color: #b71c1c;">La estática acumulada busca salida a través de los chips de comunicación, quemando permanentemente los puertos LAN de la ONT y el Smart TV.</p>
+            </div>
+
+            <div class="risk-box" style="background: #fff3e0; border-left: 4px solid #f57c00; padding: 12px; border-radius: 4px;">
+                <h4 style="margin: 0 0 5px 0; color: #e65100;">Fatiga Térmica</h4>
+                <p style="margin: 0; font-size: 0.85rem; color: #e65100;">Voltajes menores a 200V fuerzan a la fuente a trabajar con mayor amperaje, reduciendo severamente la vida útil del equipo.</p>
+            </div>
+
+            <button class="close-modal-btn" style="background: var(--orange-primary);" onclick="closeModal('modalEnergiaRiesgos')">Entendido</button>
+        </div>
+    </div>
+
     <div class="modal-overlay" id="modalEnergiaProtocolo">
         <div class="modal-content">
             <button class="clear-search-btn" style="display:flex; position:absolute; top:15px; right:15px;" onclick="closeModal('modalEnergiaProtocolo')">✖</button>
@@ -984,8 +1008,7 @@
         var SHEET_CODIGOS_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSKUPJST2SVhD74W0cYfcb7RpBpuWgT5SLqHn7YSJasQcPNE971C5x_mBCDHPKJift7EFrOoYs4VHoq/pub?gid=47179035&single=true&output=csv'; 
         var SHEET_EERO_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSKUPJST2SVhD74W0cYfcb7RpBpuWgT5SLqHn7YSJasQcPNE971C5x_mBCDHPKJift7EFrOoYs4VHoq/pub?gid=469526274&single=true&output=csv';
         var SHEET_PYME_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSKUPJST2SVhD74W0cYfcb7RpBpuWgT5SLqHn7YSJasQcPNE971C5x_mBCDHPKJift7EFrOoYs4VHoq/pub?gid=979773834&single=true&output=csv'; 
-        // AQUI DEBES PEGAR EL NUEVO LINK CSV DE LA PESTAÑA ENERGIA
-        var SHEET_ENERGIA_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSKUPJST2SVhD74W0cYfcb7RpBpuWgT5SLqHn7YSJasQcPNE971C5x_mBCDHPKJift7EFrOoYs4VHoq/pub?gid=123456789&single=true&output=csv'; 
+        var SHEET_ENERGIA_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSKUPJST2SVhD74W0cYfcb7RpBpuWgT5SLqHn7YSJasQcPNE971C5x_mBCDHPKJift7EFrOoYs4VHoq/pub?gid=752503564&single=true&output=csv'; 
 
         var globalData = [], currentFilter = '', currentSearchWords = [];
         var globalCodigos = [], currentFilterCodigos = '';
@@ -1144,6 +1167,7 @@
         document.getElementById('modalPortForwarding').addEventListener('click', function(e) { if (e.target === this) closeModal('modalPortForwarding'); });
         document.getElementById('modalEnergiaMediciones').addEventListener('click', function(e) { if (e.target === this) closeModal('modalEnergiaMediciones'); });
         document.getElementById('modalEnergiaNormativa').addEventListener('click', function(e) { if (e.target === this) closeModal('modalEnergiaNormativa'); });
+        document.getElementById('modalEnergiaRiesgos').addEventListener('click', function(e) { if (e.target === this) closeModal('modalEnergiaRiesgos'); });
         document.getElementById('modalEnergiaProtocolo').addEventListener('click', function(e) { if (e.target === this) closeModal('modalEnergiaProtocolo'); });
         document.getElementById('modalEnergiaGuion').addEventListener('click', function(e) { if (e.target === this) closeModal('modalEnergiaGuion'); });
 
