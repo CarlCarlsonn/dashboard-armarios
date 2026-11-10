@@ -175,6 +175,26 @@
         .pyme-btn-title { color: var(--pyme-primary) !important; }
         .pyme-close-btn { background: var(--pyme-primary) !important; }
         .pyme-modal-img { width: 100%; border-radius: 8px; margin-top: 10px; border: 1px solid rgba(0,0,0,0.1); }
+        .pyme-dynamic-text { font-size: 0.95rem; line-height: 1.6; color: var(--text-main); white-space: pre-wrap; }
+
+        /* ESTILOS CMD GUIDE */
+        .cmd-list { list-style: none; padding: 0; margin: 0; }
+        .cmd-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid #eee; }
+        body.dark-mode .cmd-item { border-bottom-color: #444; }
+        .cmd-item:last-child { border-bottom: none; }
+        .cmd-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
+        .cmd-details { flex: 1; }
+        .cmd-text { font-family: monospace; font-weight: bold; color: #d35400; font-size: 0.9rem; margin-bottom: 4px; display: block; }
+        body.dark-mode .cmd-text { color: #ffb74d; }
+        .cmd-desc { font-size: 0.85rem; color: #333; line-height: 1.3; }
+        body.dark-mode .cmd-desc { color: #ccc; }
+        .tips-box { background: var(--table-bg); border: 1px solid #ddd; border-radius: 8px; padding: 12px; margin-top: 15px; }
+        body.dark-mode .tips-box { border-color: #444; }
+        .tips-box h4 { margin: 0 0 8px 0; font-size: 0.9rem; color: #2c3e50; }
+        body.dark-mode .tips-box h4 { color: #fff; }
+        .tips-box ul { margin: 0; padding-left: 20px; font-size: 0.8rem; color: #444; line-height: 1.4; }
+        body.dark-mode .tips-box ul { color: #bbb; }
+        .tips-box li { margin-bottom: 6px; }
 
         /* TV DECO */
         .guide-modal-title { color: #1976d2 !important; }
@@ -224,9 +244,11 @@
         .eero-btn-title { color: var(--teal-primary) !important; }
         .eero-close-btn { background: var(--teal-primary) !important; }
         .eero-modal-img { width: 100%; border-radius: 8px; margin-top: 10px; border: 1px solid rgba(0,0,0,0.1); }
-        
-        /* ESTILO TEXTO DINÁMICO EN MODAL PYME */
-        .pyme-dynamic-text { font-size: 0.95rem; line-height: 1.6; color: var(--text-main); white-space: pre-wrap; }
+
+        /* MODAL OST MIKROTIK */
+        .ost-list { padding-left: 20px; font-size: 0.85rem; line-height: 1.5; color: var(--text-main); }
+        .ost-list li { margin-bottom: 12px; }
+        .ost-list b { color: var(--pyme-primary); }
     </style>
 </head>
 <body>
@@ -493,13 +515,132 @@
         </div>
     </div>
 
-    <!-- MODAL DINÁMICO PYME (Reemplaza a los anteriores) -->
+    <!-- MODAL DINÁMICO PYME -->
     <div class="modal-overlay" id="modalPymeDetail">
         <div class="modal-content">
             <button class="clear-search-btn" style="display:flex; position:absolute; top:15px; right:15px;" onclick="closeModal('modalPymeDetail')">✖</button>
             <h3 class="pyme-btn-title" id="modalPymeTitle">Título</h3>
             <div class="pyme-dynamic-text" id="modalPymeContent">Contenido...</div>
             <button class="close-modal-btn pyme-close-btn" onclick="closeModal('modalPymeDetail')">Entendido</button>
+        </div>
+    </div>
+
+    <!-- MODAL BOTONES OST -->
+    <div class="modal-overlay" id="modalOstMikrotik">
+        <div class="modal-content">
+            <button class="clear-search-btn" style="display:flex; position:absolute; top:15px; right:15px;" onclick="closeModal('modalOstMikrotik')">✖</button>
+            <h3 class="pyme-btn-title">Acciones en OST para Mikrotik</h3>
+            <ul class="ost-list">
+                <li><b>📶 WiFi:</b> Permite habilitar o desactivar la interfaz wifi del mikrotik. Además de configurar el SSID Y Pass.</li>
+                <li><b>📤 Enviar Firmware:</b> Realiza la carga de firmware en el mikrotik. Esto puede tardar hasta 3 minutos.</li>
+                <li><b>🔄 Actualizar Firmware:</b> Instala el firmware que se cargó en el mikrotik con el botón "Enviar Firmware".</li>
+                <li><b>🌐 Ping Internet:</b> Permite realizar ping hacia internet ingresando una IP o URL sin http. Ej: 8.8.8.8, gob.cl. Para ver el resultado se debe generar un nuevo reporte.</li>
+                <li><b>📡 Ping SBC y aprov:</b> Permite realizar un ping hacia el SBC de la zonal y además realiza un ping hacia el aprovisionador IPBXV.</li>
+                <li><b>⚙️ Setear Option43 Unifi:</b> Corrige el valor del Option43, para que así la antena Unifi llegue al Controller. OST alerta con error si esta con un valor incorrecto.</li>
+                <li><b>🔌 Reinicio:</b> Reinicia el equipo Mikrotik.</li>
+            </ul>
+            <button class="close-modal-btn pyme-close-btn" onclick="closeModal('modalOstMikrotik')">Entendido</button>
+        </div>
+    </div>
+
+    <!-- MODAL GUÍA CMD -->
+    <div class="modal-overlay" id="modalCmdGuide">
+        <div class="modal-content">
+            <button class="clear-search-btn" style="display:flex; position:absolute; top:15px; right:15px;" onclick="closeModal('modalCmdGuide')">✖</button>
+            <h3 class="pyme-btn-title">GUÍA VISUAL DE COMANDOS DE RED (CMD)</h3>
+            <span class="subtitle">Herramientas de diagnóstico de conectividad, lentitud y pérdida de paquetes</span>
+
+            <ul class="cmd-list">
+                <li class="cmd-item">
+                    <div class="cmd-icon">📶</div>
+                    <div class="cmd-details">
+                        <span class="cmd-text">ping 8.8.8.8 -t</span>
+                        <div class="cmd-desc">Envía paquetes sin parar para ver microcortes y estabilidad general.</div>
+                    </div>
+                </li>
+                <li class="cmd-item">
+                    <div class="cmd-icon">⏱️</div>
+                    <div class="cmd-details">
+                        <span class="cmd-text">ping -n 100 8.8.8.8</span>
+                        <div class="cmd-desc">Envía exactamente 100 paquetes y da un porcentaje exacto de pérdidas.</div>
+                    </div>
+                </li>
+                <li class="cmd-item">
+                    <div class="cmd-icon">🗺️</div>
+                    <div class="cmd-details">
+                        <span class="cmd-text">tracert 8.8.8.8</span>
+                        <div class="cmd-desc">Muestra el camino y los saltos que da la conexión hasta llegar al destino.</div>
+                    </div>
+                </li>
+                <li class="cmd-item">
+                    <div class="cmd-icon">🎯</div>
+                    <div class="cmd-details">
+                        <span class="cmd-text">pathping 8.8.8.8</span>
+                        <div class="cmd-desc">Muestra en qué salto de red exacto se están perdiendo los paquetes.</div>
+                    </div>
+                </li>
+                <li class="cmd-item">
+                    <div class="cmd-icon">📡</div>
+                    <div class="cmd-details">
+                        <span class="cmd-text">netsh wlan show interfaces</span>
+                        <div class="cmd-desc">Muestra calidad de la señal Wi-Fi (dBm) y velocidad actual de enlace.</div>
+                    </div>
+                </li>
+                <li class="cmd-item">
+                    <div class="cmd-icon">📦</div>
+                    <div class="cmd-details">
+                        <span class="cmd-text">winget install Ookla.Speedtest</span>
+                        <div class="cmd-desc">Instala la utilidad oficial de Ookla para medir velocidad desde el CMD.</div>
+                    </div>
+                </li>
+                <li class="cmd-item">
+                    <div class="cmd-icon">🚀</div>
+                    <div class="cmd-details">
+                        <span class="cmd-text">speedtest</span>
+                        <div class="cmd-desc">Mide bajada, subida, latencia y pérdida de paquetes. Escribe 'YES' la primera vez que lo ejecutes.</div>
+                    </div>
+                </li>
+                <li class="cmd-item">
+                    <div class="cmd-icon">💻</div>
+                    <div class="cmd-details">
+                        <span class="cmd-text">ipconfig /all</span>
+                        <div class="cmd-desc">Muestra toda la configuración de red (IP, puerta de enlace y servidores DNS).</div>
+                    </div>
+                </li>
+                <li class="cmd-item">
+                    <div class="cmd-icon">🔍</div>
+                    <div class="cmd-details">
+                        <span class="cmd-text">nslookup google.com</span>
+                        <div class="cmd-desc">Verifica si los servidores DNS están respondiendo de forma adecuada.</div>
+                    </div>
+                </li>
+                <li class="cmd-item">
+                    <div class="cmd-icon">📊</div>
+                    <div class="cmd-details">
+                        <span class="cmd-text">netstat -e</span>
+                        <div class="cmd-desc">Muestra estadísticas recibidas, ideal para ver errores de transmisión de datos.</div>
+                    </div>
+                </li>
+                <li class="cmd-item">
+                    <div class="cmd-icon">🧹</div>
+                    <div class="cmd-details">
+                        <span class="cmd-text">ipconfig /flushdns</span>
+                        <div class="cmd-desc">Borra la caché de DNS si hay problemas al cargar o resolver páginas.</div>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="tips-box">
+                <h4>AYUDA MEMORIA / CONSEJOS ÚTILES</h4>
+                <ul>
+                    <li><b>Ctrl + C:</b> Detener cualquier prueba en curso (como el ping continuo) y ver el resumen final.</li>
+                    <li><b>Probar con tu Gateway</b> (ej. ping 192.168.1.1) para saber si la falla es interna (Wi-Fi/router) o externa (Internet).</li>
+                    <li><b>Guardar registro:</b> Agrega '> red.txt' al final de cualquier comando para guardar los resultados en un archivo.</li>
+                    <li><b>Ejecutar como Administrador</b> si algún comando da error o deniega el acceso.</li>
+                </ul>
+            </div>
+
+            <button class="close-modal-btn pyme-close-btn" onclick="closeModal('modalCmdGuide')">Entendido</button>
         </div>
     </div>
 
@@ -659,6 +800,8 @@
         document.getElementById('modalSwitch').addEventListener('click', function(e) { if (e.target === this) closeModal('modalSwitch'); });
         document.getElementById('modalTopologia').addEventListener('click', function(e) { if (e.target === this) closeModal('modalTopologia'); });
         document.getElementById('modalPymeDetail').addEventListener('click', function(e) { if (e.target === this) closeModal('modalPymeDetail'); });
+        document.getElementById('modalOstMikrotik').addEventListener('click', function(e) { if (e.target === this) closeModal('modalOstMikrotik'); });
+        document.getElementById('modalCmdGuide').addEventListener('click', function(e) { if (e.target === this) closeModal('modalCmdGuide'); });
 
         function escapeHtml(str) { return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;'); }
         function safeUrl(raw) { if (!raw) return ''; try { var u = new URL(String(raw).trim()); if (u.protocol === 'http:' || u.protocol === 'https:') return u.href; } catch (_) { } return ''; }
@@ -1043,6 +1186,7 @@
                 if (item.tipo === 'hero') {
                     var heroCard = document.createElement('div');
                     heroCard.className = 'hero-card';
+                    
                     var imgHtml = item.contenido ? '<img src="' + item.contenido + '" class="hero-img" onerror="this.style.display=\'none\'">' : '';
                     var rowsHtml = '';
                     if (item.descripcion) {
@@ -1291,8 +1435,10 @@
 
         function getPymeIcon(titulo) {
             var t = titulo.toUpperCase();
-            if (t.includes('PTO') || t.includes('DMZ') || t.includes('PUERTO')) return '<svg class="svg-icon c-blue" viewBox="0 0 24 24"><rect x="2" y="8" width="20" height="8" rx="2"/><path d="M6 16v4 M10 16v4 M14 16v4 M18 16v4"/></svg>';
-            if (t.includes('YEALINK') || t.includes('TELEFONO') || t.includes('SIP')) return '<svg class="svg-icon c-green" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>';
+            if (t.includes('PTO') || t.includes('DMZ') || t.includes('PUERTO')) return '<svg class="svg-icon c-pyme" viewBox="0 0 24 24"><rect x="2" y="8" width="20" height="8" rx="2"/><path d="M6 16v4 M10 16v4 M14 16v4 M18 16v4"/></svg>';
+            if (t.includes('YEALINK') || t.includes('TELEFONO') || t.includes('SIP')) return '<svg class="svg-icon c-pyme" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>';
+            if (t.includes('CMD') || t.includes('COMANDO')) return '<svg class="svg-icon c-pyme" viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>';
+            if (t.includes('OST') || t.includes('BOTONES')) return '<svg class="svg-icon c-pyme" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>';
             return '<svg class="svg-icon c-pyme" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>';
         }
 
@@ -1328,7 +1474,11 @@
                             var line = lines[j].trim();
                             if (!line) continue;
                             var icon = '💡';
+                            if (line.toUpperCase().includes('NO COMPATIBLES') || line.toUpperCase().includes('❌')) { icon = '❌'; }
+                            else if (line.toUpperCase().includes('L009') || line.toUpperCase().includes('2011')) { icon = '📌'; }
                             var formattedText = highlightText(line, words);
+                            var parts = formattedText.split(':');
+                            if (parts.length > 1) { formattedText = '<b>' + parts[0] + ':</b>' + parts.slice(1).join(':'); }
                             rowsHtml += '<div style="display:flex; gap:8px; margin-bottom:8px; font-size:0.85rem; line-height:1.3; color:var(--text-main); align-items:flex-start;"><div style="flex-shrink:0;">' + icon + '</div><div style="flex:1;">' + formattedText + '</div></div>';
                         }
                     }
@@ -1348,11 +1498,10 @@
                 var gridCard = document.createElement('div');
                 gridCard.className = 'grid-card';
                 var iconSvg = getPymeIcon(item.titulo);
+                var modalId = item.contenido || ''; 
                 
                 gridCard.innerHTML = '<div class="grid-icon-box">' + iconSvg + '</div><div class="grid-title">' + highlightText(item.titulo, words) + '</div>';
-                
-                // Aquí llamamos a la función dinámica que abrirá el modal con los datos de la fila
-                gridCard.onclick = (function(index) { return function() { openPymeDetail(index); }; })(i);
+                gridCard.onclick = function(mid) { return function() { if(mid) openModal(mid); }; }(modalId);
                 gridContainer.appendChild(gridCard);
             }
 
@@ -1360,33 +1509,9 @@
             resultsPymeContainer.appendChild(frag);
         }
 
-        window.openPymeDetail = function(index) {
-            var item = globalPyme[index];
-            if (!item) return;
-            
-            // Título dinámico
-            document.getElementById('modalPymeTitle').innerText = item.titulo;
-            
-            // Contenido dinámico (de la columna E "Descripción")
-            var textContent = item.descripcion ? item.descripcion.replace(/\n/g, '<br>') : 'Sin información detallada.';
-            
-            // Si el contenido es una URL de imagen, mostramos la imagen, si no, mostramos el texto
-            var modalContent = document.getElementById('modalPymeContent');
-            if (textContent.startsWith('http') && (textContent.endsWith('.png') || textContent.endsWith('.jpg') || textContent.endsWith('.jpeg'))) {
-                modalContent.innerHTML = '<img src="' + textContent + '" class="pyme-modal-img" alt="Imagen PYME">';
-            } else {
-                modalContent.innerHTML = textContent;
-            }
-            
-            openModal('modalPymeDetail');
-        };
-
         resultsPymeContainer.addEventListener('scroll', function() { scrollTopBtnPyme.style.display = resultsPymeContainer.scrollTop > 300 ? 'block' : 'none'; });
         function scrollToTopPyme() { resultsPymeContainer.scrollTo({ top: 0, behavior: 'smooth' }); }
 
-        /* ---------------------------------------------------- */
-        /* INICIALIZACIÓN                                       */
-        /* ---------------------------------------------------- */
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js').then(function(reg) { reg.update(); }).catch(function(err) { console.log("Error SW:", err); });
         }
