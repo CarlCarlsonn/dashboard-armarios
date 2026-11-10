@@ -175,7 +175,30 @@
         .pyme-btn-title { color: var(--pyme-primary) !important; }
         .pyme-close-btn { background: var(--pyme-primary) !important; }
         .pyme-modal-img { width: 100%; border-radius: 8px; margin-top: 10px; border: 1px solid rgba(0,0,0,0.1); }
-        .pyme-dynamic-text { font-size: 0.95rem; line-height: 1.6; color: var(--text-main); white-space: pre-wrap; }
+        
+        /* NUEVOS ESTILOS ESTRUCTURADOS PARA PYME */
+        .modal-subtitle { font-size: 0.85rem; text-align: center; color: #666; margin-bottom: 20px; display: block; }
+        .modal-alert { background: var(--warning-bg); border-left: 6px solid var(--warning-border); color: var(--warning-text); padding: 12px; border-radius: 8px; margin-bottom: 20px; display: flex; gap: 10px; align-items: flex-start; font-size: 0.85rem; font-weight: 600; line-height: 1.4; }
+        .modal-section-title { font-weight: 700; font-size: 0.95rem; color: var(--text-main); margin: 20px 0 10px 0; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        body.dark-mode .modal-section-title { border-bottom-color: #444; }
+        
+        .step-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 15px; }
+        .step-item { display: flex; gap: 10px; align-items: flex-start; }
+        .step-num { background: var(--pyme-primary); color: white; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.75rem; flex-shrink: 0; margin-top: 2px; }
+        .step-text { font-size: 0.85rem; line-height: 1.4; color: var(--text-main); }
+        .step-text b { color: var(--text-main); }
+
+        .vertical-list { list-style: none; padding: 0; margin: 0 0 15px 0; background: var(--table-bg); border: 1px solid #eee; border-radius: 8px; padding: 12px; }
+        body.dark-mode .vertical-list { border-color: #444; }
+        .vertical-list li { font-size: 0.85rem; color: var(--text-main); margin-bottom: 8px; padding-left: 20px; position: relative; line-height: 1.4; }
+        .vertical-list li:last-child { margin-bottom: 0; }
+        .vertical-list li::before { content: "•"; color: var(--pyme-primary); font-size: 1.2rem; position: absolute; left: 5px; top: -2px; font-weight: bold; }
+        .vertical-list code { background: #e9ecef; padding: 2px 4px; border-radius: 4px; font-family: monospace; color: #d32f2f; word-break: break-all; display: inline-block; max-width: 100%; }
+        body.dark-mode .vertical-list code { background: #444; color: #ef5350; }
+        
+        .danger-box { background: var(--danger-bg); border-left: 4px solid var(--danger-color); padding: 12px; border-radius: 4px; font-size: 0.85rem; color: var(--danger-color); margin-bottom: 15px; line-height: 1.4; }
+        .info-box { background: #e3f2fd; border-left: 4px solid #1976d2; padding: 12px; border-radius: 4px; font-size: 0.85rem; color: #0d47a1; margin-bottom: 15px; line-height: 1.4; }
+        body.dark-mode .info-box { background: #1a237e; color: #e3f2fd; border-color: #3b82f6; }
 
         /* ESTILOS CMD GUIDE */
         .cmd-list { list-style: none; padding: 0; margin: 0; }
@@ -186,21 +209,18 @@
         .cmd-details { flex: 1; }
         .cmd-text { font-family: monospace; font-weight: bold; color: #d35400; font-size: 0.9rem; margin-bottom: 4px; display: block; }
         body.dark-mode .cmd-text { color: #ffb74d; }
-        .cmd-desc { font-size: 0.85rem; color: #333; line-height: 1.3; }
-        body.dark-mode .cmd-desc { color: #ccc; }
+        .cmd-desc { font-size: 0.85rem; color: var(--text-main); line-height: 1.3; }
         .tips-box { background: var(--table-bg); border: 1px solid #ddd; border-radius: 8px; padding: 12px; margin-top: 15px; }
         body.dark-mode .tips-box { border-color: #444; }
-        .tips-box h4 { margin: 0 0 8px 0; font-size: 0.9rem; color: #2c3e50; }
-        body.dark-mode .tips-box h4 { color: #fff; }
-        .tips-box ul { margin: 0; padding-left: 20px; font-size: 0.8rem; color: #444; line-height: 1.4; }
-        body.dark-mode .tips-box ul { color: #bbb; }
+        .tips-box h4 { margin: 0 0 8px 0; font-size: 0.9rem; color: var(--text-main); }
+        .tips-box ul { margin: 0; padding-left: 20px; font-size: 0.8rem; color: var(--text-main); line-height: 1.4; }
         .tips-box li { margin-bottom: 6px; }
 
         /* ESTILOS PORT FORWARDING */
         .pf-step { display: flex; gap: 10px; margin-bottom: 12px; font-size: 0.85rem; line-height: 1.4; }
         .pf-step-num { background: var(--pyme-primary); color: white; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; font-size: 0.75rem; }
-        .pf-form-box { background: #f8f9fa; border: 1px solid #ddd; border-radius: 8px; padding: 12px; margin-bottom: 15px; }
-        body.dark-mode .pf-form-box { background: #2a2a2a; border-color: #444; }
+        .pf-form-box { background: var(--table-bg); border: 1px solid #ddd; border-radius: 8px; padding: 12px; margin-bottom: 15px; }
+        body.dark-mode .pf-form-box { border-color: #444; }
         .pf-form-box table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
         .pf-form-box th { background: #e9ecef; padding: 6px; text-align: left; border-bottom: 1px solid #ddd; color: #333; }
         body.dark-mode .pf-form-box th { background: #333; border-color: #444; color: #eee; }
@@ -561,7 +581,7 @@
         <div class="modal-content">
             <button class="clear-search-btn" style="display:flex; position:absolute; top:15px; right:15px;" onclick="closeModal('modalCmdGuide')">✖</button>
             <h3 class="pyme-btn-title">GUÍA VISUAL DE COMANDOS DE RED (CMD)</h3>
-            <span class="subtitle">Herramientas de diagnóstico de conectividad, lentitud y pérdida de paquetes</span>
+            <span class="modal-subtitle">Herramientas de diagnóstico de conectividad, lentitud y pérdida de paquetes</span>
 
             <ul class="cmd-list">
                 <li class="cmd-item">
@@ -662,38 +682,23 @@
         <div class="modal-content">
             <button class="clear-search-btn" style="display:flex; position:absolute; top:15px; right:15px;" onclick="closeModal('modalPortForwarding')">✖</button>
             <h3 class="pyme-btn-title">PORT FORWARDING (Redirección de Puertos)</h3>
-            <p style="font-size:0.85rem; color:var(--text-muted); text-align:center; margin-bottom:15px;">Permite redirigir puertos de una IP pública a una IP privada (LAN) en la ONT.</p>
+            <span class="modal-subtitle">Permite redirigir puertos de una IP pública a una IP privada (LAN) en la ONT.</span>
 
-            <div class="warning-banner" style="margin-bottom:15px; padding:10px;">
+            <div class="modal-alert">
                 <div>⚠️</div>
-                <p style="margin:0; font-size:0.85rem; color:var(--text-main);">
-                    <b>LÍMITES:</b> Zhone (Máx 8 reglas) / Fiberhome (Máx 5 reglas).
-                </p>
+                <div><b>LÍMITES:</b> Zhone (Máx 8 reglas) / Fiberhome (Máx 5 reglas).</div>
             </div>
 
-            <h4 style="margin: 15px 0 10px 0; font-size: 0.95rem;">📝 PASO A PASO EN OST</h4>
-            <div class="pf-step">
-                <div class="pf-step-num">1</div>
-                <div>Seleccionar ONT -> Ir a <b>Acciones</b> -> Clic en <b>[Port Forwarding]</b>.</div>
-            </div>
-            <div class="pf-step">
-                <div class="pf-step-num">2</div>
-                <div>Presionar en la flecha de <b>[Agregar]</b> para desplegar el formulario.</div>
-            </div>
-            <div class="pf-step">
-                <div class="pf-step-num">3</div>
-                <div>Completar los campos (ver detalle abajo).</div>
-            </div>
-            <div class="pf-step">
-                <div class="pf-step-num">4</div>
-                <div>Hacer clic en <b>[Agregar Temporalmente]</b>. Repetir si hay más reglas.</div>
-            </div>
-            <div class="pf-step">
-                <div class="pf-step-num">5</div>
-                <div>Al finalizar, presionar <b>[Agregar]</b> (Guardar) y confirmar con <b>OK</b> en el mensaje de advertencia.</div>
+            <h4 class="modal-section-title">📝 PASO A PASO EN OST</h4>
+            <div class="step-list">
+                <div class="step-item"><div class="step-num">1</div><div class="step-text">Seleccionar ONT -> Ir a <b>Acciones</b> -> Clic en <b>[Port Forwarding]</b>.</div></div>
+                <div class="step-item"><div class="step-num">2</div><div class="step-text">Presionar en la flecha de <b>[Agregar]</b> para desplegar el formulario.</div></div>
+                <div class="step-item"><div class="step-num">3</div><div class="step-text">Completar los campos (ver detalle abajo).</div></div>
+                <div class="step-item"><div class="step-num">4</div><div class="step-text">Hacer clic en <b>[Agregar Temporalmente]</b>. Repetir si hay más reglas.</div></div>
+                <div class="step-item"><div class="step-num">5</div><div class="step-text">Al finalizar, presionar <b>[Agregar]</b> (Guardar) y confirmar con <b>OK</b> en el mensaje de advertencia.</div></div>
             </div>
 
-            <h4 style="margin: 15px 0 10px 0; font-size: 0.95rem;">📋 CAMPOS DEL FORMULARIO</h4>
+            <h4 class="modal-section-title">📋 CAMPOS DEL FORMULARIO</h4>
             <div class="pf-form-box">
                 <table>
                     <tr><th>Name</th><td>Nombre de la regla (ej: camara1).</td></tr>
@@ -711,8 +716,8 @@
                 • IP asignada: (La definida en el paso anterior).
             </div>
 
-            <h4 style="margin: 15px 0 10px 0; font-size: 0.95rem;">📌 EJEMPLOS</h4>
-            <div style="font-size: 0.85rem; line-height: 1.4; margin-bottom: 15px;">
+            <h4 class="modal-section-title">📌 EJEMPLOS</h4>
+            <div style="font-size: 0.85rem; line-height: 1.4; margin-bottom: 15px; color:var(--text-main);">
                 <p><b>1 Puerto (Cámara 5000):</b><br>
                 Source Start: <code>5000</code> / Source End: <code>5000</code><br>
                 Dest Start: <code>5000</code> / Dest End: <code>5000</code></p>
@@ -721,10 +726,10 @@
                 <i>*El cliente debe configurar el mismo rango en su equipo.</i></p>
             </div>
 
-            <h4 style="margin: 15px 0 10px 0; font-size: 0.95rem;">🔄 OTRAS ACCIONES</h4>
+            <h4 class="modal-section-title">🔄 OTRAS ACCIONES</h4>
             <ul style="font-size: 0.85rem; color: var(--text-main); padding-left: 20px; margin-bottom: 20px;">
-                <li><b>Aplicar Reglas por Defecto:</b> Clic en `[Aplicar Reglas Por Defecto]` -> `[Aplicar]` -> Confirmar con `OK`.</li>
-                <li><b>Eliminar una regla:</b> Marcar la casilla de la regla -> `[Eliminar]` -> Confirmar con `Continuar`.</li>
+                <li><b>Aplicar Reglas por Defecto:</b> Clic en <code>[Aplicar Reglas Por Defecto]</code> -> <code>[Aplicar]</code> -> Confirmar con <code>OK</code>.</li>
+                <li><b>Eliminar una regla:</b> Marcar la casilla de la regla -> <code>[Eliminar]</code> -> Confirmar con <code>Continuar</code>.</li>
             </ul>
 
             <button class="close-modal-btn pyme-close-btn" onclick="closeModal('modalPortForwarding')">Entendido</button>
@@ -1268,7 +1273,6 @@
                 if (item.tipo === 'hero') {
                     var heroCard = document.createElement('div');
                     heroCard.className = 'hero-card';
-                    
                     var imgHtml = item.contenido ? '<img src="' + item.contenido + '" class="hero-img" onerror="this.style.display=\'none\'">' : '';
                     var rowsHtml = '';
                     if (item.descripcion) {
@@ -1581,7 +1585,6 @@
                 
                 gridCard.innerHTML = '<div class="grid-icon-box">' + iconSvg + '</div><div class="grid-title">' + highlightText(item.titulo, words) + '</div>';
                 
-                // Lógica híbrida: Si el contenido es un modalId (ej. modalPortForwarding), abre ese. Si no, abre el dinámico.
                 if (modalId && modalId !== '(Déjalo vacío)' && !modalId.startsWith('http')) {
                     gridCard.onclick = function(mid) { return function() { openModal(mid); }; }(modalId);
                 } else {
@@ -1595,7 +1598,75 @@
             resultsPymeContainer.appendChild(frag);
         }
 
-        // Modal Dinámico (Lee el texto de la Columna E)
+        /* NUEVO INTÉRPRETE DE ETIQUETAS PARA PYME */
+        function formatPymeText(rawText) {
+            if (!rawText) return 'Sin información detallada.';
+            
+            let safeText = escapeHtml(rawText);
+            safeText = safeText.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
+            
+            const lines = safeText.split('\n');
+            let html = '';
+            let stepCount = 1;
+            let inStepList = false;
+            let inBulletList = false;
+
+            for (let i = 0; i < lines.length; i++) {
+                let line = lines[i].trim();
+                if (!line) continue;
+
+                if (line.startsWith('[SECCION]')) {
+                    if (inStepList) { html += '</div>'; inStepList = false; stepCount = 1; }
+                    if (inBulletList) { html += '</ul>'; inBulletList = false; }
+                    html += `<h4 class="modal-section-title">${line.replace('[SECCION]', '').trim()}</h4>`;
+                } 
+                else if (line.startsWith('[PASO]')) {
+                    if (inBulletList) { html += '</ul>'; inBulletList = false; }
+                    if (!inStepList) { html += '<div class="step-list">'; inStepList = true; }
+                    html += `<div class="step-item"><div class="step-num">${stepCount++}</div><div class="step-text">${line.replace('[PASO]', '').trim()}</div></div>`;
+                }
+                else if (line.startsWith('[LISTA]')) {
+                    if (inStepList) { html += '</div>'; inStepList = false; stepCount = 1; }
+                    if (!inBulletList) { html += '<ul class="vertical-list">'; inBulletList = true; }
+                    html += `<li>${line.replace('[LISTA]', '').trim()}</li>`;
+                }
+                else if (line.startsWith('[ALERTA]')) {
+                    if (inStepList) { html += '</div>'; inStepList = false; stepCount = 1; }
+                    if (inBulletList) { html += '</ul>'; inBulletList = false; }
+                    html += `<div class="modal-alert"><div>💡</div><div>${line.replace('[ALERTA]', '').trim()}</div></div>`;
+                }
+                else if (line.startsWith('[PELIGRO]')) {
+                    if (inStepList) { html += '</div>'; inStepList = false; stepCount = 1; }
+                    if (inBulletList) { html += '</ul>'; inBulletList = false; }
+                    html += `<div class="danger-box">${line.replace('[PELIGRO]', '').trim()}</div>`;
+                }
+                else if (line.startsWith('[INFO]')) {
+                    if (inStepList) { html += '</div>'; inStepList = false; stepCount = 1; }
+                    if (inBulletList) { html += '</ul>'; inBulletList = false; }
+                    html += `<div class="info-box">${line.replace('[INFO]', '').trim()}</div>`;
+                }
+                else if (line.startsWith('[LINK]')) {
+                    if (inStepList) { html += '</div>'; inStepList = false; stepCount = 1; }
+                    if (inBulletList) { html += '</ul>'; inBulletList = false; }
+                    html += `<div style="margin-bottom:10px;"><code style="word-break: break-all;">${line.replace('[LINK]', '').trim()}</code></div>`;
+                }
+                else {
+                    if (inStepList) {
+                        html += `<div class="step-item"><div style="width:22px; flex-shrink:0;"></div><div class="step-text">${line}</div></div>`;
+                    } else if (inBulletList) {
+                        html += `<li>${line}</li>`;
+                    } else {
+                        html += `<p style="font-size:0.85rem; line-height:1.4; margin-bottom:10px; color:var(--text-main);">${line}</p>`;
+                    }
+                }
+            }
+
+            if (inStepList) html += '</div>';
+            if (inBulletList) html += '</ul>';
+
+            return html;
+        }
+
         window.openPymeDetail = function(index) {
             var item = globalPyme[index];
             if (!item) return;
@@ -1603,17 +1674,9 @@
             document.getElementById('modalPymeTitle').innerText = item.titulo;
             
             var textContent = item.descripcion ? item.descripcion : 'Sin información detallada.';
+            var formattedHTML = formatPymeText(textContent);
             
-            textContent = textContent.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
-            textContent = textContent.replace(/\n/g, '<br>');
-            
-            var modalContent = document.getElementById('modalPymeContent');
-            
-            if (textContent.startsWith('http') && (textContent.endsWith('.png') || textContent.endsWith('.jpg') || textContent.endsWith('.jpeg'))) {
-                modalContent.innerHTML = '<img src="' + textContent + '" class="pyme-modal-img" alt="Imagen PYME">';
-            } else {
-                modalContent.innerHTML = textContent;
-            }
+            document.getElementById('modalPymeContent').innerHTML = formattedHTML;
             
             openModal('modalPymeDetail');
         };
