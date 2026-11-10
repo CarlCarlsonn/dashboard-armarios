@@ -570,6 +570,191 @@
         </div>
     </div>
 
+    <!-- MODALES FIJOS PYME (OST, CMD, PORT FORWARDING) -->
+    <div class="modal-overlay" id="modalOstMikrotik">
+        <div class="modal-content">
+            <button class="clear-search-btn" style="display:flex; position:absolute; top:15px; right:15px;" onclick="closeModal('modalOstMikrotik')">✖</button>
+            <h3 class="pyme-btn-title">Acciones en OST para Mikrotik</h3>
+            <ul class="ost-list">
+                <li><b>📶 WiFi:</b> Permite habilitar o desactivar la interfaz wifi del mikrotik. Además de configurar el SSID Y Pass.</li>
+                <li><b>📤 Enviar Firmware:</b> Realiza la carga de firmware en el mikrotik. Esto puede tardar hasta 3 minutos.</li>
+                <li><b>🔄 Actualizar Firmware:</b> Instala el firmware que se cargó en el mikrotik con el botón "Enviar Firmware".</li>
+                <li><b>🌐 Ping Internet:</b> Permite realizar ping hacia internet ingresando una IP o URL sin http. Ej: 8.8.8.8, gob.cl. Para ver el resultado se debe generar un nuevo reporte.</li>
+                <li><b>📡 Ping SBC y aprov:</b> Permite realizar un ping hacia el SBC de la zonal y además realiza un ping hacia el aprovisionador IPBXV.</li>
+                <li><b>⚙️ Setear Option43 Unifi:</b> Corrige el valor del Option43, para que así la antena Unifi llegue al Controller. OST alerta con error si esta con un valor incorrecto.</li>
+                <li><b>🔌 Reinicio:</b> Reinicia el equipo Mikrotik.</li>
+            </ul>
+            <button class="close-modal-btn pyme-close-btn" onclick="closeModal('modalOstMikrotik')">Entendido</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modalCmdGuide">
+        <div class="modal-content">
+            <button class="clear-search-btn" style="display:flex; position:absolute; top:15px; right:15px;" onclick="closeModal('modalCmdGuide')">✖</button>
+            <h3 class="pyme-btn-title">GUÍA VISUAL DE COMANDOS DE RED (CMD)</h3>
+            <span class="modal-subtitle">Herramientas de diagnóstico de conectividad, lentitud y pérdida de paquetes</span>
+
+            <div class="modal-alert" style="margin-top: 15px; margin-bottom: 20px;">
+                <div>💻</div>
+                <div>
+                    <b>¿CÓMO ABRIR EL CMD?</b><br>
+                    Presiona las teclas <b>Win + R</b> en tu teclado, escribe <b>cmd</b> y presiona <b>Enter</b>. 
+                    <br><i>(También puedes buscar "cmd" en el menú de inicio de Windows).</i>
+                </div>
+            </div>
+
+            <ul class="cmd-list">
+                <li class="cmd-item">
+                    <div class="cmd-icon">📶</div>
+                    <div class="cmd-details">
+                        <span class="cmd-text">ping 8.8.8.8 -t</span>
+                        <div class="cmd-desc">Envía paquetes sin parar para ver microcortes y estabilidad general.</div>
+                    </div>
+                </li>
+                <li class="cmd-item">
+                    <div class="cmd-icon">⏱️</div>
+                    <div class="cmd-details">
+                        <span class="cmd-text">ping -n 100 8.8.8.8</span>
+                        <div class="cmd-desc">Envía exactamente 100 paquetes y da un porcentaje exacto de pérdidas.</div>
+                    </div>
+                </li>
+                <li class="cmd-item">
+                    <div class="cmd-icon">🗺️</div>
+                    <div class="cmd-details">
+                        <span class="cmd-text">tracert 8.8.8.8</span>
+                        <div class="cmd-desc">Muestra el camino y los saltos que da la conexión hasta llegar al destino.</div>
+                    </div>
+                </li>
+                <li class="cmd-item">
+                    <div class="cmd-icon">🎯</div>
+                    <div class="cmd-details">
+                        <span class="cmd-text">pathping 8.8.8.8</span>
+                        <div class="cmd-desc">Muestra en qué salto de red exacto se están perdiendo los paquetes.</div>
+                    </div>
+                </li>
+                <li class="cmd-item">
+                    <div class="cmd-icon">📡</div>
+                    <div class="cmd-details">
+                        <span class="cmd-text">netsh wlan show interfaces</span>
+                        <div class="cmd-desc">Muestra calidad de la señal Wi-Fi (dBm) y velocidad actual de enlace.</div>
+                    </div>
+                </li>
+                <li class="cmd-item">
+                    <div class="cmd-icon">📦</div>
+                    <div class="cmd-details">
+                        <span class="cmd-text">winget install Ookla.Speedtest</span>
+                        <div class="cmd-desc">Instala la utilidad oficial de Ookla para medir velocidad desde el CMD.</div>
+                    </div>
+                </li>
+                <li class="cmd-item">
+                    <div class="cmd-icon">🚀</div>
+                    <div class="cmd-details">
+                        <span class="cmd-text">speedtest</span>
+                        <div class="cmd-desc">Mide bajada, subida, latencia y pérdida de paquetes. Escribe 'YES' la primera vez que lo ejecutes.</div>
+                    </div>
+                </li>
+                <li class="cmd-item">
+                    <div class="cmd-icon">💻</div>
+                    <div class="cmd-details">
+                        <span class="cmd-text">ipconfig /all</span>
+                        <div class="cmd-desc">Muestra toda la configuración de red (IP, puerta de enlace y servidores DNS).</div>
+                    </div>
+                </li>
+                <li class="cmd-item">
+                    <div class="cmd-icon">🔍</div>
+                    <div class="cmd-details">
+                        <span class="cmd-text">nslookup google.com</span>
+                        <div class="cmd-desc">Verifica si los servidores DNS están respondiendo de forma adecuada.</div>
+                    </div>
+                </li>
+                <li class="cmd-item">
+                    <div class="cmd-icon">📊</div>
+                    <div class="cmd-details">
+                        <span class="cmd-text">netstat -e</span>
+                        <div class="cmd-desc">Muestra estadísticas recibidas, ideal para ver errores de transmisión de datos.</div>
+                    </div>
+                </li>
+                <li class="cmd-item">
+                    <div class="cmd-icon">🧹</div>
+                    <div class="cmd-details">
+                        <span class="cmd-text">ipconfig /flushdns</span>
+                        <div class="cmd-desc">Borra la caché de DNS si hay problemas al cargar o resolver páginas.</div>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="tips-box">
+                <h4>AYUDA MEMORIA / CONSEJOS ÚTILES</h4>
+                <ul>
+                    <li><b>Ctrl + C:</b> Detener cualquier prueba en curso (como el ping continuo) y ver el resumen final.</li>
+                    <li><b>Probar con tu Gateway</b> (ej. ping 192.168.1.1) para saber si la falla es interna (Wi-Fi/router) o externa (Internet).</li>
+                    <li><b>Guardar registro:</b> Agrega '> red.txt' al final de cualquier comando para guardar los resultados en un archivo.</li>
+                    <li><b>Ejecutar como Administrador</b> si algún comando da error o deniega el acceso.</li>
+                </ul>
+            </div>
+
+            <button class="close-modal-btn pyme-close-btn" onclick="closeModal('modalCmdGuide')">Entendido</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modalPortForwarding">
+        <div class="modal-content">
+            <button class="clear-search-btn" style="display:flex; position:absolute; top:15px; right:15px;" onclick="closeModal('modalPortForwarding')">✖</button>
+            <h3 class="pyme-btn-title">PORT FORWARDING (Redirección de Puertos)</h3>
+            <span class="modal-subtitle">Permite redirigir puertos de una IP pública a una IP privada (LAN) en la ONT.</span>
+
+            <div class="modal-alert">
+                <div>⚠️</div>
+                <div><b>LÍMITES:</b> Zhone (Máx 8 reglas) / Fiberhome (Máx 5 reglas).</div>
+            </div>
+
+            <h4 class="modal-section-title">📝 PASO A PASO EN OST</h4>
+            <div class="step-list">
+                <div class="step-item"><div class="step-num">1</div><div class="step-text">Seleccionar ONT -> Ir a <b>Acciones</b> -> Clic en <b>[Port Forwarding]</b>.</div></div>
+                <div class="step-item"><div class="step-num">2</div><div class="step-text">Presionar en la flecha de <b>[Agregar]</b> para desplegar el formulario.</div></div>
+                <div class="step-item"><div class="step-num">3</div><div class="step-text">Completar los campos (ver detalle abajo).</div></div>
+                <div class="step-item"><div class="step-num">4</div><div class="step-text">Hacer clic en <b>[Agregar Temporalmente]</b>. Repetir si hay más reglas.</div></div>
+                <div class="step-item"><div class="step-num">5</div><div class="step-text">Al finalizar, presionar <b>[Agregar]</b> (Guardar) y confirmar con <b>OK</b> en el mensaje de advertencia.</div></div>
+            </div>
+
+            <h4 class="modal-section-title">📋 CAMPOS DEL FORMULARIO</h4>
+            <div class="pf-form-box">
+                <table>
+                    <tr><th>Name</th><td>Nombre de la regla (ej: camara1).</td></tr>
+                    <tr><th>Source Port Start/End</th><td>Rango público (1 al 65535). Si es 1 solo puerto, repetir el número en ambos.</td></tr>
+                    <tr><th>Destination IP Address</th><td>Asignar desde <b>192.168.1.220</b> hasta <b>192.168.1.227</b>.</td></tr>
+                    <tr><th>Destination Port Start/End</th><td>Rango privado. Se recomienda usar el mismo puerto que el Source.</td></tr>
+                </table>
+            </div>
+
+            <div class="pf-data-box">
+                <b>💻 DATOS PARA EL CLIENTE</b><br>
+                El cliente DEBE configurar su equipo con:<br>
+                • Puerta de enlace: <b>192.168.1.254</b><br>
+                • Máscara de subred: <b>255.255.255.0</b><br>
+                • IP asignada: (La definida en el paso anterior).
+            </div>
+
+            <h4 class="modal-section-title">📌 EJEMPLOS</h4>
+            <div style="font-size: 0.85rem; line-height: 1.4; margin-bottom: 15px; color:var(--text-main);">
+                <p><b>1 Puerto (Cámara 5000):</b><br>
+                Source Start: <code>5000</code> / Source End: <code>5000</code><br>
+                Dest Start: <code>5000</code> / Dest End: <code>5000</code></p>
+                <p><b>Rango (5000 al 5020):</b><br>
+                Source Start: <code>5000</code> / Source End: <code>5020</code><br>
+                <i>*El cliente debe configurar el mismo rango en su equipo.</i></p>
+            </div>
+
+            <h4 class="modal-section-title">🔄 OTRAS ACCIONES</h4>
+            <ul style="font-size: 0.85rem; color: var(--text-main); padding-left: 20px; margin-bottom: 20px;">
+                <li><b>Aplicar Reglas por Defecto:</b> Clic en <code>[Aplicar Reglas Por Defecto]</code> -> <code>[Aplicar]</code> -> Confirmar con <code>OK</code>.</li>
+                <li><b>Eliminar una regla:</b> Marcar la casilla de la regla -> <code>[Eliminar]</code> -> Confirmar con <code>Continuar</code>.</li>
+            </ul>
+
+            <button class="close-modal-btn pyme-close-btn" onclick="closeModal('modalPortForwarding')">Entendido</button>
+        </div>
+    </div>
+
     <script>
         var safeStorage = {
             get: function(key) { try { return localStorage.getItem(key); } catch(e) { return null; } },
@@ -688,7 +873,11 @@
 
         function openModal(modalId) {
             var el = document.getElementById(modalId);
-            if (!el) return; 
+            if (!el) {
+                console.warn("Modal no encontrado: " + modalId);
+                alert("Error: No se encontró la ventana para este botón. Revisa el Excel (Columna D).");
+                return; 
+            }
             if (activeModal === modalId) return;
             activeModal = modalId;
             el.style.display = 'flex';
@@ -726,6 +915,9 @@
         document.getElementById('modalSwitch').addEventListener('click', function(e) { if (e.target === this) closeModal('modalSwitch'); });
         document.getElementById('modalTopologiaEero').addEventListener('click', function(e) { if (e.target === this) closeModal('modalTopologiaEero'); });
         document.getElementById('modalPymeDetail').addEventListener('click', function(e) { if (e.target === this) closeModal('modalPymeDetail'); });
+        document.getElementById('modalOstMikrotik').addEventListener('click', function(e) { if (e.target === this) closeModal('modalOstMikrotik'); });
+        document.getElementById('modalCmdGuide').addEventListener('click', function(e) { if (e.target === this) closeModal('modalCmdGuide'); });
+        document.getElementById('modalPortForwarding').addEventListener('click', function(e) { if (e.target === this) closeModal('modalPortForwarding'); });
 
         function escapeHtml(str) { return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;'); }
         function safeUrl(raw) { if (!raw) return ''; try { var u = new URL(String(raw).trim()); if (u.protocol === 'http:' || u.protocol === 'https:') return u.href; } catch (_) { } return ''; }
@@ -1163,7 +1355,6 @@
             }
             document.getElementById('hwModalImage').innerHTML = imgHtml;
 
-            // Usamos el traductor mágico para el texto
             document.getElementById('hwModalContent').innerHTML = formatRichText(item.descripcion);
 
             openModal('topologiaModal');
@@ -1420,6 +1611,7 @@
                 
                 gridCard.innerHTML = '<div class="grid-icon-box">' + iconSvg + '</div><div class="grid-title">' + highlightText(item.titulo, words) + '</div>';
                 
+                // LA LÓGICA ARREGLADA: Detecta si es un modal estático o dinámico
                 if (modalId && modalId !== '(Déjalo vacío)' && !modalId.startsWith('http')) {
                     gridCard.onclick = function(mid) { return function() { openModal(mid); }; }(modalId);
                 } else {
@@ -1438,7 +1630,6 @@
             if (!item) return;
             
             document.getElementById('modalPymeTitle').innerText = item.titulo;
-            // Usamos el traductor mágico
             document.getElementById('modalPymeContent').innerHTML = formatRichText(item.descripcion);
             
             openModal('modalPymeDetail');
@@ -1467,7 +1658,6 @@
                 else if (line.startsWith('[PASO]')) {
                     if (inBulletList) { html += '</ul>'; inBulletList = false; }
                     if (!inStepList) { html += '<div class="step-list">'; inStepList = true; }
-                    // Clase especial para el color del circulo
                     let numClass = currentView === 'pyme' ? 'step-num' : 'hw-step-num';
                     html += `<div class="step-item"><div class="${numClass}">${stepCount++}</div><div class="step-text">${line.replace('[PASO]', '').trim()}</div></div>`;
                 }
