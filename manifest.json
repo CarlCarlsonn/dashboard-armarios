@@ -1,6 +1,6 @@
 {
-  "name": "Buscador de Red - Telsur",
-  "short_name": "Busca Red",
+  "name": "MemoTec",
+  "short_name": "MemoTec",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#f0f2f5",
