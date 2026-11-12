@@ -1,4 +1,4 @@
-const CACHE_NAME = 'telsur-dashboard-v6'; // Versión 6 para forzar actualización
+const CACHE_NAME = 'telsur-dashboard-v7'; // Versión 6 para forzar actualización
 
 // Instalar el Service Worker
 self.addEventListener('install', (e) => {
