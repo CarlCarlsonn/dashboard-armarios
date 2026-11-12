@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="theme-color" content="#2e7d32">
-    <title>Red Telsur - App Terreno</title>
+    <title>MemoTec</title>
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" href="icon.png">
     <style>
@@ -158,7 +158,6 @@
         .sidebar-item:hover { background-color: rgba(0,0,0,0.05); }
         body.dark-mode .sidebar-item:hover { background-color: rgba(255,255,255,0.1); }
         .sidebar-item.active { background-color: rgba(46, 125, 50, 0.1); color: var(--primary); border-left: 4px solid var(--primary); }
-        .sidebar-item span.icon { font-size: 1.3rem; }
 
         .oracle-table { width: 100%; border-collapse: collapse; font-size: 0.75rem; margin: 10px 0; background-color: var(--table-bg); border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
         .oracle-table th { background-color: #0d3b66; color: white; padding: 8px 6px; text-align: center; font-weight: bold; }
@@ -318,6 +317,41 @@
         .meter-img { width: 100px; height: auto; object-fit: contain; border-radius: 6px; background: #fff; }
         .meter-instructions { flex: 1; font-size: 0.8rem; line-height: 1.4; color: var(--text-main); }
         .dial-indicator { display: inline-block; background: #000; color: #fff; padding: 2px 6px; border-radius: 4px; font-family: monospace; font-weight: bold; font-size: 0.75rem; margin-top: 4px; }
+
+        /* --- ESTILOS NUEVOS ÍCONOS --- */
+        .menu-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .menu-icon svg:not(.huawei-logo) {
+            width: 100%;
+            height: 100%;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .menu-icon.cube svg { stroke-width: 2.5; }
+
+        /* --- ESTILOS DE LA NUEVA FIRMA (Fondo) --- */
+        .app-footer {
+            margin-top: auto;
+            padding: 20px 15px;
+            text-align: center;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            background: #ffffff;
+        }
+        body.dark-mode .app-footer { border-top-color: rgba(255,255,255,0.1); background: var(--sidebar-bg); }
+        .app-footer .main-text { font-size: 0.75rem; color: #65676b; line-height: 1.4; }
+        body.dark-mode .app-footer .main-text { color: var(--text-muted); }
+        .app-footer .highlight { font-weight: 700; color: #2e7d32; }
+        body.dark-mode .app-footer .highlight { color: var(--primary-dark); }
+        .app-footer .version { font-size: 0.65rem; color: #a0a0a0; margin-top: 6px; }
     </style>
 </head>
 <body>
@@ -326,17 +360,56 @@
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleMenu()"></div>
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <h2>Menú Principal</h2>
-            <p>App de Terreno - C.Saez</p>
+            <h2>MemoTec</h2>
+            <p>Tu ayuda memoria en terreno</p>
         </div>
         <ul class="sidebar-menu">
-            <li class="sidebar-item active" id="menu-armarios" onclick="switchView('armarios')"><span class="icon">📦</span> Armarios y Centrales</li>
-            <li class="sidebar-item" id="menu-codigos" onclick="switchView('codigos')"><span class="icon">📺</span> Control TV-Deco</li>
-            <li class="sidebar-item" id="menu-topologias" onclick="switchView('topologias')"><span class="icon">🗺️</span> HUAWEI Topología y Alertas</li>
-            <li class="sidebar-item" id="menu-eero" onclick="switchView('eero')"><span class="icon">📡</span> EERO Topología y Alertas</li>
-            <li class="sidebar-item" id="menu-pyme" onclick="switchView('pyme')"><span class="icon">🏢</span> Configuración PYME</li>
-            <li class="sidebar-item" id="menu-energia" onclick="switchView('energia')"><span class="icon">⚡</span> Energía y Tierra</li>
+            <li class="sidebar-item active" id="menu-armarios" onclick="switchView('armarios')">
+                <div class="menu-icon">
+                    <svg viewBox="0 0 24 24"><rect x="2" y="4" width="14" height="16" rx="1"></rect><path d="M2 8h14 M2 12h14 M2 16h14"></path><circle cx="16" cy="16" r="5"></circle><path d="M20 20l4 4"></path></svg>
+                </div>
+                Armarios y Centrales
+            </li>
+            <li class="sidebar-item" id="menu-codigos" onclick="switchView('codigos')">
+                <div class="menu-icon">
+                    <svg viewBox="0 0 24 24"><polyline points="17 2 12 7 7 2" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline><rect x="2" y="7" width="20" height="14" rx="2" ry="2" stroke="currentColor" fill="none" stroke-width="2"></rect><rect x="4" y="9" width="3.2" height="10" fill="#FFC107" stroke="none"></rect><rect x="7.2" y="9" width="3.2" height="10" fill="#4CAF50" stroke="none"></rect><rect x="10.4" y="9" width="3.2" height="10" fill="#00BCD4" stroke="none"></rect><rect x="13.6" y="9" width="3.2" height="10" fill="#E91E63" stroke="none"></rect><rect x="16.8" y="9" width="3.2" height="10" fill="#F44336" stroke="none"></rect></svg>
+                </div>
+                Control TV-Deco
+            </li>
+            <li class="sidebar-item" id="menu-topologias" onclick="switchView('topologias')">
+                <div class="menu-icon">
+                    <svg class="huawei-logo" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width: 24px; height: 24px; display: block; fill: #4b5563; stroke: none !important;"><path style="fill: #4b5563; stroke: none !important;" d="M12.1 0c2.1 0 3.8 1.1 4.3 4.2.6 5.5-.6 10.7-.9 12l-.1.1c-.4.1-.8.1-.8.1-.8.1-1.6.2-2.4.2h-.2c-.7 0-1.6-.1-2.4-.2 0 0-.4-.1-.8-.1-.1 0-.1-.1-.1-.1l-.1-.1c-.3-1.3-1.4-6.5-.9-12C8.1 1.1 9.8 0 11.9 0h.2zM14.2 17.5c.6-.2 1.3-.4 1.9-.6l5.7 2.2c-.7 1.3-2.1 2.7-4.3 3.1-1.5.3-3.1.4-3.1.4h-.2s-1.7-.1-3.1-.4c-2.2-.5-3.6-1.8-4.3-3.1l5.7-2.2c.6.3 1.3.5 1.9.6h.2zM3.7 6.1S1.8 7.9 1.7 9.8v.4c.1 1.5 1.2 2.4 1.2 2.4 1.8 1.8 6.3 4 7.3 4.5 0 0 .1 0 .1-.1l.1-.1C7.5 10.8 3.7 6.1 3.7 6.1zm16.6 0c-3.8 4.7-7.7 9.3-7.7 9.3v.1l.1.1c.1.1.1.1.1.1 1-.5 5.5-2.8 7.3-4.5 0 0 1.1-.9 1.2-2.4v-.4c-.1-1.9-2-3.7-2-3.7zm-10.6 12.5s-.1-.1-.1-.1H2.2c.8 1.4 2.1 2.5 3.6 2.2.9-.2 3.2-1.8 3.9-2.3.1-.1.1-.1.1-.1v.1zm4.6 0v-.1c.1.1.1.1.1.1.7.5 3 2.1 3.9 2.3 1.5.3 2.8-.8 3.6-2.2h-7.6s-.1 0-.1.1v-.2zM9.7 17.8C6.5 15.6.2 12.3.2 12.3c-.2.5-.2.9-.2 1.3v.1c0 1.1.4 1.8.4 1.8s5 1.1 7.8 2.2c1 .4 1.8.7 1.8.7.1.1.1.1 0 .1l-1.5 1.2c-.2-.2-.5-.4-.8-.5zm4.6 0c-.3.1-.6.3-.8.5l-1.5-1.2c-.1-.1-.1-.1 0-.1 0 0 .8-.3 1.8-.7 2.9-1.1 7.8-2.2 7.8-2.2s.4-.8.4-1.8v-.1c0-.4 0-.8-.2-1.3 0 0-6.3 3.3-9.5 5.5z"/></svg>
+                </div>
+                HUAWEI Topología y Alertas
+            </li>
+            <li class="sidebar-item" id="menu-eero" onclick="switchView('eero')">
+                <div class="menu-icon" style="color: #0055C4;">
+                    <svg viewBox="0 0 24 24"><rect x="2" y="10" width="14" height="12" rx="4" ry="4" stroke="currentColor" fill="none" stroke-width="2"></rect><path d="M20 3C22.5 5.5 22.5 9.5 20 12 M17 6C18 7 18 9 17 10" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round"></path></svg>
+                </div>
+                EERO Topología y Alertas
+            </li>
+            <li class="sidebar-item" id="menu-pyme" onclick="switchView('pyme')">
+                <div class="menu-icon cube">
+                    <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                </div>
+                Configuración PYME
+            </li>
+            <li class="sidebar-item" id="menu-energia" onclick="switchView('energia')">
+                <div class="menu-icon">
+                    <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" fill="#FFC107" stroke="#FFC107"></polygon></svg>
+                </div>
+                Energía y Tierra
+            </li>
         </ul>
+        
+        <!-- FIRMA SUTIL -->
+        <div class="app-footer">
+            <div class="main-text">
+                Desarrollado por <span class="highlight">Carlos Saez</span><br>
+                Supervisor de Instalaciones
+            </div>
+            <div class="version">MemoTec v2.0 · 2026</div>
+        </div>
     </div>
 
     <!-- VISTA ARMARIOS -->
