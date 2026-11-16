@@ -378,6 +378,47 @@
         .app-footer .highlight { font-weight: 700; color: #2e7d32; }
         body.dark-mode .app-footer .highlight { color: var(--primary-dark); }
         .app-footer .version { font-size: 0.65rem; color: #a0a0a0; margin-top: 6px; }
+
+        /* ========================================================
+           NUEVO CÓDIGO SKELETON (ESTILOS GLOBALES PARA TODOS LOS MÓDULOS)
+           ======================================================== */
+        .skeleton-card {
+            background: var(--card-bg); border-radius: 12px; padding: 16px; margin-bottom: 12px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: flex; flex-direction: column; gap: 12px;
+            border-left: 5px solid #e0e0e0; min-height: 140px; position: relative; overflow: hidden;
+        }
+        body.dark-mode .skeleton-card { border-left-color: #444; }
+
+        .skeleton-grid-card {
+            background: var(--card-bg); border-radius: 12px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: flex; flex-direction: column; height: 120px;
+        }
+        
+        .skeleton-anim {
+            background: #e0e0e0;
+            background: linear-gradient(90deg, #e0e0e0 25%, #f5f5f5 50%, #e0e0e0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite linear;
+            border-radius: 4px;
+        }
+        body.dark-mode .skeleton-anim {
+            background: #333;
+            background: linear-gradient(90deg, #333 25%, #444 50%, #333 75%);
+            background-size: 200% 100%;
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        .sk-tag { width: 70px; height: 20px; border-radius: 12px; margin-bottom: 2px;}
+        .sk-title { width: 80%; height: 22px; margin-bottom: 2px; }
+        .sk-box { width: 100%; height: 40px; border-radius: 8px; margin-bottom: 2px; }
+        .sk-btn { width: 100%; height: 42px; border-radius: 10px; margin-top: auto; }
+        
+        .sk-grid-icon { width: 100%; height: 80px; }
+        .sk-grid-text { width: 60%; height: 15px; margin: 12px auto; }
+        /* ======================================================== */
     </style>
 </head>
 <body>
@@ -480,7 +521,7 @@
                 <div class="chip" onclick="applyFilter('ARMA', this)">Armarios</div>
             </div>
         </header>
-        <div class="results-container" id="resultsContainer"><div class="loading">Cargando datos...</div></div>
+        <div class="results-container" id="resultsContainer"></div>
         <button id="scrollTopBtn" onclick="scrollToTopArmarios()">⬆️</button>
     </div>
 
@@ -520,7 +561,7 @@
             </div>
             <div class="guide-btn-container"><button class="guide-btn" onclick="openModal('guideModal')">⚙️ Guía: Asociar Control a Deco</button></div>
         </header>
-        <div class="results-container" id="resultsCodigosContainer"><div class="loading">Cargando códigos...</div></div>
+        <div class="results-container" id="resultsCodigosContainer"></div>
         <button id="scrollTopBtnCodigos" onclick="scrollToTopCodigos()">⬆️</button>
     </div>
 
@@ -549,7 +590,7 @@
             </div>
             <div class="info-bar"><span id="counterTopologias" class="site-counter">0 items</span><span id="lastUpdatedTopologias">Sincronizando...</span></div>
         </header>
-        <div class="results-container" id="resultsTopologiasContainer"><div class="loading">Cargando topologías...</div></div>
+        <div class="results-container" id="resultsTopologiasContainer"></div>
         <button id="scrollTopBtnTopologias" onclick="scrollToTopTopologias()">⬆️</button>
     </div>
 
@@ -578,7 +619,7 @@
             </div>
             <div class="info-bar"><span id="counterEero" class="site-counter">0 items</span><span id="lastUpdatedEero">Sincronizando...</span></div>
         </header>
-        <div class="results-container" id="resultsEeroContainer"><div class="loading">Cargando EERO...</div></div>
+        <div class="results-container" id="resultsEeroContainer"></div>
         <button id="scrollTopBtnEero" onclick="scrollToTopEero()">⬆️</button>
     </div>
 
@@ -607,7 +648,7 @@
             </div>
             <div class="info-bar"><span id="counterPyme" class="site-counter">0 items</span><span id="lastUpdatedPyme">Sincronizando...</span></div>
         </header>
-        <div class="results-container" id="resultsPymeContainer"><div class="loading">Cargando PYME...</div></div>
+        <div class="results-container" id="resultsPymeContainer"></div>
         <button id="scrollTopBtnPyme" onclick="scrollToTopPyme()">⬆️</button>
     </div>
 
@@ -636,7 +677,7 @@
             </div>
             <div class="info-bar"><span id="counterEnergia" class="site-counter">0 items</span><span id="lastUpdatedEnergia">Sincronizando...</span></div>
         </header>
-        <div class="results-container" id="resultsEnergiaContainer"><div class="loading">Cargando Energía...</div></div>
+        <div class="results-container" id="resultsEnergiaContainer"></div>
         <button id="scrollTopBtnEnergia" onclick="scrollToTopEnergia()">⬆️</button>
     </div>
 
@@ -658,9 +699,7 @@
                 </div>
             </div>
         </header>
-        <div class="results-container" id="resultsDocumentosContainer">
-            <div class="loading">Cargando documentos...</div>
-        </div>
+        <div class="results-container" id="resultsDocumentosContainer"></div>
     </div>
 
     <!-- MODALES FIJOS -->
@@ -1399,6 +1438,33 @@
 
         function findDataStart(rows) { for (var i = 0; i < Math.min(rows.length, 30); i++) { if (/^https?:\/\//i.test((rows[i][2] || '').trim())) return i; } return 0; }
 
+        /* --- SKELETON LOADERS HTML GENERATORS --- */
+        function getCardSkeletonHTML() {
+            var html = '';
+            for(var i=0; i<4; i++) {
+                html += '<div class="skeleton-card">' +
+                        '<div class="skeleton-anim sk-tag"></div>' +
+                        '<div class="skeleton-anim sk-title"></div>' +
+                        '<div class="skeleton-anim sk-box"></div>' +
+                        '<div class="skeleton-anim sk-btn"></div>' +
+                        '</div>';
+            }
+            return html;
+        }
+
+        function getGridSkeletonHTML() {
+            var html = '<div class="grid-container">';
+            for(var i=0; i<8; i++) {
+                html += '<div class="skeleton-grid-card">' +
+                        '<div class="skeleton-anim sk-grid-icon"></div>' +
+                        '<div class="skeleton-anim sk-grid-text"></div>' +
+                        '</div>';
+            }
+            html += '</div>';
+            return html;
+        }
+        /* ----------------------------------------- */
+
         /* LÓGICA ARMARIOS */
         var reglaHtml = 
             '<div class="card-header"><span class="tag">REGLA DE ORO</span></div>' +
@@ -1456,6 +1522,9 @@
 
         async function loadData() {
             var lastUpdatedEl = document.getElementById('lastUpdated');
+            // INYECTAMOS LOS SKELETONS AL INICIAR LA CARGA
+            resultsContainer.innerHTML = getCardSkeletonHTML();
+            
             var cached = safeStorage.get('dashboardData');
             if (cached) {
                 try {
@@ -1593,7 +1662,8 @@
         function forceUpdateCodigos() { loadCodigos(); }
 
         async function loadCodigos() {
-            resultsCodigosContainer.innerHTML = '<div class="loading">Sincronizando códigos...</div>';
+            // INYECTAMOS SKELETONS AL INICIAR LA CARGA
+            resultsCodigosContainer.innerHTML = getCardSkeletonHTML();
             try {
                 var fetchUrl = SHEET_CODIGOS_URL + '&nocache=' + new Date().getTime();
                 var response = await fetch(fetchUrl, { cache: 'no-store' });
@@ -1670,7 +1740,8 @@
         function forceUpdateTopologias() { loadTopologias(); }
 
         async function loadTopologias() {
-            resultsTopologiasContainer.innerHTML = '<div class="loading">Sincronizando topologías...</div>';
+            // INYECTAMOS SKELETONS EN FORMATO GRID
+            resultsTopologiasContainer.innerHTML = getGridSkeletonHTML();
             try {
                 var fetchUrl = SHEET_TOPOLOGIAS_URL + '&nocache=' + new Date().getTime();
                 var response = await fetch(fetchUrl, { cache: 'no-store' });
@@ -1816,7 +1887,8 @@
         function forceUpdateEero() { loadEero(); }
 
         async function loadEero() {
-            resultsEeroContainer.innerHTML = '<div class="loading">Sincronizando EERO...</div>';
+            // INYECTAMOS SKELETONS EN FORMATO GRID
+            resultsEeroContainer.innerHTML = getGridSkeletonHTML();
             try {
                 var fetchUrl = SHEET_EERO_URL + '&nocache=' + new Date().getTime();
                 var response = await fetch(fetchUrl, { cache: 'no-store' });
@@ -1946,7 +2018,8 @@
         function forceUpdatePyme() { loadPyme(); }
 
         async function loadPyme() {
-            resultsPymeContainer.innerHTML = '<div class="loading">Sincronizando PYME...</div>';
+            // INYECTAMOS SKELETONS EN FORMATO GRID
+            resultsPymeContainer.innerHTML = getGridSkeletonHTML();
             try {
                 var fetchUrl = SHEET_PYME_URL + '&nocache=' + new Date().getTime();
                 var response = await fetch(fetchUrl, { cache: 'no-store' });
@@ -2090,7 +2163,8 @@
         function forceUpdateEnergia() { loadEnergia(); }
 
         async function loadEnergia() {
-            resultsEnergiaContainer.innerHTML = '<div class="loading">Sincronizando Energía...</div>';
+            // INYECTAMOS SKELETONS EN FORMATO GRID
+            resultsEnergiaContainer.innerHTML = getGridSkeletonHTML();
             try {
                 var fetchUrl = SHEET_ENERGIA_URL + '&nocache=' + new Date().getTime();
                 var response = await fetch(fetchUrl, { cache: 'no-store' });
@@ -2299,32 +2373,36 @@
         function loadDocumentos() {
             var container = document.getElementById('resultsDocumentosContainer');
             if (!container) return;
-            if (container.dataset.loaded === 'true') return;
+            
+            // INYECTAMOS SKELETONS AL INICIAR LA CARGA
+            container.innerHTML = getCardSkeletonHTML();
 
-            var html = '';
-            documentosData.forEach(function(doc, index) {
-                html +=
-                    '<div class="card" style="min-height: auto;">' +
-                        '<div class="card-header">' +
-                            '<span class="tag" style="background-color: var(--primary); color: white;">PDF</span>' +
-                        '</div>' +
-                        '<div class="card-title">' + escapeHtml(doc.nombre) + '</div>' +
-                        '<div class="obs-box" style="font-family: inherit; font-size: 0.85rem; color: var(--text-main); margin-bottom: 15px;">' +
-                            escapeHtml(doc.descripcion) +
-                        '</div>' +
-                        '<div style="display: flex; gap: 10px;">' +
-                            '<button class="nav-btn" style="background-color: var(--teal-primary); flex: 1; margin-top: 0;" onclick="abrirPdf(' + index + ')">' +
-                                '👁️ Ver PDF' +
-                            '</button>' +
-                            '<button class="nav-btn" style="background-color: var(--accent); flex: 1; margin-top: 0;" onclick="descargarDocumento(' + index + ')">' +
-                                '📥 Descargar' +
-                            '</button>' +
-                        '</div>' +
-                    '</div>';
-            });
+            // Simulamos un tiempo de carga para los documentos
+            setTimeout(function() {
+                var html = '';
+                documentosData.forEach(function(doc, index) {
+                    html +=
+                        '<div class="card" style="min-height: auto;">' +
+                            '<div class="card-header">' +
+                                '<span class="tag" style="background-color: var(--primary); color: white;">PDF</span>' +
+                            '</div>' +
+                            '<div class="card-title">' + escapeHtml(doc.nombre) + '</div>' +
+                            '<div class="obs-box" style="font-family: inherit; font-size: 0.85rem; color: var(--text-main); margin-bottom: 15px;">' +
+                                escapeHtml(doc.descripcion) +
+                            '</div>' +
+                            '<div style="display: flex; gap: 10px;">' +
+                                '<button class="nav-btn" style="background-color: var(--teal-primary); flex: 1; margin-top: 0;" onclick="abrirPdf(' + index + ')">' +
+                                    '👁️ Ver PDF' +
+                                '</button>' +
+                                '<button class="nav-btn" style="background-color: var(--accent); flex: 1; margin-top: 0;" onclick="descargarDocumento(' + index + ')">' +
+                                    '📥 Descargar' +
+                                '</button>' +
+                            '</div>' +
+                        '</div>';
+                });
 
-            container.innerHTML = html;
-            container.dataset.loaded = 'true';
+                container.innerHTML = html;
+            }, 500); // 500ms de tiempo de carga
         }
 
         function abrirPdf(index) {
