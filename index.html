@@ -380,7 +380,7 @@
         .app-footer .version { font-size: 0.65rem; color: #a0a0a0; margin-top: 6px; }
 
         /* ========================================================
-           NUEVO CÓDIGO SKELETON (ESTILOS GLOBALES PARA TODOS LOS MÓDULOS)
+           CÓDIGO SKELETON (ESTILOS GLOBALES PARA TODOS LOS MÓDULOS)
            ======================================================== */
         .skeleton-card {
             background: var(--card-bg); border-radius: 12px; padding: 16px; margin-bottom: 12px;
@@ -703,14 +703,16 @@
     </div>
 
     <!-- MODALES FIJOS -->
-    <!-- MODAL VISOR DE PDF -->
+    <!-- MODAL VISOR DE PDF CON CONTENEDOR DINÁMICO -->
     <div class="modal-overlay" id="modalPdfViewer">
         <div class="modal-content" style="max-width: 900px; height: 85vh; display: flex; flex-direction: column; padding: 15px; overflow: hidden;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                 <h3 style="margin: 0; color: var(--text-main); font-size: 1rem; text-align: left;">Visor de Documento</h3>
+                <!-- NUEVO BOTÓN DE CIERRE -->
                 <button class="clear-search-btn" style="display: flex; position: static;" onclick="cerrarPdf()">✖</button>
             </div>
-            <iframe id="pdfFrame" style="flex: 1; width: 100%; border: 1px solid #ccc; border-radius: 8px; background: #fff;"></iframe>
+            <!-- CONTENEDOR VACÍO (El iframe se crea aquí dinámicamente) -->
+            <div id="pdfContainer" style="flex: 1; width: 100%; border: 1px solid #ccc; border-radius: 8px; background: #fff; overflow:hidden;"></div>
             <div style="margin-top: 10px; text-align: center; font-size: 0.85rem;">
                 <a id="pdfLinkExterno" href="#" target="_blank" style="color: var(--accent); font-weight: bold; text-decoration: underline;">Abrir en una nueva pestaña (si no carga aquí)</a>
             </div>
@@ -1404,15 +1406,56 @@
         document.getElementById('modalEnergiaProtocolo').addEventListener('click', function(e) { if (e.target === this) closeModal('modalEnergiaProtocolo'); });
         document.getElementById('modalEnergiaGuion').addEventListener('click', function(e) { if (e.target === this) closeModal('modalEnergiaGuion'); });
 
+        /* --- FUNCIONES DE BÚSQUEDA INTELIGENTE Y FORMATEO --- */
         function escapeHtml(str) { return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;'); }
         function safeUrl(raw) { if (!raw) return ''; try { var u = new URL(String(raw).trim()); if (u.protocol === 'http:' || u.protocol === 'https:') return u.href; } catch (_) { } return ''; }
+        
+        // CEREBRO DE BÚSQUEDA FUZZY
+        function buscadorFuzzy(termino, textoDestino) {
+            const limpiar = (str) => String(str).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            const q = limpiar(termino);
+            const t = limpiar(textoDestino);
+
+            if (t.includes(q)) return true; // Si es exacto, pasa rápido
+
+            const aplicarFonetica = (str) => {
+                return str
+                    .replace(/v/g, 'b')
+                    .replace(/z/g, 's')
+                    .replace(/c([ei])/g, 's$1')
+                    .replace(/h/g, '')
+                    .replace(/y/g, 'll')
+                    .replace(/(.)\1+/g, '$1'); 
+            };
+
+            const phQuery = aplicarFonetica(q);
+            const phText = aplicarFonetica(t);
+
+            return phText.includes(phQuery);
+        }
+
+        // FUNCIÓN MODIFICADA PARA RESALTAR RESULTADOS USANDO LÓGICA FUZZY
         function highlightText(text, words) {
             var escaped = escapeHtml(text);
             if (!words || words.length === 0) return escaped;
-            var regexSafeWords = words.map(function(w) { return w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); });
-            var regex = new RegExp('(' + regexSafeWords.join('|') + ')', 'gi');
-            return escaped.replace(regex, '<mark>$1</mark>');
+            
+            // Creamos un diccionario de mapeo fonético básico para el resaltado visual
+            var textLower = escaped.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            
+            // Si la búsqueda es exacta (sin errores), usamos el resaltado estricto (más bonito visualmente)
+            var esBusquedaExacta = words.every(w => textLower.includes(w.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")));
+            
+            if (esBusquedaExacta) {
+                var regexSafeWords = words.map(function(w) { return w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); });
+                var regex = new RegExp('(' + regexSafeWords.join('|') + ')', 'gi');
+                return escaped.replace(regex, '<mark>$1</mark>');
+            } else {
+                // Si la tarjeta pasó por Fuzzy Search (hubo error de tipeo), devolvemos el texto normal
+                // (Resaltar con errores de tipeo rompería el HTML, por lo que es más seguro no resaltar)
+                return escaped;
+            }
         }
+        /* ---------------------------------------------------- */
 
         function parseCSV(text) {
             var rows = []; var row = [], field = '', inQuotes = false, i = 0;
@@ -1573,7 +1616,8 @@
             resultsContainer.innerHTML = '';
             updateCounter(dataArray.length);
             var searchTerm = searchInput.value.toLowerCase().trim();
-            var isSectorSearch = /sec/i.test(searchTerm); 
+            // Soporte Fuzzy para buscar 'sector' aunque escriban mal
+            var isSectorSearch = buscadorFuzzy('sector', searchTerm); 
             var frag = document.createDocumentFragment();
 
             if (isSectorSearch && dataArray.length > 0) {
@@ -1632,11 +1676,14 @@
             var term = searchInput.value.toLowerCase().trim();
             currentSearchWords = term.split(/\s+/).filter(function(w) { return w !== ''; });
             var filterToApply = (term !== '') ? '' : currentFilter;
+            
             var filtered = globalData.filter(function(item) {
-                var searchable = (item.nombre + ' ' + item.coordenadas + ' ' + item.tipo + ' ' + item.obs).toLowerCase();
-                var matchesSearch = currentSearchWords.every(function(w) { return searchable.indexOf(w) !== -1; });
+                var searchableText = (item.nombre + ' ' + item.coordenadas + ' ' + item.tipo + ' ' + item.obs);
+                // APLICAMOS BÚSQUEDA FUZZY A CADA PALABRA INGRESADA
+                var matchesSearch = currentSearchWords.every(function(w) { return buscadorFuzzy(w, searchableText); });
                 return matchesSearch && chipMatches(item, filterToApply);
             });
+            
             if (filterToApply === 'CENTRAL') {
                 filtered.sort(function(a, b) {
                     var prioA = getCentralPriority(a.nombre); var prioB = getCentralPriority(b.nombre);
@@ -1697,10 +1744,12 @@
                 document.querySelector('#view-codigos .chip').classList.add('active');
             }
             var filterToApply = (term !== '') ? '' : currentFilterCodigos;
+            
             var filtered = globalCodigos.filter(function(item) {
-                var searchable = (item.marca + ' ' + item.codigos).toLowerCase();
-                var matchesSearch = words.every(function(w) { return searchable.indexOf(w) !== -1; });
-                var matchesChip = filterToApply === '' || item.marca.toLowerCase().indexOf(filterToApply.toLowerCase()) !== -1;
+                var searchableText = (item.marca + ' ' + item.codigos);
+                // APLICAMOS BÚSQUEDA FUZZY A CADA PALABRA
+                var matchesSearch = words.every(function(w) { return buscadorFuzzy(w, searchableText); });
+                var matchesChip = filterToApply === '' || buscadorFuzzy(filterToApply, item.marca);
                 return matchesSearch && matchesChip;
             });
             renderCodigos(filtered, words);
@@ -1776,8 +1825,8 @@
             var words = term.split(/\s+/).filter(function(w) { return w !== ''; });
 
             var filtered = globalTopologias.filter(function(item) {
-                var searchable = (item.titulo + ' ' + item.palabras + ' ' + item.contenido + ' ' + item.descripcion).toLowerCase();
-                return words.every(function(w) { return searchable.indexOf(w) !== -1; });
+                var searchableText = (item.titulo + ' ' + item.palabras + ' ' + item.contenido + ' ' + item.descripcion);
+                return words.every(function(w) { return buscadorFuzzy(w, searchableText); });
             });
             renderTopologias(filtered, words);
         }
@@ -1923,8 +1972,8 @@
             var words = term.split(/\s+/).filter(function(w) { return w !== ''; });
 
             var filtered = globalEero.filter(function(item) {
-                var searchable = (item.titulo + ' ' + item.palabras + ' ' + item.contenido + ' ' + item.descripcion).toLowerCase();
-                return words.every(function(w) { return searchable.indexOf(w) !== -1; });
+                var searchableText = (item.titulo + ' ' + item.palabras + ' ' + item.contenido + ' ' + item.descripcion);
+                return words.every(function(w) { return buscadorFuzzy(w, searchableText); });
             });
             renderEero(filtered, words);
         }
@@ -2054,8 +2103,8 @@
             var words = term.split(/\s+/).filter(function(w) { return w !== ''; });
 
             var filtered = globalPyme.filter(function(item) {
-                var searchable = (item.titulo + ' ' + item.palabras + ' ' + item.contenido + ' ' + item.descripcion).toLowerCase();
-                return words.every(function(w) { return searchable.indexOf(w) !== -1; });
+                var searchableText = (item.titulo + ' ' + item.palabras + ' ' + item.contenido + ' ' + item.descripcion);
+                return words.every(function(w) { return buscadorFuzzy(w, searchableText); });
             });
             renderPyme(filtered, words);
         }
@@ -2199,8 +2248,8 @@
             var words = term.split(/\s+/).filter(function(w) { return w !== ''; });
 
             var filtered = globalEnergia.filter(function(item) {
-                var searchable = (item.titulo + ' ' + item.palabras + ' ' + item.contenido + ' ' + item.descripcion).toLowerCase();
-                return words.every(function(w) { return searchable.indexOf(w) !== -1; });
+                var searchableText = (item.titulo + ' ' + item.palabras + ' ' + item.contenido + ' ' + item.descripcion);
+                return words.every(function(w) { return buscadorFuzzy(w, searchableText); });
             });
             renderEnergia(filtered, words);
         }
@@ -2377,7 +2426,7 @@
             // INYECTAMOS SKELETONS AL INICIAR LA CARGA
             container.innerHTML = getCardSkeletonHTML();
 
-            // Simulamos un tiempo de carga para los documentos
+            // Simulamos un breve tiempo de carga local para los documentos
             setTimeout(function() {
                 var html = '';
                 documentosData.forEach(function(doc, index) {
@@ -2402,20 +2451,34 @@
                 });
 
                 container.innerHTML = html;
-            }, 500); // 500ms de tiempo de carga
+            }, 500); 
         }
 
+        // CÓDIGO CORREGIDO PARA EL VISOR DE PDF (DESTRUCCIÓN DINÁMICA)
         function abrirPdf(index) {
             var doc = documentosData[index];
             if (!doc) return;
-            document.getElementById('pdfFrame').src = 'https://docs.google.com/viewer?url=' + encodeURIComponent(doc.urlRaw) + '&embedded=true';
+            
+            // Creamos un nuevo iframe dinámicamente y lo inyectamos en el contenedor
+            var container = document.getElementById('pdfContainer');
+            container.innerHTML = '<iframe id="pdfFrame" src="https://docs.google.com/viewer?url=' + encodeURIComponent(doc.urlRaw) + '&embedded=true" style="width: 100%; height: 100%; border: none;"></iframe>';
+            
             document.getElementById('pdfLinkExterno').href = doc.urlRaw;
             openModal('modalPdfViewer');
         }
 
         function cerrarPdf() {
-            document.getElementById('pdfFrame').src = '';
-            closeModal('modalPdfViewer');
+            var modal = document.getElementById('modalPdfViewer');
+            // Ocultamos el modal inmediatamente (cierre instantáneo visual)
+            modal.style.display = 'none';
+            
+            // Destruimos el iframe vaciando el contenedor por detrás
+            // Esto evita que el historial del navegador quede 'secuestrado'
+            setTimeout(function() {
+                document.getElementById('pdfContainer').innerHTML = '';
+            }, 50);
+            
+            closeModal('modalPdfViewer', false);
         }
 
         function descargarDocumento(index) {
@@ -2445,7 +2508,7 @@
                 });
         }
         
-        // Cerrar visor PDF al hacer clic afuera
+        // Cerrar visor PDF al hacer clic afuera (fondo oscuro)
         document.getElementById('modalPdfViewer').addEventListener('click', function(e) { 
             if (e.target === this) { cerrarPdf(); } 
         });
