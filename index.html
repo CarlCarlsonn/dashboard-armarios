@@ -639,7 +639,28 @@
         <div class="results-container" id="resultsEnergiaContainer"><div class="loading">Cargando Energía...</div></div>
         <button id="scrollTopBtnEnergia" onclick="scrollToTopEnergia()">⬆️</button>
     </div>
-
+    <!-- VISTA DUCTOS -->
+    <div id="view-documentos" style="display: none; flex-direction: column; height: 100%; overflow: hidden;">
+        <header>
+            <div class="header-top">
+                <div class="title-group">
+                    <button class="menu-btn" onclick="toggleMenu()">☰</button>
+                    <div>
+                        <div class="header-title">
+                            <span class="header-icon">
+                                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                            </span>
+                            DUCTOS
+                        </div>
+                        <div class="subtitle">Materiales y accesos para ductos.</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="results-container" id="resultsDocumentosContainer">
+            <div class="loading">Cargando documentos...</div>
+        </div>
+    </div>
     <!-- MODALES FIJOS (ARMARIOS / DECOS / EERO / PYME) -->
     <div class="modal-overlay" id="infoModal">
         <div class="modal-content">
