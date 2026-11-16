@@ -432,6 +432,12 @@
                 </div>
                 DUCTOS
             </li>
+                        <li class="sidebar-item" id="menu-documentos" onclick="switchView('documentos')">
+                <div class="menu-icon">
+                    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                </div>
+                DUCTOS
+            </li>
         </ul>
         
         <!-- FIRMA SUTIL -->
@@ -661,7 +667,42 @@
             <div class="loading">Cargando documentos...</div>
         </div>
     </div>
+        <!-- VISTA DUCTOS -->
+    <div id="view-documentos" style="display: none; flex-direction: column; height: 100%; overflow: hidden;">
+        <header>
+            <div class="header-top">
+                <div class="title-group">
+                    <button class="menu-btn" onclick="toggleMenu()">☰</button>
+                    <div>
+                        <div class="header-title">
+                            <span class="header-icon">
+                                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                            </span>
+                            DUCTOS
+                        </div>
+                        <div class="subtitle">Materiales y accesos para ductos.</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="results-container" id="resultsDocumentosContainer">
+            <div class="loading">Cargando documentos...</div>
+        </div>
+    </div>
     <!-- MODALES FIJOS (ARMARIOS / DECOS / EERO / PYME) -->
+        <!-- MODAL VISOR DE PDF -->
+    <div class="modal-overlay" id="modalPdfViewer">
+        <div class="modal-content" style="max-width: 900px; height: 85vh; display: flex; flex-direction: column; padding: 15px; overflow: hidden;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <h3 style="margin: 0; color: var(--text-main); font-size: 1rem; text-align: left;">Visor de Documento</h3>
+                <button class="clear-search-btn" style="display: flex; position: static;" onclick="cerrarPdf()">✖</button>
+            </div>
+            <iframe id="pdfFrame" style="flex: 1; width: 100%; border: 1px solid #ccc; border-radius: 8px; background: #fff;"></iframe>
+            <div style="margin-top: 10px; text-align: center; font-size: 0.85rem;">
+                <a id="pdfLinkExterno" href="#" target="_blank" style="color: var(--accent); font-weight: bold; text-decoration: underline;">Abrir en una nueva pestaña (si no carga aquí)</a>
+            </div>
+        </div>
+    </div>
     <div class="modal-overlay" id="infoModal">
         <div class="modal-content">
             <h3>⚠️ COMPRUEBA QUE LA CUENTA NO SEA RÍGIDA</h3>
@@ -1266,6 +1307,7 @@
             document.getElementById('view-pyme').style.display = 'none';
             document.getElementById('view-energia').style.display = 'none';
             document.getElementById('view-documentos').style.display = 'none'; // <-- Nueva línea agregada
+            document.getElementById('view-documentos').style.display = 'none';
 
             if (viewName === 'armarios') {
                 document.getElementById('menu-armarios').classList.add('active');
@@ -1294,6 +1336,11 @@
                 document.getElementById('menu-documentos').classList.add('active');
                 document.getElementById('view-documentos').style.display = 'flex';
                 loadDocumentos();
+            } else if (viewName === 'documentos') {
+                document.getElementById('menu-documentos').classList.add('active');
+                document.getElementById('view-documentos').style.display = 'flex';
+                loadDocumentos();
+            }    
             }
         }
         function openModal(modalId) {
@@ -2331,6 +2378,98 @@
                     alert('No se pudo descargar el archivo.\n\nVerifica tu conexión o la URL del PDF.');
                 });
         }
+        /* ========== FIN SECCIÓN DUCTOS ========== */
+                /* ============================================= */
+        /* ============ LÓGICA DUCTOS ================== */
+        /* ============================================= */
+        var documentosData = [
+            {
+                nombre: "Materiales para postación o ductos",
+                descripcion: "Especificaciones de materiales para instalación en postes o ductos.",
+                urlRaw: "https://raw.githubusercontent.com/CarlCarlsonn/dashboard-armarios/main/DOCUMENTOS/Materiales%20para%20postacion%20o%20ductos.pdf"
+            },
+            {
+                nombre: "Acceso canalizado al domicilio (Acometida subterránea)",
+                descripcion: "Guía para el acceso canalizado y acometida subterránea al domicilio.",
+                urlRaw: "https://raw.githubusercontent.com/CarlCarlsonn/dashboard-armarios/main/DOCUMENTOS/Acceso%20canalizado%20al%20domicilio%20(Acometida%20subterranea).pdf"
+            }
+        ];
+
+        function loadDocumentos() {
+            var container = document.getElementById('resultsDocumentosContainer');
+            if (!container) return;
+            if (container.dataset.loaded === 'true') return;
+
+            var html = '';
+            documentosData.forEach(function(doc, index) {
+                html +=
+                    '<div class="card" style="min-height: auto;">' +
+                        '<div class="card-header">' +
+                            '<span class="tag" style="background-color: var(--primary); color: white;">PDF</span>' +
+                        '</div>' +
+                        '<div class="card-title">' + escapeHtml(doc.nombre) + '</div>' +
+                        '<div class="obs-box" style="font-family: inherit; font-size: 0.85rem; color: var(--text-main); margin-bottom: 15px;">' +
+                            escapeHtml(doc.descripcion) +
+                        '</div>' +
+                        '<div style="display: flex; gap: 10px;">' +
+                            '<button class="nav-btn" style="background-color: var(--teal-primary); flex: 1; margin-top: 0;" onclick="abrirPdf(' + index + ')">' +
+                                '👁️ Ver PDF' +
+                            '</button>' +
+                            '<button class="nav-btn" style="background-color: var(--accent); flex: 1; margin-top: 0;" onclick="descargarDocumento(' + index + ')">' +
+                                '📥 Descargar' +
+                            '</button>' +
+                        '</div>' +
+                    '</div>';
+            });
+
+            container.innerHTML = html;
+            container.dataset.loaded = 'true';
+        }
+
+        function abrirPdf(index) {
+            var doc = documentosData[index];
+            if (!doc) return;
+            document.getElementById('pdfFrame').src = doc.urlRaw;
+            document.getElementById('pdfLinkExterno').href = doc.urlRaw;
+            openModal('modalPdfViewer');
+        }
+
+        function cerrarPdf() {
+            document.getElementById('pdfFrame').src = '';
+            closeModal('modalPdfViewer');
+        }
+
+        function descargarDocumento(index) {
+            var doc = documentosData[index];
+            if (!doc) return;
+
+            var nombreArchivo = doc.nombre.replace(/[^\w\s\-áéíóúÁÉÍÓÚñÑ()]/g, '').trim() + '.pdf';
+
+            fetch(doc.urlRaw)
+                .then(function(response) {
+                    if (!response.ok) throw new Error('HTTP ' + response.status);
+                    return response.blob();
+                })
+                .then(function(blob) {
+                    var blobUrl = window.URL.createObjectURL(blob);
+                    var a = document.createElement('a');
+                    a.href = blobUrl;
+                    a.download = nombreArchivo;
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                    window.URL.revokeObjectURL(blobUrl);
+                })
+                .catch(function(error) {
+                    console.error('Error al descargar:', error);
+                    alert('No se pudo descargar el archivo.\n\nVerifica tu conexión o la URL del PDF.');
+                });
+        }
+        
+        // Cerrar visor PDF al hacer clic afuera
+        document.getElementById('modalPdfViewer').addEventListener('click', function(e) { 
+            if (e.target === this) { cerrarPdf(); } 
+        });
         /* ========== FIN SECCIÓN DUCTOS ========== */
     </script>
 </body>
