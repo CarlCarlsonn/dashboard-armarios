@@ -1251,7 +1251,7 @@
 
         function toggleMenu() { sidebar.classList.toggle('active'); sidebarOverlay.classList.toggle('active'); }
 
-        function switchView(viewName, addToHistory = true) {
+               function switchView(viewName, addToHistory = true) {
             if (sidebar.classList.contains('active')) toggleMenu();
             if (addToHistory) history.pushState({ view: viewName, modal: null }, '', '#' + viewName);
             
@@ -1265,6 +1265,7 @@
             document.getElementById('view-eero').style.display = 'none';
             document.getElementById('view-pyme').style.display = 'none';
             document.getElementById('view-energia').style.display = 'none';
+            document.getElementById('view-documentos').style.display = 'none'; // <-- Nueva línea agregada
 
             if (viewName === 'armarios') {
                 document.getElementById('menu-armarios').classList.add('active');
@@ -1289,9 +1290,12 @@
                 document.getElementById('menu-energia').classList.add('active');
                 document.getElementById('view-energia').style.display = 'flex';
                 if (globalEnergia.length === 0) loadEnergia();
+            } else if (viewName === 'documentos') {  // <-- Nuevo bloque agregado
+                document.getElementById('menu-documentos').classList.add('active');
+                document.getElementById('view-documentos').style.display = 'flex';
+                loadDocumentos();
             }
         }
-
         function openModal(modalId) {
             var el = document.getElementById(modalId);
             if (!el) {
@@ -2259,6 +2263,75 @@
         }
 
         loadData();
+                /* ============================================= */
+        /* ============ SECCIÓN DUCTOS ================= */
+        /* ============================================= */
+        var documentosData = [
+            {
+                nombre: "Materiales para postación o ductos",
+                descripcion: "Especificaciones de materiales para instalación en postes o ductos.",
+                urlRaw: "https://raw.githubusercontent.com/CarlCarlsonn/dashboard-armarios/main/DOCUMENTOS/Materiales%20para%20postacion%20o%20ductos.pdf"
+            },
+            {
+                nombre: "Acceso canalizado al domicilio (Acometida subterránea)",
+                descripcion: "Guía para el acceso canalizado y acometida subterránea al domicilio.",
+                urlRaw: "https://raw.githubusercontent.com/CarlCarlsonn/dashboard-armarios/main/DOCUMENTOS/Acceso%20canalizado%20al%20domicilio%20(Acometida%20subterranea).pdf"
+            }
+        ];
+
+        function loadDocumentos() {
+            var container = document.getElementById('resultsDocumentosContainer');
+            if (!container) return;
+            if (container.dataset.loaded === 'true') return;
+
+            var html = '';
+            documentosData.forEach(function(doc, index) {
+                html +=
+                    '<div class="card" style="min-height: auto;">' +
+                        '<div class="card-header">' +
+                            '<span class="tag" style="background-color: var(--primary); color: white;">PDF</span>' +
+                        '</div>' +
+                        '<div class="card-title">' + escapeHtml(doc.nombre) + '</div>' +
+                        '<div class="obs-box" style="font-family: inherit; font-size: 0.85rem; color: var(--text-main); margin-bottom: 15px;">' +
+                            escapeHtml(doc.descripcion) +
+                        '</div>' +
+                        '<button class="nav-btn" style="background-color: var(--accent); color: white; border: none; cursor: pointer;" onclick="descargarDocumento(' + index + ')">' +
+                            '📥 Descargar PDF' +
+                        '</button>' +
+                    '</div>';
+            });
+
+            container.innerHTML = html;
+            container.dataset.loaded = 'true';
+        }
+
+        function descargarDocumento(index) {
+            var doc = documentosData[index];
+            if (!doc) return;
+
+            var nombreArchivo = doc.nombre.replace(/[^\w\s\-áéíóúÁÉÍÓÚñÑ()]/g, '').trim() + '.pdf';
+
+            fetch(doc.urlRaw)
+                .then(function(response) {
+                    if (!response.ok) throw new Error('HTTP ' + response.status);
+                    return response.blob();
+                })
+                .then(function(blob) {
+                    var blobUrl = window.URL.createObjectURL(blob);
+                    var a = document.createElement('a');
+                    a.href = blobUrl;
+                    a.download = nombreArchivo; // Fuerza la descarga
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                    window.URL.revokeObjectURL(blobUrl);
+                })
+                .catch(function(error) {
+                    console.error('Error al descargar:', error);
+                    alert('No se pudo descargar el archivo.\n\nVerifica tu conexión o la URL del PDF.');
+                });
+        }
+        /* ========== FIN SECCIÓN DUCTOS ========== */
     </script>
 </body>
 </html>
