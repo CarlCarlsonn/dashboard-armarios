@@ -641,7 +641,7 @@
     </div>
 
     <!-- VISTA DUCTOS -->
-    <div id="view-documentos">
+    <div id="view-documentos" style="display: none; flex-direction: column; height: 100%; overflow: hidden;">
         <header>
             <div class="header-top">
                 <div class="title-group">
@@ -1310,7 +1310,7 @@
                 document.getElementById('view-documentos').style.display = 'flex';
                 loadDocumentos();
             }
-        }
+        } 
 
         function openModal(modalId) {
             var el = document.getElementById(modalId);
@@ -2330,7 +2330,7 @@
         function abrirPdf(index) {
             var doc = documentosData[index];
             if (!doc) return;
-            document.getElementById('pdfFrame').src = doc.urlRaw;
+            document.getElementById('pdfFrame').src = 'https://docs.google.com/viewer?url=' + encodeURIComponent(doc.urlRaw) + '&embedded=true';
             document.getElementById('pdfLinkExterno').href = doc.urlRaw;
             openModal('modalPdfViewer');
         }
