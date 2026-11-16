@@ -65,7 +65,6 @@
         
         .header-title { font-size: 1.15rem; font-weight: 700; margin: 0; display: flex; align-items: center; gap: 8px; }
         
-        /* --- NUEVOS ÍCONOS DEL HEADER --- */
         .header-icon {
             display: inline-flex;
             align-items: center;
@@ -87,7 +86,6 @@
             fill: currentColor;
             stroke: none !important;
         }
-        /* --------------------------------------- */
 
         .subtitle { font-size: 0.7rem; opacity: 0.85; margin-top: 4px; line-height: 1.2; max-width: 90%; }
         .header-buttons { display: flex; gap: 8px; }
@@ -120,7 +118,6 @@
 
         .results-container { flex: 1; overflow-y: auto; padding: 15px; padding-bottom: 50px; -webkit-overflow-scrolling: touch; touch-action: pan-y; }
 
-        /* ARMARIOS */
         .card { background: var(--card-bg); border-radius: 12px; padding: 16px; margin-bottom: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: flex; flex-direction: column; position: relative; overflow: hidden; min-height: 140px; }
         .card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background-color: var(--tag-color, var(--primary)); }
         .rule-card { border: 2px solid var(--danger-color); background-color: var(--card-bg); border-left: 6px solid var(--danger-color); animation: slideDown 0.3s ease-out; }
@@ -135,7 +132,6 @@
         .nav-btn { background-color: var(--accent); color: white; text-decoration: none; padding: 12px; border-radius: 10px; text-align: center; font-weight: 600; display: flex; justify-content: center; align-items: center; gap: 8px; font-size: 0.95rem; margin-top: auto; }
         .nav-btn:active { opacity: 0.8; }
 
-        /* TOPOLOGIAS & EERO & PYME & ENERGIA */
         .hero-card { background: var(--card-bg); border-radius: 12px; padding: 16px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: flex; align-items: flex-start; gap: 15px; border-left: 6px solid var(--primary); animation: slideDown 0.3s ease-out; }
         .hero-img { width: 100px; height: 100px; object-fit: contain; border-radius: 8px; background: #fff; padding: 5px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); flex-shrink: 0; }
         .hero-details { flex: 1; }
@@ -161,7 +157,6 @@
         .c-orange { stroke: var(--orange-primary); fill: rgba(245,124,0,0.1); }
         .grid-title { padding: 12px 8px; text-align: center; font-weight: 700; font-size: 0.8rem; color: var(--text-main); line-height: 1.2; flex: 1; display: flex; align-items: center; justify-content: center; }
 
-        /* GENERALES */
         .loading, .no-results { text-align: center; padding: 20px; color: var(--text-muted); }
         .contact-footer { text-align: center; font-size: 0.8rem; color: var(--text-muted); padding: 20px; margin-top: 10px; border-top: 1px solid rgba(0,0,0,0.1); line-height: 1.4; }
         body.dark-mode .contact-footer { border-top-color: rgba(255,255,255,0.1); }
@@ -200,7 +195,6 @@
         .modal-content .note-box { background: var(--rule-bg); border-left: 4px solid var(--rule-border); padding: 10px; border-radius: 4px; font-size: 0.85rem; margin-bottom: 15px; }
         .close-modal-btn { background: var(--primary); color: white; border: none; padding: 12px 15px; border-radius: 8px; width: 100%; font-weight: bold; font-size: 1rem; cursor: pointer; margin-top: 10px; }
 
-        /* ESTILOS MODALES PYME Y HUAWEI DINÁMICOS */
         .pyme-btn-title { color: var(--pyme-primary) !important; }
         .pyme-close-btn { background: var(--pyme-primary) !important; }
         .pyme-modal-img { width: 100%; border-radius: 8px; margin-top: 10px; border: 1px solid rgba(0,0,0,0.1); }
@@ -216,7 +210,6 @@
         .step-text { font-size: 0.85rem; line-height: 1.4; color: var(--text-main); }
         .step-text b { color: var(--text-main); }
         
-        /* Color de paso para Huawei */
         .hw-step-num { background: var(--purple-primary); color: white; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.75rem; flex-shrink: 0; margin-top: 2px; }
 
         .vertical-list { list-style: none; padding: 0; margin: 0 0 15px 0; background: var(--table-bg); border: 1px solid #eee; border-radius: 8px; padding: 12px; }
@@ -231,7 +224,6 @@
         .info-box { background: #e3f2fd; border-left: 4px solid #1976d2; padding: 12px; border-radius: 4px; font-size: 0.85rem; color: #0d47a1; margin-bottom: 15px; line-height: 1.4; }
         body.dark-mode .info-box { background: #1a237e; color: #e3f2fd; border-color: #3b82f6; }
 
-        /* ESTILOS CMD GUIDE */
         .cmd-list { list-style: none; padding: 0; margin: 0; }
         .cmd-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid #eee; }
         body.dark-mode .cmd-item { border-bottom-color: #444; }
@@ -247,7 +239,6 @@
         .tips-box ul { margin: 0; padding-left: 20px; font-size: 0.8rem; color: var(--text-main); line-height: 1.4; }
         .tips-box li { margin-bottom: 6px; }
 
-        /* ESTILOS PORT FORWARDING */
         .pf-step { display: flex; gap: 10px; margin-bottom: 12px; font-size: 0.85rem; line-height: 1.4; }
         .pf-step-num { background: var(--pyme-primary); color: white; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; font-size: 0.75rem; }
         .pf-form-box { background: var(--table-bg); border: 1px solid #ddd; border-radius: 8px; padding: 12px; margin-bottom: 15px; }
@@ -260,7 +251,6 @@
         .pf-data-box { background: #e3f2fd; border-left: 4px solid #1976d2; padding: 12px; border-radius: 4px; font-size: 0.85rem; margin-bottom: 15px; color: #0d47a1; }
         body.dark-mode .pf-data-box { background: #1a237e; border-color: #3b82f6; color: #e3f2fd; }
 
-        /* TV DECO */
         .guide-modal-title { color: #1976d2 !important; }
         .guide-card { background: rgba(0,0,0,0.02); border: 1px solid rgba(0,0,0,0.1); border-radius: 10px; padding: 15px; margin-bottom: 15px; display: flex; flex-direction: column; }
         body.dark-mode .guide-card { background: rgba(255,255,255,0.05); border-color: #444; }
@@ -284,7 +274,6 @@
         .topologia-modal-img { width: 100%; height: auto; border-radius: 8px; margin-bottom: 15px; background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         .topologia-modal-text { font-size: 0.95rem; line-height: 1.6; color: var(--text-main); white-space: pre-wrap; }
 
-        /* EERO */
         .eero-hero-card { background: var(--card-bg); border-radius: 12px; padding: 16px; display: flex; align-items: flex-start; gap: 15px; border-left: 6px solid var(--teal-primary); box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 15px; animation: slideDown 0.3s ease-out; }
         .eero-hero-img { width: 80px; height: 80px; object-fit: contain; border-radius: 8px; padding: 5px; flex-shrink: 0; border: 1px solid rgba(0,0,0,0.1); }
         .eero-hero-details { flex: 1; min-width: 0; }
@@ -309,12 +298,10 @@
         .eero-close-btn { background: var(--teal-primary) !important; }
         .eero-modal-img { width: 100%; border-radius: 8px; margin-top: 10px; border: 1px solid rgba(0,0,0,0.1); }
 
-        /* MODAL OST MIKROTIK */
         .ost-list { padding-left: 20px; font-size: 0.85rem; line-height: 1.5; color: var(--text-main); }
         .ost-list li { margin-bottom: 12px; }
         .ost-list b { color: var(--pyme-primary); }
 
-        /* --- NUEVOS ESTILOS ENERGIA --- */
         .energia-step-block { margin-bottom: 20px; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; background: #fff; }
         body.dark-mode .energia-step-block { border-color: #444; background: #1e1e1e; }
         .energia-step-header { background: #f1f3f5; padding: 10px; font-weight: bold; font-size: 0.9rem; color: #333; border-bottom: 1px solid #ddd; }
@@ -344,7 +331,6 @@
         .meter-instructions { flex: 1; font-size: 0.8rem; line-height: 1.4; color: var(--text-main); }
         .dial-indicator { display: inline-block; background: #000; color: #fff; padding: 2px 6px; border-radius: 4px; font-family: monospace; font-weight: bold; font-size: 0.75rem; margin-top: 4px; }
 
-        /* --- ESTILOS NUEVOS ÍCONOS MENÚ LATERAL --- */
         .menu-icon {
             width: 24px;
             height: 24px;
@@ -364,7 +350,6 @@
         }
         .menu-icon.cube svg { stroke-width: 2.5; }
 
-        /* --- ESTILOS DE LA NUEVA FIRMA (Fondo) --- */
         .app-footer {
             margin-top: auto;
             padding: 20px 15px;
@@ -426,13 +411,12 @@
                 </div>
                 Energía y Tierra
             </li>
-                        <li class="sidebar-item" id="menu-documentos" onclick="switchView('documentos')">
+            <li class="sidebar-item" id="menu-documentos" onclick="switchView('documentos')">
                 <div class="menu-icon">
                     <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
                 </div>
                 DUCTOS
             </li>
-                       
         </ul>
         
         <!-- FIRMA SUTIL -->
@@ -640,6 +624,7 @@
         <div class="results-container" id="resultsEnergiaContainer"><div class="loading">Cargando Energía...</div></div>
         <button id="scrollTopBtnEnergia" onclick="scrollToTopEnergia()">⬆️</button>
     </div>
+
     <!-- VISTA DUCTOS -->
     <div id="view-documentos" style="display: none; flex-direction: column; height: 100%; overflow: hidden;">
         <header>
@@ -662,30 +647,9 @@
             <div class="loading">Cargando documentos...</div>
         </div>
     </div>
-        <!-- VISTA DUCTOS -->
-    <div id="view-documentos" style="display: none; flex-direction: column; height: 100%; overflow: hidden;">
-        <header>
-            <div class="header-top">
-                <div class="title-group">
-                    <button class="menu-btn" onclick="toggleMenu()">☰</button>
-                    <div>
-                        <div class="header-title">
-                            <span class="header-icon">
-                                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
-                            </span>
-                            DUCTOS
-                        </div>
-                        <div class="subtitle">Materiales y accesos para ductos.</div>
-                    </div>
-                </div>
-            </div>
-        </header>
-        <div class="results-container" id="resultsDocumentosContainer">
-            <div class="loading">Cargando documentos...</div>
-        </div>
-    </div>
-    <!-- MODALES FIJOS (ARMARIOS / DECOS / EERO / PYME) -->
-        <!-- MODAL VISOR DE PDF -->
+
+    <!-- MODALES FIJOS -->
+    <!-- MODAL VISOR DE PDF -->
     <div class="modal-overlay" id="modalPdfViewer">
         <div class="modal-content" style="max-width: 900px; height: 85vh; display: flex; flex-direction: column; padding: 15px; overflow: hidden;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
@@ -698,6 +662,7 @@
             </div>
         </div>
     </div>
+    
     <div class="modal-overlay" id="infoModal">
         <div class="modal-content">
             <h3>⚠️ COMPRUEBA QUE LA CUENTA NO SEA RÍGIDA</h3>
@@ -824,7 +789,6 @@
         </div>
     </div>
 
-    <!-- MODALES PYME -->
     <div class="modal-overlay" id="modalPymeDetail">
         <div class="modal-content">
             <button class="clear-search-btn" style="display:flex; position:absolute; top:15px; right:15px;" onclick="closeModal('modalPymeDetail')">✖</button>
@@ -1287,7 +1251,7 @@
 
         function toggleMenu() { sidebar.classList.toggle('active'); sidebarOverlay.classList.toggle('active'); }
 
-               function switchView(viewName, addToHistory = true) {
+        function switchView(viewName, addToHistory = true) {
             if (sidebar.classList.contains('active')) toggleMenu();
             if (addToHistory) history.pushState({ view: viewName, modal: null }, '', '#' + viewName);
             
@@ -1301,7 +1265,6 @@
             document.getElementById('view-eero').style.display = 'none';
             document.getElementById('view-pyme').style.display = 'none';
             document.getElementById('view-energia').style.display = 'none';
-            document.getElementById('view-documentos').style.display = 'none'; // <-- Nueva línea agregada
             document.getElementById('view-documentos').style.display = 'none';
 
             if (viewName === 'armarios') {
@@ -1327,11 +1290,13 @@
                 document.getElementById('menu-energia').classList.add('active');
                 document.getElementById('view-energia').style.display = 'flex';
                 if (globalEnergia.length === 0) loadEnergia();
-            } else if (viewName === 'documentos') {  // <-- Nuevo bloque agregado
+            } else if (viewName === 'documentos') {  
                 document.getElementById('menu-documentos').classList.add('active');
                 document.getElementById('view-documentos').style.display = 'flex';
                 loadDocumentos();
-           
+            }
+        } // <-- AQUI FALTABA ESTA LLAVE DE CIERRE PARA LA FUNCION SWITCHVIEW
+
         function openModal(modalId) {
             var el = document.getElementById(modalId);
             if (!el) {
@@ -2299,76 +2264,8 @@
         }
 
         loadData();
-                /* ============================================= */
-        /* ============ SECCIÓN DUCTOS ================= */
+        
         /* ============================================= */
-        var documentosData = [
-            {
-                nombre: "Materiales para postación o ductos",
-                descripcion: "Especificaciones de materiales para instalación en postes o ductos.",
-                urlRaw: "https://raw.githubusercontent.com/CarlCarlsonn/dashboard-armarios/main/DOCUMENTOS/Materiales%20para%20postacion%20o%20ductos.pdf"
-            },
-            {
-                nombre: "Acceso canalizado al domicilio (Acometida subterránea)",
-                descripcion: "Guía para el acceso canalizado y acometida subterránea al domicilio.",
-                urlRaw: "https://raw.githubusercontent.com/CarlCarlsonn/dashboard-armarios/main/DOCUMENTOS/Acceso%20canalizado%20al%20domicilio%20(Acometida%20subterranea).pdf"
-            }
-        ];
-
-        function loadDocumentos() {
-            var container = document.getElementById('resultsDocumentosContainer');
-            if (!container) return;
-            if (container.dataset.loaded === 'true') return;
-
-            var html = '';
-            documentosData.forEach(function(doc, index) {
-                html +=
-                    '<div class="card" style="min-height: auto;">' +
-                        '<div class="card-header">' +
-                            '<span class="tag" style="background-color: var(--primary); color: white;">PDF</span>' +
-                        '</div>' +
-                        '<div class="card-title">' + escapeHtml(doc.nombre) + '</div>' +
-                        '<div class="obs-box" style="font-family: inherit; font-size: 0.85rem; color: var(--text-main); margin-bottom: 15px;">' +
-                            escapeHtml(doc.descripcion) +
-                        '</div>' +
-                        '<button class="nav-btn" style="background-color: var(--accent); color: white; border: none; cursor: pointer;" onclick="descargarDocumento(' + index + ')">' +
-                            '📥 Descargar PDF' +
-                        '</button>' +
-                    '</div>';
-            });
-
-            container.innerHTML = html;
-            container.dataset.loaded = 'true';
-        }
-
-        function descargarDocumento(index) {
-            var doc = documentosData[index];
-            if (!doc) return;
-
-            var nombreArchivo = doc.nombre.replace(/[^\w\s\-áéíóúÁÉÍÓÚñÑ()]/g, '').trim() + '.pdf';
-
-            fetch(doc.urlRaw)
-                .then(function(response) {
-                    if (!response.ok) throw new Error('HTTP ' + response.status);
-                    return response.blob();
-                })
-                .then(function(blob) {
-                    var blobUrl = window.URL.createObjectURL(blob);
-                    var a = document.createElement('a');
-                    a.href = blobUrl;
-                    a.download = nombreArchivo; // Fuerza la descarga
-                    document.body.appendChild(a);
-                    a.click();
-                    a.remove();
-                    window.URL.revokeObjectURL(blobUrl);
-                })
-                .catch(function(error) {
-                    console.error('Error al descargar:', error);
-                    alert('No se pudo descargar el archivo.\n\nVerifica tu conexión o la URL del PDF.');
-                });
-        }
-        /* ========== FIN SECCIÓN DUCTOS ========== */
-                /* ============================================= */
         /* ============ LÓGICA DUCTOS ================== */
         /* ============================================= */
         var documentosData = [
