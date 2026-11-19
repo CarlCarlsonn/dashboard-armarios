@@ -18,6 +18,10 @@
             --teal-primary: #00897b; --teal-dark: #00695c; 
             --pyme-primary: #3f51b5; --pyme-dark: #283593;
             --orange-primary: #f57c00; --orange-dark: #e65100;
+            --fusion-primary: #c62828; --fusion-dark: #8e0000;
+            --fusion-border: rgba(0,0,0,0.12); --fusion-grid-line: #495057;
+            --fusion-stage-bg: linear-gradient(180deg, #f1f3f5 0%, #e4e8ec 100%);
+            --fusion-ok-bg: #e8f5e9; --fusion-ok-color: #2e7d32;
             --warning-bg: #fff3cd; --warning-border: #ffc107;
             --warning-text: #856404; --btn-setup: #3a3a3a; --btn-red: #d32f2f; --btn-blue: #1976d2;
             --btn-green: #2e7d32; --btn-grey: #757575; --btn-orange: #f57c00; --btn-light-grey: #e0e0e0;
@@ -33,6 +37,10 @@
             --teal-primary: #26a69a; --teal-dark: #00897b; 
             --pyme-primary: #5c6bc0; --pyme-dark: #3949ab;
             --orange-primary: #fb8c00; --orange-dark: #ef6c00;
+            --fusion-primary: #d32f2f; --fusion-dark: #9a0007;
+            --fusion-border: rgba(255,255,255,0.14); --fusion-grid-line: #757575;
+            --fusion-stage-bg: linear-gradient(180deg, #1a1d21 0%, #121417 100%);
+            --fusion-ok-bg: #1b5e20; --fusion-ok-color: #a5d6a7;
             --warning-bg: #3e2a1a; --warning-border: #ffb74d; --warning-text: #ffb74d;
         }
 
@@ -45,8 +53,8 @@
             height: 100vh; height: 100dvh; transition: background-color 0.3s, color 0.3s;
         }
 
-        #view-armarios, #view-codigos, #view-topologias, #view-eero, #view-pyme, #view-energia, #view-documentos { display: flex; flex-direction: column; height: 100%; overflow: hidden; }
-        #view-codigos, #view-topologias, #view-eero, #view-pyme, #view-energia, #view-documentos { display: none; }
+        #view-armarios, #view-codigos, #view-topologias, #view-eero, #view-pyme, #view-energia, #view-documentos, #view-fusion { display: flex; flex-direction: column; height: 100%; overflow: hidden; }
+        #view-codigos, #view-topologias, #view-eero, #view-pyme, #view-energia, #view-documentos, #view-fusion { display: none; }
 
         header {
             background-color: var(--primary); color: white; padding: 15px 15px 10px 15px;
@@ -58,6 +66,7 @@
         #view-eero header { background-color: var(--teal-primary); }
         #view-pyme header { background-color: var(--pyme-primary); }
         #view-energia header { background-color: var(--orange-primary); }
+        #view-fusion header { background-color: var(--fusion-primary); }
 
         .header-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
         .title-group { display: flex; align-items: center; gap: 12px; }
@@ -74,7 +83,8 @@
             height: 22px;
             flex-shrink: 0;
         }
-        .header-icon svg {
+        .header-icon svg.fusion-svg { width: 100%; height: 100%; display: block; }
+        .header-icon svg:not(.fusion-svg) {
             width: 100%;
             height: 100%;
             stroke: currentColor;
@@ -168,8 +178,8 @@
         .contact-footer strong { color: var(--primary); }
         mark { background-color: var(--highlight-bg); color: var(--highlight-text); padding: 0 2px; border-radius: 3px; font-weight: bold; }
         
-        #scrollTopBtn, #scrollTopBtnCodigos, #scrollTopBtnTopologias, #scrollTopBtnEero, #scrollTopBtnPyme, #scrollTopBtnEnergia { display: none; position: fixed; bottom: 20px; right: 20px; z-index: 99; background-color: var(--primary); color: white; border: none; cursor: pointer; padding: 15px; border-radius: 50%; font-size: 1.2rem; box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: opacity 0.3s; }
-        #scrollTopBtnCodigos { background-color: var(--blue-primary); } #scrollTopBtnTopologias { background-color: var(--purple-primary); } #scrollTopBtnEero { background-color: var(--teal-primary); } #scrollTopBtnPyme { background-color: var(--pyme-primary); } #scrollTopBtnEnergia { background-color: var(--orange-primary); }
+        #scrollTopBtn, #scrollTopBtnCodigos, #scrollTopBtnTopologias, #scrollTopBtnEero, #scrollTopBtnPyme, #scrollTopBtnEnergia, #scrollTopBtnFusion { display: none; position: fixed; bottom: 20px; right: 20px; z-index: 99; background-color: var(--primary); color: white; border: none; cursor: pointer; padding: 15px; border-radius: 50%; font-size: 1.2rem; box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: opacity 0.3s; }
+        #scrollTopBtnCodigos { background-color: var(--blue-primary); } #scrollTopBtnTopologias { background-color: var(--purple-primary); } #scrollTopBtnEero { background-color: var(--teal-primary); } #scrollTopBtnPyme { background-color: var(--pyme-primary); } #scrollTopBtnEnergia { background-color: var(--orange-primary); } #scrollTopBtnFusion { background-color: var(--fusion-primary); }
 
         .sidebar-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; opacity: 0; transition: opacity 0.3s; }
         .sidebar-overlay.active { display: block; opacity: 1; }
@@ -353,7 +363,8 @@
             justify-content: center;
             flex-shrink: 0;
         }
-        .menu-icon svg:not(.huawei-logo) {
+        .menu-icon svg.fusion-svg { width: 100%; height: 100%; display: block; }
+        .menu-icon svg:not(.huawei-logo):not(.fusion-svg) {
             width: 100%;
             height: 100%;
             stroke: currentColor;
@@ -419,6 +430,397 @@
         .sk-grid-icon { width: 100%; height: 80px; }
         .sk-grid-text { width: 60%; height: 15px; margin: 12px auto; }
         /* ======================================================== */
+
+        /* ========================================================
+           ESTILOS BLINDADOS SECCIÓN FUSIÓN (P-80-11)
+           ======================================================== */
+        #menu-fusion.active {
+            background-color: rgba(198, 40, 40, 0.1);
+            color: var(--fusion-primary);
+            border-left: 4px solid var(--fusion-primary);
+        }
+        body.dark-mode #menu-fusion.active {
+            background-color: rgba(239, 83, 80, 0.15);
+            color: #ff8a80;
+            border-left-color: #ef5350;
+        }
+
+        #view-fusion header {
+            padding: 15px 15px 12px 15px;
+            padding-top: max(15px, env(safe-area-inset-top));
+            flex-shrink: 0;
+        }
+        #view-fusion .header-top {
+            align-items: center;
+            margin-bottom: 0;
+            gap: 8px;
+        }
+
+        .fusion-dl-corner {
+            background: rgba(255,255,255,0.18);
+            border: 1px solid rgba(255,255,255,0.35);
+            color: #ffffff;
+            height: 36px;
+            padding: 0 11px;
+            border-radius: 10px;
+            font-size: 0.76rem;
+            font-weight: 800;
+            letter-spacing: 0.2px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: background-color 0.2s, opacity 0.2s;
+            flex-shrink: 0;
+        }
+        .fusion-dl-corner:active { background: rgba(255,255,255,0.32); }
+        .fusion-dl-corner:disabled { opacity: 0.65; cursor: wait; }
+
+        .fusion-sub-tabs {
+            display: flex;
+            gap: 6px;
+            margin-top: 12px;
+            background: rgba(0,0,0,0.2);
+            padding: 4px;
+            border-radius: 12px;
+        }
+        .fusion-sub-tab {
+            flex: 1;
+            border: none;
+            background: transparent;
+            color: rgba(255,255,255,0.88);
+            padding: 8px 4px;
+            border-radius: 9px;
+            font-weight: 700;
+            font-size: 0.78rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .fusion-sub-tab.active {
+            background: #ffffff;
+            color: var(--fusion-primary);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+        }
+        body.dark-mode .fusion-sub-tab.active {
+            background: #2c2c2c;
+            color: #ff8a80;
+        }
+
+        .fusion-sticky-bar {
+            background: var(--card-bg);
+            padding: 9px 15px;
+            border-bottom: 1px solid var(--fusion-border);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+            z-index: 90;
+            flex-shrink: 0;
+        }
+        .fusion-tube-toggle { display: flex; gap: 8px; }
+        .fusion-tube-btn {
+            flex: 1;
+            padding: 9px 8px;
+            border-radius: 10px;
+            border: 2px solid var(--fusion-border);
+            background: var(--table-bg);
+            color: var(--text-main);
+            font-weight: 800;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .fusion-tube-btn.active {
+            border-color: var(--fusion-primary);
+            background: var(--fusion-primary);
+            color: #ffffff;
+            box-shadow: 0 2px 6px rgba(198,40,40,0.28);
+        }
+
+        .fusion-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border: 1px solid var(--fusion-border);
+        }
+        .fusion-card-title {
+            font-size: 0.98rem;
+            font-weight: 800;
+            margin: 0 0 12px 0;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .fusion-pill {
+            display: inline-block;
+            background: var(--fusion-primary);
+            color: #fff;
+            padding: 1px 7px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-weight: 700;
+            font-size: 0.8rem;
+        }
+
+        .fusion-fil-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-bottom: 14px;
+        }
+        .fusion-fil-num-btn {
+            padding: 10px 4px;
+            border-radius: 10px;
+            border: 1px solid var(--fusion-border);
+            background: var(--table-bg);
+            color: var(--text-main);
+            font-weight: 800;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: transform 0.12s, background-color 0.15s;
+        }
+        .fusion-fil-num-btn.active {
+            background: var(--fusion-primary);
+            color: #fff;
+            border-color: var(--fusion-primary);
+            transform: scale(1.03);
+        }
+
+        .fusion-visual-stage {
+            background: var(--fusion-stage-bg);
+            border: 1px solid var(--fusion-border);
+            border-radius: 14px;
+            padding: 22px 14px 20px 14px;
+            margin-bottom: 10px;
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.06);
+        }
+        .fusion-assembly {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            min-height: 88px;
+        }
+        .fusion-tube {
+            flex: 0 0 55%;
+            height: 84px;
+            border-radius: 12px 0 0 12px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 24px 0 14px;
+            box-shadow:
+                0 12px 18px -6px rgba(0,0,0,0.36),
+                0 4px 6px -2px rgba(0,0,0,0.22);
+            z-index: 2;
+        }
+        .fusion-tube::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 12px 0 0 12px;
+            background: linear-gradient(
+                180deg,
+                rgba(255,255,255,0.24) 0%,
+                rgba(255,255,255,0.50) 16%,
+                rgba(255,255,255,0.10) 36%,
+                rgba(0,0,0,0.02) 55%,
+                rgba(0,0,0,0.34) 86%,
+                rgba(0,0,0,0.52) 100%
+            );
+            pointer-events: none;
+            z-index: 1;
+        }
+        .fusion-tube-sub, .fusion-tube-main { position: relative; z-index: 2; }
+        .fusion-tube-sub {
+            font-size: 0.66rem;
+            text-transform: uppercase;
+            font-weight: 800;
+            opacity: 0.88;
+            line-height: 1;
+            letter-spacing: 0.6px;
+        }
+        .fusion-tube-main {
+            font-size: 0.90rem;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-top: 4px;
+        }
+        .fusion-tube-mouth {
+            position: absolute;
+            right: -15px;
+            top: 0;
+            width: 30px;
+            height: 84px;
+            border-radius: 50%;
+            background: radial-gradient(
+                ellipse at 36% 50%,
+                #050505 0%,
+                #121212 52%,
+                #2c2c2c 80%,
+                #181818 100%
+            );
+            border: 3.5px solid rgba(0,0,0,0.34);
+            box-shadow:
+                inset 5px 0 12px rgba(0,0,0,0.95),
+                inset -2px 0 5px rgba(255,255,255,0.16),
+                2px 3px 8px rgba(0,0,0,0.28);
+            z-index: 3;
+        }
+        .fusion-filament-zone {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            min-width: 0;
+        }
+        .fusion-filament {
+            height: 24px;
+            width: 100%;
+            margin-left: -10px;
+            padding: 0 10px 0 22px;
+            border-radius: 0 12px 12px 0;
+            position: relative;
+            z-index: 4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.74rem;
+            font-weight: 900;
+            letter-spacing: 0.4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            box-shadow:
+                0 7px 12px -3px rgba(0,0,0,0.34),
+                0 2px 4px rgba(0,0,0,0.2);
+        }
+        .fusion-filament::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 0 12px 12px 0;
+            background:
+                linear-gradient(90deg, rgba(0,0,0,0.58) 0%, rgba(0,0,0,0.16) 14%, rgba(0,0,0,0) 28%),
+                linear-gradient(180deg, rgba(255,255,255,0.46) 0%, rgba(255,255,255,0.14) 30%, rgba(0,0,0,0.04) 55%, rgba(0,0,0,0.38) 100%);
+            pointer-events: none;
+            z-index: 1;
+        }
+        .fusion-filament span { position: relative; z-index: 2; }
+        .fusion-filament.fo-blanco { border: 1.5px solid #868e96; border-left: none; }
+
+        .fo-azul { background: #0070c0; color: #fff; }
+        .fo-naranjo { background: #ff9800; color: #111; }
+        .fo-verde { background: #00b050; color: #fff; }
+        .fo-cafe { background: #795548; color: #fff; }
+        .fo-gris { background: #9e9e9e; color: #111; }
+        .fo-blanco { background: #ffffff; color: #111; }
+
+        .fusion-table-wrap {
+            border: 1.5px solid var(--fusion-grid-line);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 12px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .fusion-table-wrap:last-child { margin-bottom: 0; }
+        .fusion-table-wrap.tube-active {
+            border: 2.5px solid var(--fusion-primary);
+            box-shadow: 0 4px 12px rgba(198,40,40,0.25);
+        }
+        .fusion-group-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+        }
+        .fusion-group-table tr { cursor: pointer; }
+        .fusion-group-table td {
+            padding: 8px 10px;
+            font-weight: 700;
+            border-right: 1.5px solid var(--fusion-grid-line);
+            border-bottom: 1.5px solid var(--fusion-grid-line);
+        }
+        .fusion-group-table td:last-child { border-right: none; }
+        .fusion-group-table tr:last-child td { border-bottom: none; }
+        .fusion-group-table td.fusion-tube-cell { border-bottom: none; }
+
+        .fusion-tube-cell {
+            width: 44%;
+            vertical-align: middle;
+            text-align: left;
+            font-style: italic;
+            font-size: 0.8rem;
+            letter-spacing: 0.2px;
+        }
+        .fusion-color-cell { width: 30%; text-align: left; position: relative; }
+        .fusion-num-cell {
+            width: 26%;
+            text-align: center;
+            background: var(--card-bg);
+            color: var(--text-main);
+            font-weight: 800;
+            white-space: nowrap;
+        }
+        tr.fusion-row-active .fusion-color-cell {
+            box-shadow: inset 0 0 0 2px #ffffff, inset 0 0 0 4.5px var(--fusion-primary);
+            font-weight: 900;
+        }
+        tr.fusion-row-active .fusion-num-cell {
+            background: var(--fusion-primary);
+            color: #ffffff;
+            font-weight: 900;
+            font-size: 0.84rem;
+            letter-spacing: 0.3px;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.25);
+        }
+
+        .fusion-step-row { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 10px; font-size: 0.84rem; line-height: 1.4; }
+        .fusion-step-row:last-child { margin-bottom: 0; }
+        .fusion-step-badge {
+            background: var(--fusion-primary);
+            color: #fff;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 800;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+        .fusion-alert-box {
+            background: var(--warning-bg);
+            border-left: 5px solid var(--warning-border);
+            color: var(--warning-text);
+            padding: 11px 12px;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 12px;
+        }
+        .fusion-danger-box {
+            background: var(--danger-bg);
+            border-left: 5px solid var(--danger-color);
+            color: var(--danger-color);
+            padding: 11px 12px;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            line-height: 1.4;
+            margin-bottom: 12px;
+        }
+        .fusion-ok-box {
+            background: var(--fusion-ok-bg);
+            border-left: 5px solid var(--fusion-ok-color);
+            color: var(--fusion-ok-color);
+            padding: 11px 12px;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            line-height: 1.4;
+            margin-bottom: 12px;
+        }
+        /* ======================================================== */
     </style>
 </head>
 <body>
@@ -472,6 +874,17 @@
                     <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
                 </div>
                 DUCTOS
+            </li>
+            <li class="sidebar-item" id="menu-fusion" onclick="switchView('fusion')">
+                <div class="menu-icon">
+                    <svg class="fusion-svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M2 12h7" stroke="currentColor" stroke-width="2.3"/>
+                        <path d="M15 12h7" stroke="currentColor" stroke-width="2.3"/>
+                        <circle cx="12" cy="12" r="2.6" fill="#FF9800" stroke="#C62828" stroke-width="1.6"/>
+                        <path d="M12 4.5v2.2M12 17.3v2.2M6.8 6.8l1.6 1.6M15.6 15.6l1.6 1.6M6.8 17.2l1.6-1.6M15.6 8.4l1.6-1.6" stroke="#FF9800" stroke-width="1.9"/>
+                    </svg>
+                </div>
+                FUSIÓN
             </li>
         </ul>
         
@@ -700,6 +1113,124 @@
             </div>
         </header>
         <div class="results-container" id="resultsDocumentosContainer"></div>
+    </div>
+
+    <!-- VISTA FUSION -->
+    <div id="view-fusion">
+        <header>
+            <div class="header-top">
+                <div class="title-group">
+                    <button class="menu-btn" onclick="toggleMenu()">☰</button>
+                    <div>
+                        <div class="header-title">
+                            <span class="header-icon">
+                                <svg class="fusion-svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M2 12h7M15 12h7" stroke="#fff" stroke-width="2.3"/>
+                                    <circle cx="12" cy="12" r="2.6" fill="#FFD54F" stroke="#fff" stroke-width="1.4"/>
+                                    <path d="M12 4.5v2.2M12 17.3v2.2M6.8 6.8l1.6 1.6M15.6 15.6l1.6 1.6M6.8 17.2l1.6-1.6M15.6 8.4l1.6-1.6" stroke="#FFD54F" stroke-width="1.9"/>
+                                </svg>
+                            </span>
+                            FUSIÓN
+                        </div>
+                        <div class="subtitle">CDA Termocontraíbles · P-80-11</div>
+                    </div>
+                </div>
+                <div class="header-buttons">
+                    <button class="fusion-dl-corner" id="btnDescargarManualFusion" onclick="descargarManualFusion()" title="Descargar Manual P-80-11">
+                        📥 PDF
+                    </button>
+                </div>
+            </div>
+            <div class="fusion-sub-tabs">
+                <button class="fusion-sub-tab active" id="fusionTabColores" onclick="switchFusionSubTab('colores', this)">🎨 Colores</button>
+                <button class="fusion-sub-tab" id="fusionTabPasos" onclick="switchFusionSubTab('pasos', this)">📋 Paso a Paso</button>
+                <button class="fusion-sub-tab" id="fusionTabAuditoria" onclick="switchFusionSubTab('auditoria', this)">🦺 EPP / Audit</button>
+            </div>
+        </header>
+
+        <!-- BARRA FIJA PARA CAMBIAR DE 2 A 4 MINI TUBOS EN CUALQUIER MOMENTO -->
+        <div class="fusion-sticky-bar" id="fusionTubeStickyBar" style="display: none;">
+            <div class="fusion-tube-toggle">
+                <button class="fusion-tube-btn active" id="btnFusion2Tubos" onclick="setFusionTubeModel(2)">2 Mini Tubos (1-12)</button>
+                <button class="fusion-tube-btn" id="btnFusion4Tubos" onclick="setFusionTubeModel(4)">4 Mini Tubos (1-8)</button>
+            </div>
+        </div>
+
+        <div class="results-container" id="resultsFusionContainer">
+            <!-- SKELETON LOADER INTEGRADO -->
+            <div id="fusionSkeletonContainer"></div>
+
+            <!-- CONTENIDO REAL FUSIÓN -->
+            <div id="fusionRealContent" style="display: none;">
+                <!-- SUB-TAB 1: COLORES -->
+                <div id="fusion-subtab-colores">
+                    <div class="fusion-card">
+                        <div class="fusion-card-title">🎯 Selector Rápido de Filamento</div>
+                        <div class="fusion-fil-grid" id="fusionFilGrid"></div>
+                        <div class="fusion-visual-stage" id="fusionVisualStage"></div>
+                        <div style="font-size:0.75rem; color:var(--text-muted); text-align:center;">
+                            Toca un filamento arriba o directamente en la tabla para destacarlo.
+                        </div>
+                    </div>
+
+                    <div class="fusion-card">
+                        <div class="fusion-card-title">📊 Tabla Completa de Referencia</div>
+                        <div id="fusionFullTableContainer"></div>
+                    </div>
+                </div>
+
+                <!-- SUB-TAB 2: PASO A PASO -->
+                <div id="fusion-subtab-pasos" style="display:none;">
+                    <div class="fusion-card">
+                        <div class="fusion-card-title">1. Verificación y Preparación CDA (8 entradas)</div>
+                        <div class="fusion-step-row"><div class="fusion-step-badge">1</div><div>Validar filamento libre con <b>Despacho</b> y en <b>Contenedor</b>. Sin rótulo claro: usar <b>linterna óptica</b>.</div></div>
+                        <div class="fusion-step-row"><div class="fusion-step-badge">2</div><div><b>Entrada con baja:</b> Ablandar termo antiguo con soplete (guantes de cuero) y retirar con cartonero.</div></div>
+                        <div class="fusion-step-row"><div class="fusion-step-badge">3</div><div>Ingresar acometida y <b>dejar puesto el termocontraíble</b> antes de fusionar.</div></div>
+                        <div class="fusion-step-row"><div class="fusion-step-badge">4</div><div>Remover chaqueta hasta <b>soporte metálico</b>. Cortar pigtail a <span class="fusion-pill">5 vueltas a la mano</span> y presentar en bandeja.</div></div>
+                    </div>
+
+                    <div class="fusion-card">
+                        <div class="fusion-card-title">2. Pelado, Corte y Fusión</div>
+                        <div class="fusion-step-row"><div class="fusion-step-badge">1</div><div>Pasar protección termo <b>SIEMPRE hacia la acometida</b> (evita quebrar el filamento).</div></div>
+                        <div class="fusion-step-row"><div class="fusion-step-badge">2</div><div>Pelar a <span class="fusion-pill">45°</span> y limpiar con <b>alcohol isopropílico</b> y toalla limpia.</div></div>
+                        <div class="fusion-step-row"><div class="fusion-step-badge">3</div><div>Cortar en guillotina a <span class="fusion-pill">16 mm</span>.</div></div>
+                        <div class="fusion-step-row"><div class="fusion-step-badge">4</div><div>Presentar en máquina sin topar, separación aprox. <span class="fusion-pill">3 mm</span>. Revisar amplificación y pérdida en pantalla.</div></div>
+                    </div>
+
+                    <div class="fusion-card">
+                        <div class="fusion-card-title">3. Horno, Bandeja y Cierre</div>
+                        <div class="fusion-step-row"><div class="fusion-step-badge">1</div><div>Contraer en horno y <b>ESPERAR QUE ENFRÍE</b> antes de fijar (en caliente se daña).</div></div>
+                        <div class="fusion-step-row"><div class="fusion-step-badge">2</div><div>Acometida enrollada al <b>lado contrario del filamento</b>. Fijar placa protectora con <b>velcro</b> o <b>amarra plástica</b>.</div></div>
+                        <div class="fusion-step-row"><div class="fusion-step-badge">3</div><div>Cerrar tapa siguiendo la <b>flecha</b> y verificando que la <b>goma circular</b> quede pareja.</div></div>
+                        <div class="fusion-step-row"><div class="fusion-step-badge">4</div><div>Instalar <b>papel aluminio</b> en entrada de acometida, sopletear parejo y subir a poste con amarras de <span class="fusion-pill">75 cm</span> (rótulo visible desde el suelo).</div></div>
+                    </div>
+                </div>
+
+                <!-- SUB-TAB 3: EPP Y AUDITORÍA -->
+                <div id="fusion-subtab-auditoria" style="display:none;">
+                    <div class="fusion-danger-box">
+                        <b>🚨 PROHIBICIONES DE AUDITORÍA (Multas y Capacitación):</b><br>
+                        • Nunca poner <b>adhesivos</b> sobre los rollos de fibra.<br>
+                        • Nunca dejar la <b>placa protectora suelta</b>.<br>
+                        • Nunca fijar el manguito termo en caliente.<br>
+                        • Cero cortes a clientes activos.
+                    </div>
+                    <div class="fusion-alert-box">
+                        <b>🦺 SEGURIDAD CON SOPLETE Y CARTONERO:</b><br>
+                        • Usar <b>guantes de cuero no inflamables</b> al ablandar bajas y sellar el termo.<br>
+                        • Trabajar en ambiente libre de combustibles.<br>
+                        • Proteger manos y extremidades al cortar con cartonero.
+                    </div>
+                    <div class="fusion-ok-box">
+                        <b>✅ ESTÁNDAR DE CIERRE:</b><br>
+                        • Papel aluminio instalado antes de aplicar calor.<br>
+                        • Goma de tapa bien puesta contra filtraciones.<br>
+                        • Amarras de <b>75 cm</b> y rotulado legible desde el nivel del suelo.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button id="scrollTopBtnFusion" onclick="scrollToTopFusion()">⬆️</button>
     </div>
 
     <!-- MODALES FIJOS -->
@@ -1322,6 +1853,7 @@
             document.getElementById('view-pyme').style.display = 'none';
             document.getElementById('view-energia').style.display = 'none';
             document.getElementById('view-documentos').style.display = 'none';
+            document.getElementById('view-fusion').style.display = 'none';
 
             if (viewName === 'armarios') {
                 document.getElementById('menu-armarios').classList.add('active');
@@ -1350,6 +1882,10 @@
                 document.getElementById('menu-documentos').classList.add('active');
                 document.getElementById('view-documentos').style.display = 'flex';
                 loadDocumentos();
+            } else if (viewName === 'fusion') {
+                document.getElementById('menu-fusion').classList.add('active');
+                document.getElementById('view-fusion').style.display = 'flex';
+                loadFusion();
             }
         } 
 
@@ -2526,6 +3062,244 @@ function cerrarPdf() {
             if (e.target === this) { cerrarPdf(); } 
         });
         /* ========== FIN SECCIÓN DUCTOS ========== */
+
+        /* ============================================= */
+        /* ========== SECCIÓN FUSIÓN (P-80-11) ========= */
+        /* ============================================= */
+        var MANUAL_FUSION_URL = "https://raw.githubusercontent.com/CarlCarlsonn/dashboard-armarios/main/DOCUMENTOS/P-80-11%20Manual%20Fusiones%20en%20CDA%20Termocontraibles.pdf";
+        var MANUAL_FUSION_NOMBRE = "P-80-11 Manual Fusiones en CDA Termocontraibles.pdf";
+
+        var modelosFilamentosFusion = {
+            2: [
+                {
+                    tubo: "1ER MINI TUBO AZUL",
+                    tClass: "fo-azul",
+                    filamentos: [
+                        { num: 1, color: "AZUL", fClass: "fo-azul" },
+                        { num: 2, color: "NARANJO", fClass: "fo-naranjo" },
+                        { num: 3, color: "VERDE", fClass: "fo-verde" },
+                        { num: 4, color: "CAFÉ", fClass: "fo-cafe" },
+                        { num: 5, color: "GRIS", fClass: "fo-gris" },
+                        { num: 6, color: "BLANCO", fClass: "fo-blanco" }
+                    ]
+                },
+                {
+                    tubo: "2DO MINI TUBO NARANJO",
+                    tClass: "fo-naranjo",
+                    filamentos: [
+                        { num: 7, color: "AZUL", fClass: "fo-azul" },
+                        { num: 8, color: "NARANJO", fClass: "fo-naranjo" },
+                        { num: 9, color: "VERDE", fClass: "fo-verde" },
+                        { num: 10, color: "CAFÉ", fClass: "fo-cafe" },
+                        { num: 11, color: "GRIS", fClass: "fo-gris" },
+                        { num: 12, color: "BLANCO", fClass: "fo-blanco" }
+                    ]
+                }
+            ],
+            4: [
+                {
+                    tubo: "1ER MINI TUBO AZUL",
+                    tClass: "fo-azul",
+                    filamentos: [
+                        { num: 1, color: "AZUL", fClass: "fo-azul" },
+                        { num: 2, color: "NARANJO", fClass: "fo-naranjo" }
+                    ]
+                },
+                {
+                    tubo: "2DO MINI TUBO NARANJO",
+                    tClass: "fo-naranjo",
+                    filamentos: [
+                        { num: 3, color: "AZUL", fClass: "fo-azul" },
+                        { num: 4, color: "NARANJO", fClass: "fo-naranjo" }
+                    ]
+                },
+                {
+                    tubo: "3ER MINI TUBO VERDE",
+                    tClass: "fo-verde",
+                    filamentos: [
+                        { num: 5, color: "AZUL", fClass: "fo-azul" },
+                        { num: 6, color: "NARANJO", fClass: "fo-naranjo" }
+                    ]
+                },
+                {
+                    tubo: "4TO MINI TUBO CAFÉ",
+                    tClass: "fo-cafe",
+                    filamentos: [
+                        { num: 7, color: "AZUL", fClass: "fo-azul" },
+                        { num: 8, color: "NARANJO", fClass: "fo-naranjo" }
+                    ]
+                }
+            ]
+        };
+
+        var currentTubeModelFusion = 2;
+        var currentFilNumFusion = 1;
+        var fusionCurrentSubTab = 'colores';
+        var fusionLoadTimer = null;
+
+        function loadFusion() {
+            var skContainer = document.getElementById('fusionSkeletonContainer');
+            var realContent = document.getElementById('fusionRealContent');
+            var stickyBar = document.getElementById('fusionTubeStickyBar');
+            if (!skContainer || !realContent) return;
+
+            if (fusionLoadTimer) {
+                clearTimeout(fusionLoadTimer);
+                fusionLoadTimer = null;
+            }
+
+            // Inyectamos Skeleton Loader coherente con el resto de la app
+            realContent.style.display = 'none';
+            if (stickyBar) stickyBar.style.display = 'none';
+            skContainer.innerHTML = getCardSkeletonHTML();
+            skContainer.style.display = 'block';
+
+            fusionLoadTimer = setTimeout(function() {
+                skContainer.style.display = 'none';
+                skContainer.innerHTML = '';
+                realContent.style.display = 'block';
+                if (stickyBar) {
+                    stickyBar.style.display = (fusionCurrentSubTab === 'colores') ? 'block' : 'none';
+                }
+                renderFusionCalculator();
+                fusionLoadTimer = null;
+            }, 400);
+        }
+
+        function switchFusionSubTab(tab, btn) {
+            fusionCurrentSubTab = tab;
+            ['colores', 'pasos', 'auditoria'].forEach(function(t) {
+                var panel = document.getElementById('fusion-subtab-' + t);
+                if (panel) panel.style.display = (t === tab) ? 'block' : 'none';
+            });
+            var stickyBar = document.getElementById('fusionTubeStickyBar');
+            if (stickyBar) {
+                stickyBar.style.display = (tab === 'colores') ? 'block' : 'none';
+            }
+            document.querySelectorAll('#view-fusion .fusion-sub-tab').forEach(function(b) {
+                b.classList.remove('active');
+            });
+            if (btn) btn.classList.add('active');
+            var cont = document.getElementById('resultsFusionContainer');
+            if (cont) cont.scrollTop = 0;
+        }
+
+        function setFusionTubeModel(model) {
+            currentTubeModelFusion = model;
+            var maxFil = (model === 2) ? 12 : 8;
+            if (currentFilNumFusion > maxFil) currentFilNumFusion = 1;
+            var btn2 = document.getElementById('btnFusion2Tubos');
+            var btn4 = document.getElementById('btnFusion4Tubos');
+            if (btn2) btn2.classList.toggle('active', model === 2);
+            if (btn4) btn4.classList.toggle('active', model === 4);
+            renderFusionCalculator();
+        }
+
+        function selectFusionFil(num) {
+            currentFilNumFusion = num;
+            renderFusionCalculator();
+        }
+
+        function renderFusionCalculator() {
+            var filGridEl = document.getElementById('fusionFilGrid');
+            var stageEl = document.getElementById('fusionVisualStage');
+            var tableEl = document.getElementById('fusionFullTableContainer');
+            if (!filGridEl || !stageEl || !tableEl) return;
+
+            var groups = modelosFilamentosFusion[currentTubeModelFusion] || modelosFilamentosFusion[2];
+            var flatList = [];
+
+            groups.forEach(function(g) {
+                g.filamentos.forEach(function(f) {
+                    flatList.push({
+                        num: f.num,
+                        tubo: g.tubo,
+                        tClass: g.tClass,
+                        color: f.color,
+                        fClass: f.fClass
+                    });
+                });
+            });
+
+            filGridEl.innerHTML = flatList.map(function(item) {
+                return '<button class="fusion-fil-num-btn ' + (item.num === currentFilNumFusion ? 'active' : '') + '" onclick="selectFusionFil(' + item.num + ')">FIL ' + item.num + '</button>';
+            }).join('');
+
+            var sel = flatList.find(function(i) { return i.num === currentFilNumFusion; }) || flatList[0];
+            stageEl.innerHTML =
+                '<div class="fusion-assembly">' +
+                    '<div class="fusion-tube ' + sel.tClass + '">' +
+                        '<span class="fusion-tube-sub">Mini Tubo</span>' +
+                        '<span class="fusion-tube-main">' + sel.tubo + '</span>' +
+                        '<div class="fusion-tube-mouth"></div>' +
+                    '</div>' +
+                    '<div class="fusion-filament-zone">' +
+                        '<div class="fusion-filament ' + sel.fClass + '">' +
+                            '<span>FIL ' + sel.num + ' · ' + sel.color + '</span>' +
+                        '</div>' +
+                    '</div>' +
+                '</div>';
+
+            tableEl.innerHTML = groups.map(function(g) {
+                var isTubeActive = g.filamentos.some(function(f) { return f.num === currentFilNumFusion; });
+                var rows = g.filamentos.map(function(f, idx) {
+                    var isSelected = (f.num === currentFilNumFusion);
+                    return '<tr class="' + (isSelected ? 'fusion-row-active' : '') + '" onclick="selectFusionFil(' + f.num + ')">' +
+                        (idx === 0 ? '<td rowspan="' + g.filamentos.length + '" class="fusion-tube-cell ' + g.tClass + '">' + g.tubo + '</td>' : '') +
+                        '<td class="fusion-color-cell ' + f.fClass + '">' + f.color + '</td>' +
+                        '<td class="fusion-num-cell">' + (isSelected ? '◀ ' : '') + 'FIL ' + f.num + '</td>' +
+                    '</tr>';
+                }).join('');
+                return '<div class="fusion-table-wrap ' + (isTubeActive ? 'tube-active' : '') + '"><table class="fusion-group-table"><tbody>' + rows + '</tbody></table></div>';
+            }).join('');
+        }
+
+        function descargarManualFusion() {
+            var btn = document.getElementById('btnDescargarManualFusion');
+            if (!btn || btn.disabled) return;
+
+            if (!confirm('¿Descargar el Manual Completo P-80-11 (PDF)?')) return;
+
+            var textoOriginal = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '⏳...';
+
+            fetch(MANUAL_FUSION_URL)
+                .then(function(response) {
+                    if (!response.ok) throw new Error('HTTP ' + response.status);
+                    return response.blob();
+                })
+                .then(function(blob) {
+                    var blobUrl = window.URL.createObjectURL(blob);
+                    var a = document.createElement('a');
+                    a.href = blobUrl;
+                    a.download = MANUAL_FUSION_NOMBRE;
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                    window.URL.revokeObjectURL(blobUrl);
+                })
+                .catch(function(error) {
+                    console.error('Error al descargar manual:', error);
+                    alert('No se pudo descargar el manual.\n\nVerifica tu conexión o que el archivo esté subido en tu carpeta DOCUMENTOS de GitHub.');
+                })
+                .finally(function() {
+                    btn.disabled = false;
+                    btn.innerHTML = textoOriginal;
+                });
+        }
+
+        var resultsFusionContainer = document.getElementById('resultsFusionContainer');
+        var scrollTopBtnFusion = document.getElementById('scrollTopBtnFusion');
+        if (resultsFusionContainer && scrollTopBtnFusion) {
+            resultsFusionContainer.addEventListener('scroll', function() {
+                scrollTopBtnFusion.style.display = resultsFusionContainer.scrollTop > 300 ? 'block' : 'none';
+            });
+        }
+        function scrollToTopFusion() {
+            if (resultsFusionContainer) resultsFusionContainer.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        /* ========== FIN SECCIÓN FUSIÓN ========== */
     </script>
 </body>
 </html>
