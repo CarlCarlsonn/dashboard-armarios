@@ -2062,6 +2062,7 @@
             const t = limpiar(textoDestino);
 
             if (t.includes(q)) return true; // Si es exacto, pasa rápido
+            if (/^\d+$/.test(q)) return false; // Si es solo números (ej: 044), exige coincidencia exacta
 
             const aplicarFonetica = (str) => {
                 return str
@@ -2070,7 +2071,7 @@
                     .replace(/c([ei])/g, 's$1')
                     .replace(/h/g, '')
                     .replace(/y/g, 'll')
-                    .replace(/(.)\1+/g, '$1'); 
+                    .replace(/([a-z])\1+/g, '$1'); 
             };
 
             const phQuery = aplicarFonetica(q);
@@ -2322,8 +2323,11 @@
             currentSearchWords = term.split(/\s+/).filter(function(w) { return w !== ''; });
             var filterToApply = (term !== '') ? '' : currentFilter;
             
+            var pareceCoordenada = /[-.,]/.test(term) && term.length >= 4;
             var filtered = globalData.filter(function(item) {
-                var searchableText = (item.nombre + ' ' + item.coordenadas + ' ' + item.tipo + ' ' + item.obs);
+                var searchableText = pareceCoordenada
+                    ? (item.nombre + ' ' + item.coordenadas + ' ' + item.tipo + ' ' + item.obs)
+                    : (item.nombre + ' ' + item.tipo + ' ' + item.obs);
                 // APLICAMOS BÚSQUEDA FUZZY A CADA PALABRA INGRESADA
                 var matchesSearch = currentSearchWords.every(function(w) { return buscadorFuzzy(w, searchableText); });
                 return matchesSearch && chipMatches(item, filterToApply);
